@@ -80,6 +80,11 @@ The figure below shows the joints and links of the robot.
 
 The ```TCP``` has ```6``` coordinates: ```3``` of them describes its ```position(XYZ)``` in space and the other ```3``` describes its ```orientation(UVW)```. The position of the joints axes and the position of the TCP is related to each other. The process of finding position and orientation of TCP given Joints values is called ```Forward or Direct Kinematics```.  Vice versa, finding our Joints values corresponding to a given TCP position and orientation is called ```Inverse Kinematics```.
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147780776-265a7076-b7b1-4d88-bf55-f8ac04e0c2e5.png" />
+</p>
+
+
 
 ### 2. Frames
 
