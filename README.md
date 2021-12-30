@@ -66,7 +66,7 @@ Fig 1. ([Video by Oleksandr Stepanenko](https://www.youtube.com/watch?v=3fbmguBg
 </p>
 
 #### 1.3 6-axis Anthropomorphic Robotic Arm
-
+Our 6-axis robot is a ```serial kinematic``` structure with ```6``` links connected together by ```6``` joints. 
 
 ### 2. Frames
 
