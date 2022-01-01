@@ -189,7 +189,7 @@ The offset <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\Delta
 To find out how the position of our ```p``` changes when rotating our base frame, we need to pre-multiply the position coordinates with a ```rotation matrix```. The content of the matrix depends around which axis we rotate and the angle of rotation <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\Theta&space;" title="\Theta " />. Below shows the rotation matrices when rotating around each individual axes:
 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/147849401-60088e51-75c8-4a09-bad8-1b6b80095604.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/147849465-f2b943cf-864e-48b5-ae1c-b31c14703b62.png" />
 </p>
 
 
