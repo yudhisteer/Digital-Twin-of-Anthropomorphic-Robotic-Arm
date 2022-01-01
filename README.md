@@ -24,7 +24,7 @@ Serial kinematics consists of an open chain of links similar to the human arm. T
 
  
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/147774741-3ff4a7e6-03c2-4321-89d6-79b921bfd667.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/147844879-0f6a5e08-447b-4cae-a9b6-011f970062e3.png" />
 </p>
 <p align="center">
 Fig. Da Vinci's drawing of human arm(left) and Serial kinematic drawing of robotic arm(right).
@@ -77,10 +77,70 @@ The figure below shows the joints and links of the robot.
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/147778936-b56e2096-0629-456a-aba6-28b00ed7883e.png" />
 </p>
+<p align="center">
+Fig. Description of 6-axis Anthropomorphic Robotic Arm.
+</p>
 
 The ```TCP``` has ```6``` coordinates: ```3``` of them describes its ```position(XYZ)``` in space and the other ```3``` describes its ```orientation(UVW)```. The position of the joints axes and the position of the TCP is related to each other. The process of finding position and orientation of TCP given Joints values is called ```Forward or Direct Kinematics```.  Vice versa, finding our Joints values corresponding to a given TCP position and orientation is called ```Inverse Kinematics```.
 
 ### 2. Frames
+A key requirement in robotics programming is keeping track of the positions and velocities of objects in space. A frame which is essentially a coordinate system with a specific orientation and position. For example, consider the situation whereby we ask a robot to detecta blue ball in a room. It will be futile if the robot report to us that the blue is 1m from the robot because now we want to know where _in the room_ is that blue ball. Providing this information requires us to know each of the following:
+
+- The position of the blue ball relative to the camera.
+- The position and orientation of the camera relative to the base of the robot.
+- The position of the robot in the room.
+
+#### 2.1 Geometrical frameworks
+
+We need to develop a framework for representing these relative locations and using that information to translate coordinates from one frame of reference to another. In robotics, we have 4 main geometrical frameworks:
+
+##### 1. Global Coordinate System(GCS)
+The Global Coordinate System defines the origin and orientation of our world. If our workspace consists of various robots then it is useful to define a unique global reference system so that everyone understands that same global coordinate. 
+
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147844482-e0779f99-da84-4c47-b5fd-5042f5969196.png" />
+</p>
+<p align="center">
+  Fig. Global Coordinate System(GCS) in green.
+</p>
+
+
+##### 2. Machine Coordinate System(MCS)
+In a workspace with several robots each machine will have its own local coordinate system(LCS or MCS) which is fundamental in programming each individual robot. However, the other robots will not understand and interact with a point specified in a machine's local coordinate system. If we have only one robot then; ```LCS``` = ```GCS```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147844561-3b7411b3-4add-47de-95cc-9f3bb8b5e9d8.png" />
+</p>
+<p align="center">
+  Fig. Local Coordinate System(LCS) of each robot in blue and GCS in green.
+</p>
+
+##### 3. Tool Coordinate System(TCS)
+The origin of the Tool Coordinate System is located at the TCP of the robot. If we have no tool attached to the robot, then the TCS is at the Mounting Point(MP) of the robot.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147844661-418aae4a-c2b8-4b9a-ade6-9b9ab6639914.png" />
+</p>
+<p align="center">
+  Fig. Tool Coordinate System(TCS) in yellow and GCS in green.
+</p>
+
+##### 4. Workpiece Coordinate System(WCS)
+The most important frame for the operator in the Workpiece Coordinate System or Product Coordinate System. This frame is what the operator's sees and considers as the origin of its workplace and all the programmed points and movements refer to this system. We may have several products with which the robot will interact, hence we will have several WCS with their own origin and orientation.
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147844823-b4d78d15-c4ab-4390-8175-0069d4e30b57.png" />
+</p>
+<p align="center">
+  Fig. TCS in yellow, GCS in green, LCS in blue and Workpiece Coordinate System(WCS) in pink.
+</p>
+
+Our goal is to understand how to move from one frame to another and how to transform coordinate points across different frames. 
+
+#### 2.2 Frame Operations
 
 
 ### 3. Forward Kinematics
