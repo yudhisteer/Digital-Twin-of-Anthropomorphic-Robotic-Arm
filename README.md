@@ -325,7 +325,7 @@ To sum up:
 ### 3. Forward Kinematics
 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/147854054-4d707752-8ed2-40db-8495-89c0279108db.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/147854128-9f4f0357-5502-47f6-9894-fb9114724ce9.png" />
 </p>
 
 
