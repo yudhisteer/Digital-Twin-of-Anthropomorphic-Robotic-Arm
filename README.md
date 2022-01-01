@@ -295,7 +295,21 @@ It is important to remember that the order is **not** ```commutative```: ```we f
 
 If we have a point <img src="https://latex.codecogs.com/svg.image?p_{0}" title="p_{0}" /> in one frame and want to find out its coordinates as seen from a different frame, we simply pre-multiply by the homogenous matrix.  Note that because the matrix is a 4x4 and the point only has three coordinates, we need to pad its vector with a ```1``` at the end. The final expression for <img src="https://latex.codecogs.com/svg.image?p_{1}" title="p_{1}" /> looks like that. If we only have a translation and no rotation, the cosine elements along the diagonal of the rotation part will all be ```1s``` and the elements outside the diagonal will be ```0s```, so that we fall back to a simple linear offset addition for the translational effects. Similarly, if the translation offset is zero, then we only have the rotation elements left.
 
+**Example:**
 
+Imagine we have a very simple mechanical structure with only one rotating axis. Note that the position of the TCP indicated by the white dot keeps changing following the rotating axis. Now we want to find the position of the TCP in the fixed robot **base frame**. For that we need some geometrical parameters: the length of the arm ```l```, and its height ```h```. The position of the TCP as seen from the **mobile frame** of the robot’s moving link is actually constant. We call it <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" /> with coordinates  <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\begin{bmatrix}&space;l&&space;&space;0&&space;&space;0&&space;&space;1\\\end{bmatrix}^{T}" title="\begin{bmatrix} l& 0& 0& 1\\\end{bmatrix}^{T}" />.
+
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147853494-719e41da-834a-4f45-a7ee-4bfccf994f5f.png" />
+</p>
+
+Now, to find out <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" /> from <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" />, we need to find out what transformation modifies the old mobile frame into the new fixed frame at the base. We first have a rotation by an angle θ around the Z-axis, and then a translation of ```h``` along Z. Note that both are positive as seen from the new frame. So we can write down the homogenous transformation using an offset ```h``` along the Z-axis and a rotation θ around the same Z axis. ```h``` is always constant, but the angle θ can change all the time because it is driven by the rotating axis. So we pre-multiply <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" /> by the matrix ```T``` to find <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" />.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147853434-6c5a2d73-70a8-4507-a6d8-da8884a9e6f0.png" />
+</p>
 
 
 
