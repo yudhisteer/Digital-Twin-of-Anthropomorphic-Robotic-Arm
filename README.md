@@ -279,9 +279,21 @@ Euler angles are relatively easy to visualize, but they are inconvenient to work
 
 
 
-##### 2.2.3 Translation + Rotation
+##### 2.2.3 Translation + Rotation(Homogeneous Transformation)
+Now we need to put ```translation``` and ```rotation``` together into an individual transformation. The Homogeneous transformation matrix ```T```, combines the rotation matrix ```R```, for example around the Z-axis, but can be any generic rotation around the XYZ frame, and then the translational offset Δ, which can also be any generic translation along the XYZ frame.  The combination of the two is a ```4x4``` matrix, filled with zeros under the rotation matrix and with a ```1``` under the translational offset.  Combining the two operations together means that with a **single** matrix multiplication we can perform both translation and rotation of our frame at the **same time**.
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147852474-eb838ccf-6c84-4ea6-8860-0db1bc100f5d.png" />
+</p>
+
+It is important to remember that the order is **not** ```commutative```: ```we first rotate, and then translate```.  If we would first translate and then rotate, the result would be totally different.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147852785-21601287-d34e-47dd-9f0b-52b7980300a1.png" />
+</p>
+
+If we have a point ```p``` in one frame and want to find out its coordinates as seen from a different frame, we simply pre-multiply by the homogenous matrix.  Note that because the matrix is a 4x4 and the point only has three coordinates, we need to pad its vector with a 1 at the end. The final expression for P1 looks like that. If we only have a translation and no rotation, the cosine elements along the diagonal of the rotation part will all be 1s and the elements outside the diagonal will be 0s, so that we fall back to a simple linear offset addition for the translational effects. Similarly, if the translation offset is zero, then we only have the rotation elements left.
 
 
 
