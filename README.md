@@ -186,10 +186,16 @@ The offset <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\Delta
 
 
 ##### 2.2.2 Rotation
+Specifying orientation in three dimensions is more complicated than specifying position. There are several approaches, each with its own strengths and weaknesses.
 
-**Euler Angles**
+###### Euler Angles
 
-**Rotation Matrix**
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147849707-cbcc2f4f-6cf0-4760-bc7d-d9af51d54e18.png" />
+</p>
+
+
+###### Rotation Matrix
 
 To find out how the position of our ```p``` changes when rotating our base frame, we need to pre-multiply the position coordinates with a ```rotation matrix```. The content of the matrix depends around which axis we rotate and the angle of rotation <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\Theta&space;" title="\Theta " />. Below shows the rotation matrices when rotating around each individual axes:
 
