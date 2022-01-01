@@ -147,7 +147,7 @@ Before we dive into frame operations, it is best we establish some conventions t
   <img src= "https://user-images.githubusercontent.com/59663734/147845037-82b4c6e2-e0d2-4d5b-bd78-cb39a33ef49a.png" />
 </p>
 <p align="center">
-  Fig. Frame conventions
+  Fig. Left and right-handed coordinate systems and Right-hand rule for determining the direction of positive rotations around an axis.
 </p>
 
 
