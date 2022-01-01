@@ -324,6 +324,11 @@ To sum up:
 
 ### 3. Forward Kinematics
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147854054-4d707752-8ed2-40db-8495-89c0279108db.png" />
+</p>
+
+
 
 ### 4. Inverse Kinematics
 
