@@ -186,6 +186,11 @@ The offset <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\Delta
 
 
 ##### 2.2.2 Rotation
+
+**Euler Angles**
+
+**Rotation Matrix**
+
 To find out how the position of our ```p``` changes when rotating our base frame, we need to pre-multiply the position coordinates with a ```rotation matrix```. The content of the matrix depends around which axis we rotate and the angle of rotation <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\Theta&space;" title="\Theta " />. Below shows the rotation matrices when rotating around each individual axes:
 
 <p align="center">
