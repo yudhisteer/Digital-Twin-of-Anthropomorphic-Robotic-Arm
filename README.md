@@ -311,6 +311,15 @@ Now, to find out <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;
   <img src= "https://user-images.githubusercontent.com/59663734/147853434-6c5a2d73-70a8-4507-a6d8-da8884a9e6f0.png" />
 </p>
 
+To sum up:
+
+- If we have the position of a point given in one frame and want to find its position from a different frame we need to apply some transformations.
+
+- The first and simplest is a ```linear translation```, which mathematically is a simple ```addition```of an ```offset```.
+
+- If the frames are rotated with respect to each other, we need to use a ```rotation matrix```, which is built as a combination of rotations around ```individual``` axes.
+
+- Finally, if both ```translation and rotations``` are present, we can use a ```homogeneous matrix```, which combines both operations into a ```single``` one.
 
 
 ### 3. Forward Kinematics
