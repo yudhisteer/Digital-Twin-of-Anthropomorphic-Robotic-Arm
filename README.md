@@ -189,6 +189,9 @@ The offset <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\Delta
 Specifying orientation in three dimensions is more complicated than specifying position. There are several approaches, each with its own strengths and weaknesses.
 
 ###### Euler Angles
+In Euler angles orientation is expressed as a sequence of three rotations around the three coordinate axes. These three rotations are traditionally referred to as ```roll```, ```pitch``` and ```yaw```. When working with Euler angles it is necessary to specify the order that the rotations will be applied: a 90o rotation around the x-axis followed by a 90o rotation around the y-axis does **not** result in the same orientaion as the same rotations applied in the opposite order. There are, in fact, twelve valid rotation orderings: ```xyz, yzx, zxy, xzy, zyx, yxz, zxz, xyx, yzy, zyz, xzx, and yxy```.
+
+As convention, each rotation is performed around the axes of a coordinate frame aligned with the earlier rotations which is referred as ```relative``` or ```intrinsic``` rotations.
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/147849707-cbcc2f4f-6cf0-4760-bc7d-d9af51d54e18.png" />
@@ -228,6 +231,52 @@ Furthermore, when we ```tranpose``` the rotation matrix we find the same matrix 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/147849221-8e315da5-02f7-4b56-9bdf-b3abaa2f307d.png" />
 </p>
+
+It is possible to represent **any** orienation as a product of three rotation matrices around the x, y and z axes. It is straightforward to convert from an Euler angle representation to the corresponding rotation matrix. For Euler angles represented using relative rotations, the order is reversed.That is, a 45° roration about the x-axis, followed by 30° about the -axis and a 75° about the z-axis is represented as <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;R_{relative}&space;=&space;R_{z}(75^{\circ&space;})&space;\cdot&space;&space;R_{z}(30^{\circ&space;})\cdot&space;&space;R_{z}(45^{\circ&space;})&space;" title="R_{relative} = R_{z}(75^{\circ }) \cdot R_{z}(30^{\circ })\cdot R_{z}(45^{\circ }) " />
+
+In general, rotation of robots are usually given in ```A```,```B``` and ```C``` angles arounf the ```X```,```Y``` and ```Z``` coordinate system. That is we first rotate of an angle A around the x-axis, then an angle B about the y-axis and finally an angle C about the z-axis. The notation is referred as ```Improper Euler angles```, or ```RPY angles``` or ```Cardan angles```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147851360-dab3f768-ae58-4b2f-b996-2bac78d78ad1.png" />
+</p>
+
+Two important properties of rotation matrices are that:
+
+1. Any orientation can be achieved composing Euler angles which is relatively easy to perform.
+2. Any rotation matrix can be decomposed in Euler angles although that is is not that straightforward.
+
+The rotation matrix then becomes:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147851708-712b25b9-a40e-4b6f-8da0-db42713a3d1f.png" />
+</p>
+
+Note that when decomposing that matrix to find the angle A,B and C we can get two results for an angle. That is, we can reach the same global rotation with different individual rotations around the base axes. Euler angles are not unique! Combined with the choice of axis orderings, there are ```24``` possible conventions for specifying Euler angles.
+
+When <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;B&space;=&space;\pm&space;90^{\circ&space;}" title="B = \pm 90^{\circ }" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;cosB&space;=&space;0" title="cosB = 0" />. The matrix is simplied but now A and C are no longer ```linearly independent```. We are facing a ```singularity``` which is a partivcular configuration whreby an ```infinite``` number of solutions exist. We can only compute the sum and difference of A and C but not their **individual** values.
+
+Some important properties of the rotation matrix: 
+
+- The rotation matrix is an ```orthogonal``` matrix, i.e, its transpose is equal to its inverse. This is important for us and calculating the inverse of the matrix can be difficult whereas transposing it is eaxy and quick.
+
+
+<p align="center">
+  <img src= "https://latex.codecogs.com/png.image?\dpi{110}&space;R^{T}&space;=&space;R^{-1}" title="R^{T} = R^{-1}" />
+</p>
+
+- The ```determinant``` of the matrix is equal to ```1```, a property which is useful when checking if the rotation matrix has the correct input. If the determinant is not ```1``` then it is not a correct rotational matrix however, that does not mean that any matrix with determinant ```1``` is a rotational matrix. 
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147852029-b6f2100e-2836-42b9-a531-1dd484519690.png" />
+</p>
+
+
+- The product of the matrixes are ```associative``` but not ```commutative```. This means that rotating about x first and then z is not the same thing as rotating about z first and then x.
+
+To sum up:
+
+Euler angles are relatively easy to visualize, but they are inconvenient to work with from a mathematical point of view. The key problem is that the mapping from spatial orientations to Euler angles is discontinuous: small changes in orientation may cause big jumps in the required representation. This can cause difficulties when we need to smoothly update the orientation of a moving object over time. A possible solution to this would be to use ```Quaternions```. As a general rule in robotics, we use Euler angles only for the interface of the operator(**Visualization**) but we use Quaternions for all internal calculations(**Interpolation**). 
+
 
 
 ##### 2.2.3 Translation + Rotation
