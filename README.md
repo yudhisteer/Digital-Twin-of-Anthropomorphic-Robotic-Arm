@@ -141,6 +141,22 @@ The most important frame for the operator in the Workpiece Coordinate System or 
 Our goal is to understand how to move from one frame to another and how to transform coordinate points across different frames. 
 
 #### 2.2 Frame Operations
+Before we dive into frame operations, it is best we establish some conventions that we will use throughout the project. We have a ```left-handed coordinate system``` and a ```right-handed coordinate system.``` In a right-handed coordinate system we determine the direction of the z-axis by aiming the pointer finger of the right hand along the positive x-axis and curling our palm toward the positive y-axis. The thumb will then point in the direction of positive z-axis as shown below. Note that there is no way to rotate these two coordinate systems so that they align. They represent two **incompatible** ways of representing three-dimensional coordinates. This means that whenever we provide coordinates in three dimensions we must specify whether we are using a left-handed or right-handed system.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147845037-82b4c6e2-e0d2-4d5b-bd78-cb39a33ef49a.png" />
+</p>
+<p align="center">
+  Fig. Frame conventions
+</p>
+
+
+We also need to establish a convention for describing the direction of a rotation. Again, we will follow a right-hand rule. To determine the direction of positive rotation around a particular axis we point the thumb of the right hand along the axis in question. The fingers will then curl around the axis in the direction of positive rotation.
+
+
+
+
+
 
 
 ### 3. Forward Kinematics
