@@ -466,7 +466,7 @@ The actual mechanical configuration can change according to the robot we are wor
 With the next step we reach the middle of the wrist called the ```wrist center point```. We simply add a translation along the ```X axis``` and a rotation around ```Y```.
 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/147868561-02b13ed0-1d04-429c-b01d-bb6f64b9eac4.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/147868660-7e5b6ede-ff1a-4a72-8c63-3d221183efa4.png" />
 </p>
 
 
@@ -487,29 +487,56 @@ With the next step we reach the middle of the wrist called the ```wrist center p
 </p>
 
 
-
 ##### 3.1.6 J5 to J6
+We finally reach the end of the robot with the last step: one additional translation and rotation along ```X```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868720-88f0594e-0e61-45f7-bd69-911bceec22e9.png" />
+</p>
 
 
 - Translation:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868745-11c43b6b-760f-4e6c-9b39-f0e868083fb6.png" />
+</p>
 
 
-- Rotation:
+- Rotation J6 around X:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868768-1766f708-992a-4e76-a626-a36727550487.png" />
+</p>
 
 
-- Homogeneous Equartion:
+- Homogeneous Equation:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868790-8f87d70f-943e-47b4-b446-5e40d035331b.png" />
+</p>
 
 
 ##### 3.1.7 Base to J6
+The ```XYZ``` coordinates of the TCP as seen from the base frame can be obtained by pre-multiplying the position of the TCP in its local frame, which is ```zero```, the **origin** of the TCP frame, by all the homogeneous transformations(T1 to T6) we obtained for each frame in the previous six steps. The advantage of this solution is that it can be applied to any open kinematic chain.
+
+For the rotation coordinates ```ABC``` of the TCP we do the same thing, using the rotation matrices we built in the previous steps. Since the product is **associative**, we can split the calculations in two:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147869004-3a708874-9e10-4954-a2f1-7f8d2cc2f2e0.png" />
+</p>
 
 
-- Translation:
+1. The ```first```, ```second``` and ```third``` joints determine the rotation of the ```arm```, from the ```base``` to the ```wrist center point```.
+2. Then the ```fourth```, ```fifth``` and ```sixth``` joints determine the rotation of the ```wrist``` from the ```wrist center point``` to the ```TCP```.
+
+- Position:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868868-1ebfb50a-71fd-4255-b85b-c58a17bd5a54.png" />
+</p>
 
 
 - Rotation:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868917-ff4a5103-374e-4d91-a5aa-c5f874c74d42.png" />
+</p>
 
-
-- Homogeneous Equartion:
 
 
 
