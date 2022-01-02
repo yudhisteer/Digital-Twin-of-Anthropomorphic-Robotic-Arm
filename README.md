@@ -323,10 +323,45 @@ To sum up:
 
 
 ### 3. Forward Kinematics
+After studying frame operations, we can now build a geometrical model that will allow us to calculate the position and orientation of each link. This model is knows as a ```Kinematic``` model. There are two types of kinematic model: ```forward transformation(or Direct transformation)``` and ```inverse transformation```.
+
+Forward kinematics is defined as the process of calculating the position and orientation of the **TCP** given the current values of the **joint axes**. We know the position of the joints from the values obtained from the encoders of the electric servo motors. Using these values, we need to calculate the position ```XYZ``` and orientation ```UVW``` of the **TCP** always w.r.t the **base frame**. This function is a simple transformation between the base frame and the TCP frame.
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/147854128-9f4f0357-5502-47f6-9894-fb9114724ce9.png" />
 </p>
+
+The final transformation matrix is a homogeneous transformation that depends on all the joints positions and mechanical parameters of the robot. What we do is simply compose a ```chain``` of frames translations and rotations from the **base** to the **TCP**.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147866651-9563d079-2275-41ee-80f2-9fd89308cee3.png" />
+</p>
+
+The final point <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" /> can be expressed in the base frame as its local coordinates <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" /> pre-multiplied by the homogeneous frame transformation. Note that now all those frames can rotate and translate with respect to each other, according to the joints values, so their angles are not constant, but ```parameterized```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147866892-b01e8799-8981-4c58-8c6e-e1b73a1962a8.png" />
+</p>
+
+
+So what are these parameters of our kinematic model? That is, what translations and rotations we observe between the different frames?
+
+- we have all the ```rotations``` introduces by the movements of the joints: from joint ```1``` to ```6```. These are **not constant** in time and change accordingly to the motors’ movements.
+
+- we have all the ```translational``` effects due to the mechanical size of the arm. The distance from each joint to the next as shown in the picture above, from the base to the first joint, all the way to the last one. Unlike the rotational parameters, the translational parameters are actually **constant**, because the mechanical size of the arm does not change in time.
+
+
+#### 3.1 Forward Kinematics: Base to TCP
+
+##### 3.1.1 Base to J1
+
+
+
+
+
+
+
+
 
 
 
