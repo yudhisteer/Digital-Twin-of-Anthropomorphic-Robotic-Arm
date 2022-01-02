@@ -352,8 +352,32 @@ So what are these parameters of our kinematic model? That is, what translations 
 
 
 #### 3.1 Forward Kinematics: Base to TCP
+We will now build our kinematic model step by step from the base to the TCP.
 
 ##### 3.1.1 Base to J1
+We have a translation and a rotation along the Z-axis. The homogeneous transformation, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;T_{1}" title="T_{1}" />,  for this first step is built from the rotation matrix <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;R_{1}" title="R_{1}" /> and the offset <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;a1z" title="a1z" />.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147867318-137da350-0f09-434b-8bdd-f72d78660cbb.png" />
+</p>
+
+- Translation: 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147867517-bd124181-7ce4-4320-8256-cd45286bce7d.png" />
+</p>
+
+
+- Rotation J1 around Z: 
+ 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147867412-1dbd97c7-e4ab-4dc4-9eac-e54e2721c9b5.png" />
+</p>
+
+- Homogeneous Equation: 
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147867461-ece65697-ae73-4ccb-8141-544ecd4b7568.png" />
+</p>
 
 
 
