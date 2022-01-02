@@ -635,7 +635,7 @@ In the spherical wrist, the three rotating axes ```J4,J5,J6``` all intersect at 
 
 
 #### 4.2 Non-spherical wrist robot
-In the non-spherical wrist, the rotation axes do **not** intersect at one point. This configuration requires a ```numerical solution(trial-and-error procedures - approximation to the solution of a mathematical equation)``` so it is mathematically more complex and computationally more expensive. However, it does **not** suffer from ```singularity``` issues and can always perform movements at constant speed. For that reason it is used often in ```painting``` applications, where a constant speed is strictly required to spray a uniform layer of paint.
+In the non-spherical wrist, the rotation axes do **not** intersect at one point. This configuration requires a ```numerical solution```(trial-and-error procedures - approximation to the solution of a mathematical equation) so it is mathematically more complex and computationally more expensive. However, it does **not** suffer from ```singularity``` issues and can always perform movements at ```constant speed```. For that reason it is used often in ```painting``` applications, where a constant speed is strictly required to spray a uniform layer of paint.
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/147880705-397009aa-7c93-4d03-8fe7-57c25e085be2.png" />
