@@ -609,9 +609,19 @@ For our 6-axis robot, we introduce ```coupling coefficients``` in the forward ki
 </p>
 
 
-
-
 ### 4. Inverse Kinematics
+Up until now, we have studied forward kinematic whereby we are given the joint angles(J1 to J6) of the axes and we need to calculate the position and orientation of the TCP or End-Effector. We showed how we could use the Homogeneous transformation matrix H, to find the location of our end-effector.
+
+In inverse kinematics we are given the TCP location and we are asked to find the joints angles(J1 to J6) that result in that particular TCP location. Inverse kinematics is more useful for us as this is the kind of situation that we will be dealing with in real-world. That is, we may know a particular object location that our end-effector will need to grab and we will then need to find out the desired joints angles of our robots to achieve this task of grabbing the object. Remember that the TCP coordinates are expressed relative to the base frame.
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147880223-c8870731-ebd5-4e06-a318-5ffc00480b75.png" />
+</p>
+
+Robots are programmed by the operator in ```path space coordinates (XYZ)```, which are clearly understood. But motion control software acts directly on the motors, which move the joints of robots. So we need a way to transform back from ```path space``` to the ```joints space```. 
+
+Unfortunately, the inverse kinematics problem is so ```hard``` that sometimes it is even ```impossible``` to solve the problem in closed-form, that is we cannot write down equations to derive the joints axes values and a numerical approach is required. In other times, we will need a couple of ```assumptions``` and even ```geometrical intuition``` in order to solve the inverse kinematics.
 
 
 ### 5. Path Planning
