@@ -538,11 +538,75 @@ For the rotation coordinates ```ABC``` of the TCP we do the same thing, using th
 </p>
 
 ##### 3.1.8 GCS to Base to J6
+So far we have calculated the position and orientation of the TCP as seen from the local robot’s frame or Machine Coordinate System(MCS). Now we want to know the position of the TCP in the Global Coordinate System(GCS) so that other robots can also work with it.
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147875836-48bdbeeb-62d3-40d1-b471-ecc56f19abb3.png" />
+</p>
+
+
+For the position, we need to pre-multiply by the homogeneous matrix that describes the transformation between local machine coordinate(MCS) system and global world coordinate system(GCS).
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147875781-eacdc275-addb-4d74-83e2-4d8c734a2c0b.png" />
+</p>
+
+For the orientation, it is enough to pre-multiply by the rotation matrix.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147875763-4f914146-39b9-43ad-8182-39f0eb631159.png" />
+</p>
 
 
 
 ##### 3.1.9 Base to J6 to TCP
+Now if the TCP is not the mounting point but instead we have a tool at the end of our MP then we need to add the homogeneous matrix and the rotation matrix after the multiplication chain.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147876108-568ed5fe-9c9c-488e-95d5-26de1eb2e1a3.png" />
+</p>
+
+- Position:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147876154-e170c4f0-97f1-4ec2-9508-293439e531e7.png" />
+</p>
+
+
+- Rotation:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147876168-3c6cef73-d7fd-4255-aa57-cb234a3632ab.png" />
+</p>
+
+
+#### 3.2 Mechanical Coupling
+In practical, there are axes of the robot that are internally mechanically coupled. For example, a movement of J5 causes a movement of the J6 even if the motor of J6 is not moving. Hence, we need to compensate for this effect in our calculation. 
+
+In the picture below, only J1 is moved and J2 is remained fixed. However, due to the mechanical coupling, J2 is forced to move even if the motor was not activated. The white dotted lines shows the difference between the actual positions reached by the arm **with** and **without** mechanical coupling. That difference is a function of the ```coupling coefficient``` between J1 and J2.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147877147-a5e7a391-fac8-4a39-bbd6-358985ff7a49.png" />
+</p>
+
+We normally solve the direct transformations between joints and TCP with the forward kinematic function. But the joints positions are what we read from the encoders, they do not represent the actual position of the joints angles if an additional mechanical coupling is present.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147877334-bc2d3a70-dbcb-41ee-9bec-4ceb2f7364ed.png" />
+</p>
+
+
+For our 6-axis robot, we introduce ```coupling coefficients``` in the forward kinematic model so that the actual position of the TCP is calculated correctly. Before we send those joints values from the encoders to the forward kinematics, we need to adjust them by the coupling coefficient: for example the actual position of J5 and J6 might be influenced by the position of the J4. In that case the final value is what the motor sees plus the coupling factor function of J4.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147877578-587dd073-7ea5-4edf-9de0-20249b9e809c.png" />
+</p>
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147877401-c5ccfd67-13aa-4f79-84c1-77ec4a1ff0e3.png" />
+</p>
 
 
 
