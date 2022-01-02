@@ -641,7 +641,32 @@ In the non-spherical wrist, the rotation axes do **not** intersect at one point.
   <img src= "https://user-images.githubusercontent.com/59663734/147880705-397009aa-7c93-4d03-8fe7-57c25e085be2.png" />
 </p>
 
+#### 4.3 Non-unique solutions
+Another problem that makes solving inverse kinematics complicated, is the fact that, given a particular target position and orientation of the TCP, there might be more than one way for the joint axes to configure in order to reach that pose. In other words, the solution to the inverse kinematics is not always unique!
 
+#### 4.3.1 Non-unique solution I: Up and Down
+In this example we have a target position which is same for both robot. Both robots reached the ```same``` target with two ```different``` configurations. Observe that the TCP position and orientation are absolutely the ```same``` in both cases. But the joint axes configurations are ```different```!
+
+We call the two options ```UP``` and ```DOWN```. This is also a problem for the operator while programming the robot. In our software interface we need to provide a way for the operator to choose the preferred option, either up or down, or maybe we can automatically select the solution closest to the current joints configuration.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147884034-624297c0-f748-4621-a6f8-b40e20675548.png" />
+</p>
+
+
+#### 4.3.2 Non-unique solution II: Front and Back
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147884680-89e3f4f8-4951-4e46-be42-d3588d8fb8ce.png" />
+</p>
+
+
+
+#### 4.3.3 Non-unique solution III: Positive and Negative
+
+
+#### 4.4 Singularities
 
 
 
