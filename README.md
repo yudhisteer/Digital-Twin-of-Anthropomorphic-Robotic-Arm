@@ -355,15 +355,15 @@ So what are these parameters of our kinematic model? That is, what translations 
 We will now build our kinematic model step by step from the base to the TCP.
 
 ##### 3.1.1 Base to J1
-We have a translation and a rotation along the Z-axis. The homogeneous transformation, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;T_{1}" title="T_{1}" />,  for this first step is built from the rotation matrix <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;R_{1}" title="R_{1}" /> and the offset <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;a1z" title="a1z" />.
+We have a translation and a rotation along the ```Z-axis```. The homogeneous transformation, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;T_{1}" title="T_{1}" />,  for this first step is built from the rotation matrix <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;R_{1}" title="R_{1}" /> and the offset <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;a1z" title="a1z" />.
 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/147867318-137da350-0f09-434b-8bdd-f72d78660cbb.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/147867607-5ace8f7c-e7fd-4328-a1ce-5d0196e434d1.png" />
 </p>
 
 - Translation: 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/147867517-bd124181-7ce4-4320-8256-cd45286bce7d.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/147867559-2e01cd06-2eb7-46ed-9a8b-59869df9d4d3.png" />
 </p>
 
 
@@ -379,10 +379,137 @@ We have a translation and a rotation along the Z-axis. The homogeneous transform
   <img src= "https://user-images.githubusercontent.com/59663734/147867461-ece65697-ae73-4ccb-8141-544ecd4b7568.png" />
 </p>
 
+##### 3.1.2 J1 to J2
+The second step goes from the first to the second joint. Here we have two translations, one along ```X``` and one along ```Z```. Plus the rotation of the second joint around the ```Y axis```. We build the homogeneous transformation matrix <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;T_{2}" title="T_{2}" /> accordingly.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868001-e8ac72b0-87eb-4fb6-be24-c410812202cd.png" />
+</p>
+
+
+- Translation:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147867839-1fea42f0-0133-432d-a7ad-ed053ed5f6f9.png" />
+</p>
+
+- Rotation J2 around Y:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147867869-c73d22f6-20a9-4e87-bba5-6188adc798c2.png" />
+</p>
+
+- Homogeneous Equation:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147867911-0e7a9e5a-2360-4004-94e7-36bd0f439cbe.png" />
+</p>
+
+
+
+##### 3.1.3 J2 to J3
+From J2 to J3 we have a vertical translation along the ```Z axis```: ```a3z```. This is usually the longest and heaviest arm of the robot and the motor at joint 2 needs to be quite large. We build the homogeneous transformation matrix <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;T_{3}" title="T_{3}" /> using the translation along the ```Z-axis``` and then the rotation around the ```Y-axis```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868018-117c5f01-6943-4183-adb4-c5cc4e19af86.png" />
+</p>
+
+- Translation:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868108-3e63ca8a-ea34-4c81-997f-71806e7e4895.png" />
+</p>
+
+
+- Rotation J3 around Y:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868096-1494e952-c96c-43d8-8e6a-303d4b8452e3.png" />
+</p>
+
+
+
+- Homogeneous Equation:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868125-f855c5d2-00a4-4d57-9a9f-c9ec2ee1ec2e.png" />
+</p>
 
 
 
 
+##### 3.1.4 J3 to J4
+The actual mechanical configuration can change according to the robot we are working on. Here,  we have only two offsets, one along ```Z``` and another one along ```X```. In other robots, there might also be one offset along ```Y```. The homogeneous equation is build using the translation ```a4x``` and ```a4z``` and the rotation matrix about ```X```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868378-5595cc90-9c8f-4f37-b2fa-542da69c4f9d.png" />
+</p>
+
+
+- Translation:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868262-21ff0786-80a8-458a-bb23-c76d62f29488.png" />
+</p>
+
+- Rotation J4 around X:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868247-46697002-6ed3-452b-b6b3-fc7db526c549.png" />
+</p>
+
+- Homogeneous Equation:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868285-27992a53-802d-4907-85d4-5c6c13ee4a25.png" />
+</p>
+
+
+##### 3.1.5 J4 to J5
+With the next step we reach the middle of the wrist called the ```wrist center point```. We simply add a translation along the ```X axis``` and a rotation around ```Y```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868561-02b13ed0-1d04-429c-b01d-bb6f64b9eac4.png" />
+</p>
+
+
+- Translation:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868584-82c47897-19b5-4374-b86c-afdb546e22de.png" />
+</p>
+
+- Rotation J5 around Y:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868597-111edef6-0910-4342-8c06-a1962b793cc9.png" />
+</p>
+
+
+- Homogeneous Equation:
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147868611-c0d9bf6d-f3c8-4862-b910-8d404be5019a.png" />
+</p>
+
+
+
+##### 3.1.6 J5 to J6
+
+
+- Translation:
+
+
+- Rotation:
+
+
+- Homogeneous Equartion:
+
+
+##### 3.1.7 Base to J6
+
+
+- Translation:
+
+
+- Rotation:
+
+
+- Homogeneous Equartion:
 
 
 
