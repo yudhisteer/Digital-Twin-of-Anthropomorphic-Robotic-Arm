@@ -537,8 +537,12 @@ For the rotation coordinates ```ABC``` of the TCP we do the same thing, using th
   <img src= "https://user-images.githubusercontent.com/59663734/147868917-ff4a5103-374e-4d91-a5aa-c5f874c74d42.png" />
 </p>
 
+##### 3.1.8 GCS to Base to J6
 
 
+
+
+##### 3.1.9 Base to J6 to TCP
 
 
 
