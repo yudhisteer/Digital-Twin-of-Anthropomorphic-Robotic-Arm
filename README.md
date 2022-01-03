@@ -666,16 +666,92 @@ The main difference here is J1, which can either point in the front or the back 
 
 
 ##### 4.3.3 Non-unique solution III: Positive and Negative
-The next example is more subtle. The final configurations look the same but they are not. While J1, J2 and J3 are in the same position and give the same pose to the arm, the last three joints are in different positions and give a different configuration to the wrist. Notice that the J5 has opposite values in the two cases,hence, we call one ```POSITIVE``` and the other ```NEGATIVE```.
+The next example is more subtle. The final configurations look the same but they are not. While J1, J2 and J3 are in the same position and give the same pose to the arm, the last three joints are in different positions and give a different configuration to the wrist. Notice that the J5 has opposite values in the two cases, hence, we call one ```POSITIVE``` and the other ```NEGATIVE```.
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/147900767-8d008fbb-a1ba-493b-912e-cc1e0b6c4cfe.png" />
 </p>
 
-
+In all these previous examples we were able to find ```two distinct``` solutions to the inverse kinematics problem.
 
 
 #### 4.4 Singularities
+
+Now, we will see that there are cases where an ```infinite``` number of solutions are available. These critical points are called ```singularities```, and occur for some specific target poses of the TCP. There are ```3``` types of singularities: ```Shoulder Singularity```, ```Wrist Singularity``` and ```Elbow Singularity```.
+
+
+##### 4.4.1 Shoulder Singularity
+In the shoulder singularity, the wrist center point from J4, J5 and J6 aligns with the center point of J1. If we try to move from this position we will notice that the J1 and J6 will start to rotate very fast in opposite direction. The TCP will remain almost still causing a very inefficient robot motion. We can find a fixed solution for most joints, except for J1 and J6. These two are ```linearly dependent``` and we can only find their ```sum``` or ```difference```. Therefore, an ```infinite``` number of possible solutions are available.
+
+Recall that a matrix is singular when its ```determinant``` is ```zero```. The associated linear system has an infinite number of solutions because two or more variables are dependent on each other.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147901490-851b8ca2-cd27-4011-9c90-2510d5d45342.png" />
+</p>
+
+
+
+
+##### 4.4.2 Wrist Singularity
+In the wrist singularity, J5 is ```0```, while J4 and J6 are **not** independent anymore. We can move them around without modifying the final pose of the TCP. We have an ```infinite``` number of solutions. Normally, we manually pick a value for one of the two joints, for example J4, and then the other joint is automatically fixed.
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147903862-5c59a62e-ffd7-46db-8f73-0a776b22f9c3.png" />
+</p>
+
+
+
+##### 4.4.3 Elbow Singularity
+Imn the elbow singularity, J2, J3 and the wrist center point aligns together. When these 3 points are aligned, the elbow of the robotics arm will get stuck in the so
+called elbow singularity no matter where the TCP is. Elbow singularities look like the robot has “reached too far”, causing the elbow to **lock** in position.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147903645-515e143c-cb5e-41ea-b053-38665ff88385.png" />
+</p>
+
+To sum up:
+
+- the inverse kinematic problem is more complex than forward kinematics, not only because it is difficult to find a solution, but because sometimes there are many, or even infinite possible solutions we need to pick from.
+- the definition of singularity is when the robot has an ```infinite``` number of kinematic possibilities to reach the same end position - an infinite number of ways to get to the ```same``` spot.
+- what a robot's kinetic algorithm is trying to do is solve a ```complex equation``` of where to put all our axes(J1 to J6) to get our tool where we need it to be. The operator will just drag this robot somewhere and say record and we just take for granted that it gets there. But if there are an ```infinite``` number of solutions to get there then it does not know which one to take hence, we find singularity and the robot ```faults out```.
+
+##### 4.4.4 Avoiding Singularities
+It is kind of hard to tell you where we are likely to find the most singularities since they are not at a given position, they are ```relative``` to the robot configuration. In simpler words, singularities occur when a robot loses a degree of freedom. 
+
+There are two ways we can find these singularities:
+
+**- Inspection:** Here we just observe and determine what would be a singulafrity for that robot.
+
+**- Calculation:** We write the Forward Kinematic equations, take the derivative of the velocity, find the Jacobian matrix and set its determinant equal to zero to find the joints angles that would make the determinant = 0.
+
+Singularities most occur in nature when we place objects to be grabbed by the TCP at right angles and having the object below at the base of the robot. The image below shows that J5 is 2 degrees away from zero. The table is too low and the object is too close to the base of the robot. The robot would go pick the object but if we go a little bit back then we hit a singularity. There are many places singularities can occur becasue anytime J5 is ```0``` I can hit a singularity. One important thing to remember is that when in a situation as depicted in the image below, the programmer is powerless. There is nothing robotics programmers can do as they are bounded by unsolvable mathematical equations. However, we can redesign the workplace to avoid such occurances as explain below.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147918132-70959e4b-beb8-4b31-875d-674c90772583.png" />
+</p>
+
+
+
+There are 5 ways to avoid singularities:
+
+**1. Choose another robot:** We can ```only``` get a singularity with a 6-axis or more robot. If we have a four axis robot, there is no such thing as singularity. It cannot happen because any place we want to go there are no two axes fighting each other hence, we have only one solution.
+
+**2. Singularity Avoidance package:** This is a package when  buying a robot that imbed some built-in intelligence to the robot to avoid these singularities. It's going to make movements that will result in only one solution.
+
+**3. Re-design workplace:** We could relocate the robot by lowering it relative to the picking surface or change the table's postion, i.e, we increased the height and placed it a bit further from the base and this result in a change in the articulation of the robot arm. We now have a nice bend between J4 and J5(57.6°).
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147919682-f606283d-d09e-4546-8b42-60b06b13ac96.png" />
+</p>
+
+
+
+
+
+
+
 
 
 
@@ -690,6 +766,12 @@ The next example is more subtle. The final configurations look the same but they
 ## Implementation
 
 ## References
+1. https://www.youtube.com/watch?v=L7J_9OSxGvA
+2. https://www.youtube.com/watch?v=BPjqH_e5y3s
+3. https://robohub.org/3-types-of-robot-singularities-and-how-to-avoid-them/
+4. https://www.mecademic.com/en/what-are-singularities-in-a-six-axis-robot-arm
+5. https://www.youtube.com/watch?v=vCEWORZbD3Y
+6. https://www.youtube.com/watch?v=1zTDmiDjDOA
 
 ## Conclusion
 
