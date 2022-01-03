@@ -619,7 +619,11 @@ In inverse kinematics we are given the TCP location and we are asked to find the
   <img src= "https://user-images.githubusercontent.com/59663734/147880223-c8870731-ebd5-4e06-a318-5ffc00480b75.png" />
 </p>
 
-Robots are programmed by the operator in ```path space coordinates (XYZ)```, which are clearly understood. But motion control software acts directly on the motors, which move the joints of robots. So we need a way to transform back from ```path space``` to the ```joints space```. 
+Robots are programmed by the operator in ```path space coordinates (XYZ)```, which are clearly understood. But motion control software acts directly on the motors, which move the joints of robots. So we need a way to transform back from ```path space``` to the ```joints space```. More explanation about these two spaces are found below:
+
+> An industrial robot can be controlled in two spaces: ```Joints space``` and ```Cartesian space```. Hence, there are two sets of position-mode motion commands that make an industrial robot move. For joint-space motion commands (sometimes incorrectly called ```point-to-point commands```), you simply specify — directly or indirectly — a ```desired set of joint positions```, and the robot moves by translating or rotating each joint to the desired joint position, simultaneously and in a linear fashion. For Cartesian-space motion commands, you specify a ```desired pose for the end-effector``` AND a ```desired Cartesian path``` (linear or circular). To find the necessary joint positions along the desired Cartesian path, the robot controller must calculate the ```inverse position``` and ```velocity kinematics``` of the robot. Singularities arise when this calculation fails (for example, when you have division by zero) and must therefore be avoided.
+
+> Try jogging a six-axis robot arm in ```Joint space```, and the only time the robot will stop is when a joint hits a ```limit``` or when there is a ```mechanical interference```. In contrast, try jogging the same robot in ```Cartesian space``` and the robot will frequently stop and refuse to go in certain directions, although it seems to be far from what you think is the workspace boundary. **A robot singularity is a configuration in which the robot end-effector becomes blocked in certain directions.**
 
 Unfortunately, the inverse kinematics problem is so ```hard``` that sometimes it is even ```impossible``` to solve the problem in closed-form, that is we cannot write down equations to derive the joints axes values and a numerical approach is required. In other times, we will need a couple of ```assumptions``` and even ```geometrical intuition``` in order to solve the inverse kinematics.
 
@@ -770,6 +774,7 @@ To sum up:
 
 - it is mostly the mechanical engineer work to find a suitable solution for the robot to avoid singularities. The programmer should already plan this on his software. 
 - it is important to plan ahead of the position of the robot or workbench or tool so as to avoid redundant changes in the physcial robot.
+-  robot singularities can only be avoided by properly designing our robotic cell (and that includes the design of the adaptor plate for our end-effector).
 
 
 ### 5. Path Planning
