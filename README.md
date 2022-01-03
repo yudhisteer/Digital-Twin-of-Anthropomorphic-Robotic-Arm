@@ -836,7 +836,7 @@ When J1 is fixed, movements of J2 and J3 only happen on a ```vertical``` plane. 
 - First using pythagoras theorem, we unified the X and Y coordinates into a single XY(<img src="https://latex.codecogs.com/png.image?\dpi{100}&space;WP_{xy}" title="WP_{xy}" />) component.
 - We will focus on the green traingle to solve for J2 and J3. One of its side is <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\rho&space;" title="\rho " /> and its horizontal and vertical projections are ```h``` and ```l``` respectively. Since we know the mechanical size of the robot we can easily find ```h``` and ```l```. We then using pythagoras theroem to find <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\rho" title="\rho" />.
 - We already know another side of the green triangle: ```a3z```. We know need the last side which is ```b4z```. We observe that it is the hypothenus of the yellow triangle on top with legs ```a4z``` and ```a4x+a5x```.
-- In order to avoid a situation whereby the robotic arm tries to reach an object toor far from the TCP, we need to apply the ```traingle inequality```. We limit the value of <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\rho" title="\rho" /> using this rule.
+- In order to avoid a situation whereby the robotic arm tries to reach an object toor far from the TCP, we need to apply the ```triangle inequality```. We limit the value of <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\rho" title="\rho" /> using this rule.
 
 >  The sum of the lengths of any two sides of a triangle has to be greater than the length of the third side and the difference of the lengths of any two sides of a triangle has to be less than the length of the third side.
 
@@ -851,14 +851,9 @@ When J1 is fixed, movements of J2 and J3 only happen on a ```vertical``` plane. 
 </p>
 
 
-
-- 
-
-
-
-
-
 #### 4.6 Inverse Kinematics: Wrist
+The first three joints(J1, J2 and J3) determine the position of the wrist point and also the orientation of the arm from the base up to the wrist center.
+We call that rotation matrix <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{arm}" title="R_{arm}" /> The rotation of the TCP is given by the matrix ```R```, which we already found composing the ```ABC``` Euler angles. The missing rotation in between those two is given by the <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{wrist}" title="R_{wrist}" /> matrix.
 
 
 
