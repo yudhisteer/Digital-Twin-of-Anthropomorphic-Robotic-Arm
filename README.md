@@ -777,6 +777,34 @@ To sum up:
 -  robot singularities can only be avoided by properly designing our robotic cell (and that includes the design of the adaptor plate for our end-effector).
 
 
+#### 4.5 Inverse Kinematics: Arm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 4.6 Inverse Kinematics: Wrist
+
+
+
+
+
 ### 5. Path Planning
 
 <p align="center">
