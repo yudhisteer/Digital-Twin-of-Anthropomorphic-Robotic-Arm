@@ -644,7 +644,7 @@ In the non-spherical wrist, the rotation axes do **not** intersect at one point.
 #### 4.3 Non-unique solutions
 Another problem that makes solving inverse kinematics complicated, is the fact that, given a particular target position and orientation of the TCP, there might be more than one way for the joint axes to configure in order to reach that pose. In other words, the solution to the inverse kinematics is not always unique!
 
-#### 4.3.1 Non-unique solution I: Up and Down
+##### 4.3.1 Non-unique solution I: Up and Down
 In this example we have a target position which is same for both robot. Both robots reached the ```same``` target with two ```different``` configurations. Observe that the TCP position and orientation are absolutely the ```same``` in both cases. But the joint axes configurations are ```different```!
 
 We call the two options ```UP``` and ```DOWN```. This is also a problem for the operator while programming the robot. In our software interface we need to provide a way for the operator to choose the preferred option, either up or down, or maybe we can automatically select the solution closest to the current joints configuration.
@@ -654,8 +654,10 @@ We call the two options ```UP``` and ```DOWN```. This is also a problem for the 
 </p>
 
 
-#### 4.3.2 Non-unique solution II: Front and Back
+##### 4.3.2 Non-unique solution II: Front and Back
+The next example is even more extreme. We move the two robots to the same target TCP pose and we notice how they select completely different solutions whereby the second motion is absolutely redundant and overly complex. 
 
+The main difference here is J1, which can either point in the front or the back of the robot, hence, the name ```FRONT``` and ```BACK```.
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/147884680-89e3f4f8-4951-4e46-be42-d3588d8fb8ce.png" />
@@ -663,7 +665,14 @@ We call the two options ```UP``` and ```DOWN```. This is also a problem for the 
 
 
 
-#### 4.3.3 Non-unique solution III: Positive and Negative
+##### 4.3.3 Non-unique solution III: Positive and Negative
+The next example is more subtle. The final configurations look the same but they are not. While J1, J2 and J3 are in the same position and give the same pose to the arm, the last three joints are in different positions and give a different configuration to the wrist. Notice that the J5 has opposite values in the two cases,hence, we call one ```POSITIVE``` and the other ```NEGATIVE```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147900767-8d008fbb-a1ba-493b-912e-cc1e0b6c4cfe.png" />
+</p>
+
+
 
 
 #### 4.4 Singularities
