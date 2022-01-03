@@ -831,9 +831,28 @@ Recall that two solutions are possible for this problem, depending on the pose t
 Finally, if both X and Y are zero, the wrist point is straight above the base origin and we have a ```shoulder singularity```. Any position for J1 would be a correct solution. We usually fix J1 equal to the actual position of the joint.
 
 #### 4.5.3 Finding J2 and J3
+When J1 is fixed, movements of J2 and J3 only happen on a ```vertical``` plane. So we can simplify the problem by removing one dimension and reduce the workspace to a ```2D``` geometry as shown below. We need to focus on the green triangle to find J2 and J3. 
+
+- First using pythagoras theorem, we unified the X and Y coordinates into a single XY(<img src="https://latex.codecogs.com/png.image?\dpi{100}&space;WP_{xy}" title="WP_{xy}" />) component.
+- We will focus on the green traingle to solve for J2 and J3. One of its side is <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\rho&space;" title="\rho " /> and its horizontal and vertical projections are ```h``` and ```l``` respectively. Since we know the mechanical size of the robot we can easily find ```h``` and ```l```. We then using pythagoras theroem to find <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\rho" title="\rho" />.
+- We already know another side of the green triangle: ```a3z```. We know need the last side which is ```b4z```. We observe that it is the hypothenus of the yellow triangle on top with legs ```a4z``` and ```a4x+a5x```.
+- In order to avoid a situation whereby the robotic arm tries to reach an object toor far from the TCP, we need to apply the ```traingle inequality```. We limit the value of <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\rho" title="\rho" /> using this rule.
+
+>  The sum of the lengths of any two sides of a triangle has to be greater than the length of the third side and the difference of the lengths of any two sides of a triangle has to be less than the length of the third side.
+
+- Now we need to find <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\alpha&space;" title="\alpha " /> using the arctan of ```h``` and ```l```.
+- We find <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\beta&space;" title="\beta " /> using the cosine rule.
+- We observe that J2 + <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\alpha&space;" title="\alpha " /> + <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\beta&space;" title="\beta " /> = 90°. We solve for J2. Note that it could also be plus <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\beta&space;" title="\beta " />, if we were to choose the ```DOWN``` pose instead, with the second link pointing downwards and the third upwards.
+- We find <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\delta" title="\delta" /> using arctan.
+- For the top yellow traingle, we observe that J3 + <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\gamma&space;" title="\gamma " /> + <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;\delta&space;" title="\delta " /> is 180°. We solve for J3.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147964345-ac0893e5-2bee-4c82-96eb-b2cb2f4188af.png" />
+</p>
 
 
 
+- 
 
 
 
