@@ -778,19 +778,59 @@ To sum up:
 
 
 #### 4.5 Inverse Kinematics: Arm
+Earlier we discussed that our robot is a ```spherical wrist``` robot as ```J4```,```J5``` and ```J6``` all intersect at the ```wrist center point(WP)```. That point is crucial because it is dependent only on ```J1```, ```J2``` and ```J3```. That is, only a movement of J1, J2 and J3 can change the position of WP and not J4, J5 and J6. Hence, we can split the robot into two parts: ```arm``` and ```wrist```. We will process as follows:
+
+1. Given the position of the WP, we can find J1, J2 and J3.
+2. Then gicen the position and orientation of the TCP, we find J4, J5 and J6.
+
+This process is called ```decoupling```, i.e, we decouple the wrist from the arm and this process is only possible for spherical wrist and J4, J5 and J6 do not affect the position of WP.
+
+#### 4.5.1 Finding WP
+
+We have shown before that the difference between WP and TCP is ```a6x``` which is the offset between J5 and J6. However, this offset runs along the x-axis of the local TCP frame, which we call <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\hat{x}" title="\hat{x}" /> in the robot’s base frame.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147943895-0e7ced00-ad52-496b-9042-418137d126f8.png" />
+</p>
 
 
+1. Given the orientation of the TCP in Euler angles, we know how to compose the equivalent ```rotation matrix``` by multiplying together all the individual rotations around the XYZ axes.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147943639-d0a19751-92fe-4a66-a4e8-cf18febed4d8.png" />
+</p>
 
 
+2. We then take the rotation matrix ```R```, multiply it for the local ```x``` vector <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\begin{bmatrix}&space;1&&space;&space;0&&space;&space;0\\\end{bmatrix}^{T}" title="\begin{bmatrix} 1& 0& 0\\\end{bmatrix}^{T}" /> and we find how this vector is seen from the base.
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147943664-cd7eecff-3d0f-4c38-876d-ba65f1b78899.png" />
+</p>
 
+3. From the multiplication above, we get the first column of R, which is <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\hat{x}" title="\hat{x}" />. We subtract ```a6x``` times <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\hat{x}" title="\hat{x}" /> from the ```TCP``` position to find out the ```WP``` position.
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147943691-0a92b8de-f086-49a6-b442-f01a3c93efe7.png" />
+</p>
 
+After finding WP, we can now find J1, J2 and J3.
 
+#### 4.5.2 Finding J1
+The position of J1 **only** affects the X(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;WP_{x}" title="WP_{x}" />) and Y(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;WP_{y}" title="WP_{y}" />) coordinates of the wrist point, not the vertical position Z(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;WP_{Z}" title="WP_{Z}" />). So we can reduce the problem to a ```2-dimensional``` planar problem and observe that J1 is the angle between the X and Y coordinates of WP. The solution is simply to take the ```arctangent```.
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147945551-7654be09-05e2-4c49-b03a-a7e128c7c359.png" />
+</p>
 
+Recall that two solutions are possible for this problem, depending on the pose that we select: either ```front``` or ```back```. In the first case J1 is what the arctangent function returns; in the second case we need to add 180 degrees.
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147946136-0e0941ae-5482-4fd9-93e1-9f6bbc7a0779.png" />
+</p>
 
+Finally, if both X and Y are zero, the wrist point is straight above the base origin and we have a ```shoulder singularity```. Any position for J1 would be a correct solution. We usually fix J1 equal to the actual position of the joint.
+
+#### 4.5.3 Finding J2 and J3
 
 
 
