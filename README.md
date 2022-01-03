@@ -733,7 +733,7 @@ Singularities most occur in nature when we place objects to be grabbed by the TC
 
 
 
-There are 5 ways to avoid singularities:
+Below are ```6``` ways to avoid singularities:
 
 **1. Choose another robot:** We can ```only``` get a singularity with a 6-axis or more robot. If we have a four axis robot, there is no such thing as singularity. It cannot happen because any place we want to go there are no two axes fighting each other hence, we have only one solution.
 
@@ -746,14 +746,30 @@ There are 5 ways to avoid singularities:
   <img src= "https://user-images.githubusercontent.com/59663734/147919682-f606283d-d09e-4546-8b42-60b06b13ac96.png" />
 </p>
 
+**4. Offsetting the tool:** By offsetting the tool as shown below, we force the robot to be further away from the object. In that way we induce a small angle(about 15 degrees) whereby we used to have only about a 2 degrees angle. Offsetting the bracker allows us to gain some reach - our J6 can not swing - and it also allow us to manipulate the tool as per our needs.
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147928638-8458dfb4-4af3-4c2c-8074-ab24d81754f1.png" />
+</p>
+
+**5. Pivot the tool:** We can also pivot our tool such that when picking the object, the tool is perpendicular to the object but we have about 30 degrees angle at our J5. We are far away from zero therefore far away from a singularity. 
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147929587-71af6b68-cb86-4cb8-be64-528fdc74ecd5.png" />
+</p>
 
+**6. Tilt robot:** The next solution would be to tilt the robot - about 30 degrees - such that the robot is fixed on a wedge block and we have a nice J4 and J5 interaction with a bend of 24 degrees. 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/147931517-ed134db6-831c-44b2-8054-ea9c92a04108.png" />
+</p>
 
+To sum up:
 
+- it is mostly the mechanical engineer work to find a suitable solution for the robot to avoid singularities. The programmer should already plan this on his software. 
+- it is important to plan ahead of the position of the robot or workbench or tool so as to avoid redundant changes in the physcial robot.
 
 
 ### 5. Path Planning
