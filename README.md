@@ -790,7 +790,7 @@ This process is called ```decoupling```, i.e, we decouple the wrist from the arm
 We have shown before that the difference between WP and TCP is ```a6x``` which is the offset between J5 and J6. However, this offset runs along the x-axis of the local TCP frame, which we call <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\hat{x}" title="\hat{x}" /> in the robot’s base frame.
 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/147943895-0e7ced00-ad52-496b-9042-418137d126f8.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/148023273-6a59a4de-4b8d-48ef-8741-3d2693c9df2d.png" />
 </p>
 
 
@@ -875,6 +875,25 @@ We call that rotation matrix <img src="https://latex.codecogs.com/png.image?\dpi
 - The solution is to fix one of the two angles, for example ```J4``` equal to its current value, and find ```J6``` accordingly.
 - We always try to minimize the robot’s movement’s distances to reach a target position. Hence, since angles are periodic we can add or subtract <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;2\pi&space;" title="2\pi " /> to get the most convenient solution.
 
+We must remember to adjust for our coupling joints. The output of the inverse kinematics model is the positipm of the real joints. They must be adjusted to calculate the correct motor target positions. 
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148023927-0bafe79a-548e-4f3b-abb1-36f419466848.png" />
+</p>
+
+
+To sum up:
+
+- Manipulator tasks are normally formulated in terms of the desired position and orientation.
+- A systematic closed-form solution applicable to robots in general is not available.
+- Unique solutions are rare, multiple solutions do exist.
+- Inverse kinematics: Given a desired posiion X,Y,Z and orientation A,B,C, we find values of J1,J2,J3,J4,J5 and J6.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148035299-8fed7aa0-f91d-4e89-b8f5-905eb5d69941.png" />
+</p>
+
 
 
 ### 5. Path Planning
@@ -893,6 +912,7 @@ We call that rotation matrix <img src="https://latex.codecogs.com/png.image?\dpi
 4. https://www.mecademic.com/en/what-are-singularities-in-a-six-axis-robot-arm
 5. https://www.youtube.com/watch?v=vCEWORZbD3Y
 6. https://www.youtube.com/watch?v=1zTDmiDjDOA
+7. https://www.youtube.com/watch?v=unwUt3kkgvE
 
 ## Conclusion
 
