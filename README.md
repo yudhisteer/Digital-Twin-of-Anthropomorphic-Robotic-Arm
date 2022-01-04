@@ -926,6 +926,11 @@ Point-to-point is a linear interpolations of the joint axes of the robot. How do
 2. This linear interpolation happens in the ```Joint``` space. The joint angles move linearly from their starting position to their target value. For example, joint ```J1``` could move from ```0``` to ```80``` degrees. However, this linear movement of the ```joints``` does **not** translate at all into a linear movement of the ```TCP```. If we imagine the first joint moving from ```0``` to ```80``` degrees: the TCP actually moves around a ```circle``` in space(remember that J1 is a rotation around the Z-axis.)!
 3. While PTP movements are very simple to program and fast to execute, they also have **no** control over the actual path of the end effector of the robot. At planning time we do **not** know what the ```position``` and ```orientation``` of the TCP will look like.
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148078598-aa691caf-fafc-400b-9cf5-211fd3dd9a38.png" />
+</p>
+
+Although the TCP movement is not a line, the formula we need to calculate this movement is a linear interpolation between <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" />. As ```t``` increases, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p\mapsto&space;p_{1}" title="p\mapsto p_{1}" />. As shown from the graphs above, the value of ```J1``` changes linearly as ```t``` increases.
 
 
 #### 5.1.1 Point-to-point(PTP) vs Path Interpolated
@@ -935,7 +940,7 @@ Point-to-point is a linear interpolations of the joint axes of the robot. How do
 
 - ```PTP``` movements, on the other hand, do **not** care about the TCP path and can essentially do whatever they want to the geometry of the links.
 
-
+To sum up, ```PTP``` movements are ```time-optimal```, that is, they always take the ```shortest``` time possible to complete from start to end. Finally, and most importantly, a PTP movement is the only movement that allows a modification of the **actual** joint configuration.
 
 
 
