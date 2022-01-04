@@ -897,10 +897,72 @@ To sum up:
 
 
 ### 5. Path Planning
+In path planning, we will study the geometrical description of the robot’s movement in space. The geometrical curve to move between points is what we call the ```path```. If we have to points in space - ```A``` and ```B``` - we can have several ways to travel from A to B. We can have the shortest route which is the displacement - a straight line from A to B or we could have some random curve path joining the two points. Once we fix the geometry we want, we also need to generate a ```time-dependent trajectory``` to cover the path.
 
+- The easiest way to move from one point to another one, is by simply moving the joints axes of the robot to their target positions. This is called ```point-to-point(PTP)``` movement. PTPs are **fast** but they do not provide any specific **control** over the geometrical path of the TCP.
+- If we want control over the geometry of the path, then we need an ```interpolated movement```, for example a ```line```. Other interpolated movements are the ```circle```, and the ```spline``` which is a smooth interpolation through some target points in space.
+ 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/147780861-025a3448-f5f5-4020-85ba-5f74f85d218f.png" />
 </p>
+
+#### 5.1 Point-to-point(PTP)
+Point-to-point is a linear interpolations of the joint axes of the robot. How does it work? Suppose we start from point <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" />, where all the joints have certain values and we want to reach point <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" />, where the joints have different values. We simply ```linearly``` **increase** or **decrease** the joint angles, from their starting to their target values. 
+
+- We use the parameter ```t``` to describe the equation of this movement. 
+- ```t = 0``` at the starting point and ```t = 1``` at the end of the movement.
+- If we pick any value between ```0``` and ```1```, the joint axes have a value of <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p&space;=&space;p_{0}(1-t)&plus;p_{1}t" title="p = p_{0}(1-t)+p_{1}t" />.
+- when ```t = 0```, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p=p_{0}" title="p=p_{0}" /> and when ```t = 1```, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p=p_{1}" title="p=p_{1}" />.
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148075320-06ae0f3a-0d6a-4839-9039-6010c749de2b.png" />
+</p>
+
+
+**Note:** 
+
+1. ```t``` is not ```time```. ```t``` is just a parameter describing the curve from ```0``` to ```1```. It describes the ```path``` but not the ```trajectory```. Here, we only plan the ```geometry```, not the ```speed``` of the movement. So no time is involved.
+2. This linear interpolation happens in the ```Joint``` space. The joint angles move linearly from their starting position to their target value. For example, joint ```J1``` could move from ```0``` to ```80``` degrees. However, this linear movement of the ```joints``` does **not** translate at all into a linear movement of the ```TCP```. If we imagine the first joint moving from ```0``` to ```80``` degrees: the TCP actually moves around a ```circle``` in space(remember that J1 is a rotation around the Z-axis.)!
+3. While PTP movements are very simple to program and fast to execute, they also have **no** control over the actual path of the end effector of the robot. At planning time we do **not** know what the ```position``` and ```orientation``` of the TCP will look like.
+
+
+
+#### 5.1.1 Point-to-point(PTP) vs Path Interpolated
+- If we want to reconfigure the arm, e.g. change from ```UP``` to ```DOWN```, the only way we can do that is with a ```PTP``` movement, where the joint axes are ```free``` to move ```independently``` from each other to their final target value.
+
+- A ```path-interpolated``` movement does ```not``` allow that. If we start a line in space with an ```UP``` configuration we will arrive at the end of the line with the same ```UP``` configuration. That is because the ```geometry``` of the arm is ```restricted``` during path movements. It **cannot** stretch and reconfigure itself in a different way without sending the TCP out of its planned path.
+
+- ```PTP``` movements, on the other hand, do **not** care about the TCP path and can essentially do whatever they want to the geometry of the links.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Implementation
