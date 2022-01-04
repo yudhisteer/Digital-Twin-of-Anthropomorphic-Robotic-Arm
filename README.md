@@ -855,7 +855,25 @@ When J1 is fixed, movements of J2 and J3 only happen on a ```vertical``` plane. 
 The first three joints(J1, J2 and J3) determine the position of the wrist point and also the orientation of the arm from the base up to the wrist center.
 We call that rotation matrix <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{arm}" title="R_{arm}" /> The rotation of the TCP is given by the matrix ```R```, which we already found composing the ```ABC``` Euler angles. The missing rotation in between those two is given by the <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{wrist}" title="R_{wrist}" /> matrix.
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148021469-91bc6df3-9534-409c-8119-d7fe1cec5b74.png" />
+</p>
 
+
+- ```R``` is the product of <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{arm}" title="R_{arm}" /> times <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{wrist}" title="R_{wrist}" />, we can solve for <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{wrist}" title="R_{wrist}" /> pre-multiplying both sides by <img src="https://latex.codecogs.com/svg.image?R_{arm}^{-1}" title="R_{arm}^{-1}" /> and simplifying the right side. <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{wrist}" title="R_{wrist}" /> is then the product between <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{arm}" title="R_{arm}" /> transpose and ```R```.
+- Since <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{arm}" title="R_{arm}" /> is an orthogonal matrix, we know that its inverse is equal to its transpose. 
+- Remember that is <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{arm}" title="R_{arm}" /> the rotation matrix from the ```base``` to the frame created by ```J1```, ```J2``` and ```J3```. Hence, we need to compose the rotations of the joint ```J1``` around the ```Z-axis```, and of ```J2``` and ```J3``` around the ```Y-axis```.
+- The ```R``` matrix is found from ```A,B,C``` hence we can now derive <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{wrist}" title="R_{wrist}" />.
+- After finding <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{wrist}" title="R_{wrist}" />, we need to decompose it into its individual rotations of ```J4```, ```J5``` and ```J6```. Remember that ```J4``` rotates around ```X```, ```J5``` around ```Y``` and ```J6``` around ```X``` again.
+- We then need to decompose the <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{wrist}" title="R_{wrist}" /> matrix into Euler angles to find J4, J5 and J6.
+- However, if ```cosJ5 = 1``` then ```J5 = 0```. We will then have a ```wrist singularity```. There is ```no``` rotation around the ```Y-axis```, only two consecutive rotations around ```X```. There is no way to separate ```J4``` and ```J6``` anymore. Only the ```sum``` of their values is known, because it is essentially a ```single``` rotation about the ```X-axis```. The <img src="https://latex.codecogs.com/png.image?\dpi{100}&space;R_{wrist}" title="R_{wrist}" /> ,matrix then becomes:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148022371-2bb4bcdb-e78e-49bc-9a10-47976b9d9d6b.png" />
+</p>
+
+- The solution is to fix one of the two angles, for example ```J4``` equal to its current value, and find ```J6``` accordingly.
+- We always try to minimize the robot’s movement’s distances to reach a target position. Hence, since angles are periodic we can add or subtract <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;2\pi&space;" title="2\pi " /> to get the most convenient solution.
 
 
 
