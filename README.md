@@ -943,10 +943,12 @@ Although the TCP movement is not a line, the formula we need to calculate this m
 To sum up, ```PTP``` movements are ```time-optimal```, that is, they always take the ```shortest``` time possible to complete from start to end. Finally, and most importantly, a PTP movement is the only movement that allows a modification of the **actual** joint configuration.
 
 
+#### 5.2 Path Interpolation
 
 
 
 
+#### 5.3 Quaternions
 
 
 
