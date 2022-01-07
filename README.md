@@ -954,13 +954,21 @@ To sum up, ```PTP``` movements are ```time-optimal```, that is, they always take
 
 
 #### 5.2 Path Interpolation
-In order to describe a target pose for our TCP in space, we need ```6``` coordinates hence, the reason for our robot to be a ```6dof``` robot. Suppose we have a starting point <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" /> with coordinates ```XYZ``` and we need to move to our next position <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" /> with coordinates ```X'Y'Z'```. This time we are expressing the joints in the ```Path``` space instead of the ```Joint``` space. Moving from one point to the next can be done linearly, i.e, one unit top and one unit to the right. And to return back we have two options; either one unit down and one unit left or one unit left and then one unit down. Either wway we will return to our starting position! This is because we are working in a ```Euclidean``` space, where vectors add up linearly. The process can be seen below:
+In order to describe a target pose for our TCP in space, we need ```6``` coordinates hence, the reason for our robot to be a ```6dof``` robot. Suppose we have a starting point <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" /> with coordinates ```XYZ``` and we need to move to our next position <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" /> with coordinates ```X'Y'Z'```. This time we are expressing the joints in the ```Path``` space instead of the ```Joint``` space. Moving from one point to the next can be done linearly, i.e, one unit top and one unit to the right. And to return back we have two options; either one unit down and one unit left or one unit left and then one unit down. Either way we will return to our starting position! This is because we are working in a ```Euclidean``` space, where vectors add up linearly. The process can be seen below:
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/148589773-f5fc7ed7-b9a4-4dfb-a08c-696e1d64387c.png" />
 </p>
 
-However, this is not the case for our TCP angles ```UVW``` because ```Euler``` angles do not interpolate linearly. This happens because Euler angles do suffer from [Gimbal lock](https://www.youtube.com/watch?v=zc8b2Jo7mno) where the order in which we apply the three rotations affects later rotations in the sequence. A better way to interpolate these orientations is to convert our Euler angles into another representation before interpolating them; ```Rotation matrices``` or ```Quaternions``` which is even better.
+However, this is not the case for our TCP angles ```UVW``` because ```Euler``` angles do not interpolate linearly. This happens because Euler angles do suffer from [Gimbal lock](https://www.youtube.com/watch?v=zc8b2Jo7mno) where the order in which we apply the three rotations affects later rotations in the sequence. 
+Below shows the process of first rotating around X of 90 degrees, then rotate around Z also of 90 degrees to reach <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" />.  And then we go back, X of -90 and Z of -90. If rotations did add up linearly like positions we would go back to the initial pose but this not what happened!
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148594837-0bfa9b4f-70fa-40d7-b782-ff991559d325.png" />
+</p>
+
+A better way to interpolate these orientations is to convert our Euler angles into another representation before interpolating them. ```Rotation matrices``` is one solution but matrices are not suitable for interpolations as they cannot be parameterized with one single variable running from 0 to 1. A better solution would be to use ```Quaternions```.
+
 
 
 
