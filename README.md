@@ -720,6 +720,16 @@ To sum up:
 - the definition of singularity is when the robot has an ```infinite``` number of kinematic possibilities to reach the same end position - an infinite number of ways to get to the ```same``` spot.
 - what a robot's kinetic algorithm is trying to do is solve a ```complex equation``` of where to put all our axes(J1 to J6) to get our tool where we need it to be. The operator will just drag this robot somewhere and say record and we just take for granted that it gets there. But if there are an ```infinite``` number of solutions to get there then it does not know which one to take hence, we find singularity and the robot ```faults out```.
 
+Below is a video showing the singularities explained above:
+
+
+
+https://user-images.githubusercontent.com/59663734/148587446-15e434bb-f6a5-40fc-8f08-8ef141b521ad.mp4
+<p align="center">
+  [Video by Mecademic Robotics](https://www.youtube.com/watch?v=lD2HQcxeNoA)
+</p>
+
+
 ##### 4.4.4 Avoiding Singularities
 It is kind of hard to tell you where we are likely to find the most singularities since they are not at a given position, they are ```relative``` to the robot configuration. In simpler words, singularities occur when a robot loses a degree of freedom. 
 
@@ -944,7 +954,13 @@ To sum up, ```PTP``` movements are ```time-optimal```, that is, they always take
 
 
 #### 5.2 Path Interpolation
+In order to describe a target pose for our TCP in space, we need ```6``` coordinates hence, the reason for our robot to be a ```6dof``` robot. Suppose we have a starting point <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" /> with coordinates ```XYZ``` and we need to move to our next position <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" /> with coordinates ```X'Y'Z'```. This time we are expressing the joints in the ```Path``` space instead of the ```Joint``` space. Moving from one point to the next can be done linearly, i.e, one unit top and one unit to the right. And to return back we have two options; either one unit down and one unit left or one unit left and then one unit down. Either wway we will return to our starting position! This is because we are working in a ```Euclidean``` space, where vectors add up linearly. The process can be seen below:
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148589773-f5fc7ed7-b9a4-4dfb-a08c-696e1d64387c.png" />
+</p>
+
+However, this is not the case for our TCP angles ```UVW``` because ```Euler``` angles do not interpolate linearly. This happens because Euler angles do suffer from [Gimbal lock](https://www.youtube.com/watch?v=zc8b2Jo7mno) where the order in which we apply the three rotations affects later rotations in the sequence. A better way to interpolate these orientations is to convert our Euler angles into another representation before interpolating them; ```Rotation matrices``` or ```Quaternions``` which is even better.
 
 
 
