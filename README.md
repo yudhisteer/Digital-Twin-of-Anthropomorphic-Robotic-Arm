@@ -1159,6 +1159,33 @@ Note: We need to check the points are not ```collinear```, i.e, no points lie on
 
 So starting from ```t = 0``` we point along the vector ```U``` and we then rotate around using the formula in ```2D```: ```rcos(t) + rsin(t)```. This is a group of three individual equations: one in ```x```, one in ```y```, and one in ```z```. We are only focusing on position here, because the orientation will follow the ```SLERP``` interpolation: from the ```start``` orientation to the ```middle``` orientation and to the ```ending``` one.
 
+To sum up:
+
+- We need to find all the points between <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" /> (where the movement starts) and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{2}" title="p_{2}" /> (where the movement ends) along the circle.
+- If we take a simple ```2D``` case - the X,Y plane -  the parametric equation of a circle centered in the origin is ```p = r cos t + r sin t```. By moving the value of ```t``` from ```0``` to any angle we want (positive or negative), we will find the coordinates of the point ```p``` along the circle. 
+- If the circle is not centered in the ```origin```, we need to add the coordinates of its center point: ```p = C + r cos t + r sin t```. 
+- Finally, if we move to the ```3D``` space and the circle does not lie on the X,Y plane we need to generalize its axes to the vectors U,V. In the 2D case the U,V vectors were simply ```[1,0]``` and ```[0,1]```. The generic formula for a circle in 3D becomes ```p = C + U r cos t + V r sin t```. U and V are perpendicular to each other and both lie on the same plane where the circle lies.
+
+
+#### 5.6 Splines
+
+
+#### 5.7 Transitions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Implementation
 
