@@ -1128,11 +1128,36 @@ We may have two situation in practice:
 2. In the second case the initial and final orientations are different. So, while the position coordinates interpolate ```linearly```, the orientation interpolates using ```SLERP```. The two interpolations happen in ```parallel``` at the same time.
 
 
-
-
 #### 5.5 Circle
+Two points are not enough to define a circle in space. We need three points: the starting point <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" />, an intermediate point <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" /> and the final target point <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{2}" title="p_{2}" />. The parametric formula for the position of a point describing a circle in space is the following:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148695447-19695319-a181-4fea-a01c-10592fee01a4.png" />
+</p>
+
+- C: center point
 
 
+![CodeCogsEqn - 2022-01-09T223840 083](https://user-images.githubusercontent.com/59663734/148695874-9f158368-1f24-4591-972f-d42268bee319.png)
+
+- r: radius
+
+
+![CodeCogsEqn - 2022-01-09T223656 556](https://user-images.githubusercontent.com/59663734/148695792-86e77768-1674-4f51-b264-229e94fe8bf9.png)
+
+- U: normalized vector from the center to the starting point
+
+- V: a vector perpendicular to U, lying on the circle plane
+- t: the parameter that runs around the circle, from zero to the ending angle
+
+Note: We need to check the points are not ```collinear```, i.e, no points lie on the same line in space. The vectors U and V are perpendicular to each other and form the analogue of the X, Y axes on a plane.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148696550-4f59bfcb-0aba-4d92-ac47-0b2a8f09c4ba.png" />
+</p>
+
+
+So starting from ```t = 0``` we point along the vector ```U``` and we then rotate around using the formula in ```2D```: ```rcos(t) + rsin(t)```. This is a group of three individual equations: one in ```x```, one in ```y```, and one in ```z```. We are only focusing on position here, because the orientation will follow the ```SLERP``` interpolation: from the ```start``` orientation to the ```middle``` orientation and to the ```ending``` one.
 
 
 ## Implementation
