@@ -1097,10 +1097,10 @@ As shown below, when moving the TCP around a particular axis, only the orientati
 https://user-images.githubusercontent.com/59663734/148687992-9160776e-9002-4c84-a01b-000af5f90433.mp4
 
 #### 5.3.4 Implementation
-We have the ```start```<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;A_{0}B_{0}C_{0}" title="A_{0}B_{0}C_{0}" /> orientation of the robot and the user provides a ```target```<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;A_{1}B_{1}C_{1}" title="A_{1}B_{1}C_{1}" /> orientation. We cannot interpolate the ABC Euler angles directly so w interpolate quaternions using ```Slerp```. 
+We have the ```start```(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;A_{0}B_{0}C_{0}" title="A_{0}B_{0}C_{0}" />) orientation of the robot and the user provides a ```target```(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;A_{1}B_{1}C_{1}" title="A_{1}B_{1}C_{1}" />) orientation. We cannot interpolate the ABC Euler angles directly so we interpolate quaternions using ```Slerp```. 
 
 1. We first transform the ```Euler``` angles into ```Rotation``` matrices and from there into ```Quaternions```. 
-2. Then we apply SLERP to interpolate between <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;q_{0}" title="q_{0}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;q_{1}" title="q_{1}" />
+2. Then we apply ```SLERP``` to interpolate between <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;q_{0}" title="q_{0}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;q_{1}" title="q_{1}" />
 3. But because we control the motors of the robot we need to solve the ```inverse``` kinematics to find out the values of the ```joint``` axes. So we need to transform ```q``` back into a ```Rotation``` matrix and then ```Euler``` angles as input to our inverse kinematic function.
 
 
@@ -1109,7 +1109,9 @@ We have the ```start```<img src="https://latex.codecogs.com/png.image?\dpi{110}&
 </p>
 
 
+To sum up:
 
+- There are a few advantages of using quaternions over Euler angles or rotation matrices, the most important of all for our purposes being the possibility of interpolate them. When we move the robot from one pose to another we need to change its orientation from the initial one to the final one. This smooth change over time is called ```interpolation```. We cannot interpolate matrices or Euler angles directly. Quaternions can do that easily with ```SLERP```.
 
 
 
