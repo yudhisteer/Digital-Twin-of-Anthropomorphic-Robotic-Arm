@@ -1115,11 +1115,22 @@ To sum up:
 
 
 
+#### 5.4 Lines
+The simplest interpolation in the path space is a ```line```. We start from point <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{0}" title="p_{0}" /> with coordinates <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;(x_{0},y_{0},z_{0})" title="(x_{0},y_{0},z_{0})" /> and want to reach <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p_{1}" title="p_{1}" /> with coordinates <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;(x_{1},y_{1},z_{1})" title="(x_{1},y_{1},z_{1})" />. The formula for linear interpolations is as explained before: <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;p=p_{0}(1-t)&plus;p_{1}t" title="p=p_{0}(1-t)+p_{1}t" />, with ```t``` going from ```0``` to ```1```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148692202-b8a3e7d1-ce9c-4ce8-958d-a63269907bef.png" />
+</p>
+
+We may have two situation in practice:
+
+1. In the first case the starting and target points have the same orientations, so the interpolation only happens on the position coordinates ```XYZ```. 
+2. In the second case the initial and final orientations are different. So, while the position coordinates interpolate ```linearly```, the orientation interpolates using ```SLERP```. The two interpolations happen in ```parallel``` at the same time.
 
 
 
 
-
+#### 5.5 Circle
 
 
 
