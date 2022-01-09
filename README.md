@@ -973,25 +973,96 @@ A better way to interpolate these orientations is to convert our Euler angles in
 
 
 #### 5.3 Quaternions
+Since Euler angles suffer from singularities at 90 degrees, we need another way in order to interpolate angles: Quaternions. The general expression for quaternion is:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148680674-1ed54918-ce9d-4cb0-b7bf-a593c1e17e00.png" />
+</p>
+
+where <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;xi&plus;yj&plus;zk" title="xi+yj+zk" /> is a vector and ```w``` is a scalar. i,j and k are complex numbers hence: 
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148680770-f27c2f6d-02af-4a90-962d-4220c02df79e.png" />
+</p>
+
+The ```4``` elements ```x,y,z,w``` define the quaternion and are the number of elements it needs to describe an orientation, as opposed to ```3``` elements for Euler angles and ```9``` for a rotation matrix. We typically work with ```unit``` quaternions: that means a ```normalized``` form, where the norm of the quaternion is simply the Euclidean size of the vector of elements x,y,z,w.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148680853-53634d73-e514-49c5-8aed-35c784856470.png" />
+</p>
+
+where <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;{\left\|&space;q\right\|}&space;=&space;\sqrt{x^{2}&plus;y^{2}&plus;z^{2}&plus;w^{2}}" title="{\left\| q\right\|} = \sqrt{x^{2}+y^{2}+z^{2}+w^{2}}" />.
+
+Suppose we have a vector ```v``` in 3-dimensional space and we want to rotate it about point ```p``` at an angle <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\theta&space;" title="\theta " />.
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148681110-83782090-0414-4964-b552-fe55b59139b8.png" />
+</p>
 
 
+We will use quaternion to rotate it and we start by defining our quaternion and its complement:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148681217-1a189ea2-0319-402c-aa37-ef35bed894cb.png" />
+</p>
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148681244-597ed690-2aca-4d35-af8f-fa0233cafce9.png" />
+</p>
+
+If we are rotating at an angle of <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\theta&space;" title="\theta " />, then ```a,b,c,d``` are defined as :
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148681324-4daa00da-f4e4-4792-b30d-17ae1674c28e.png" />
+</p>
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148681345-55f563db-6571-4560-a650-b54db8f0a656.png" />
+</p>
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148681352-42e25222-e6d3-4a24-a562-23bbd3f727b1.png" />
+</p>
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148681378-c04b8ed7-10bd-4ac2-896c-46b9c2c837cf.png" />
+</p>
 
 
+Any given orientation is described by one ```unique``` quaternion. That is unlike Euler angles, with which many representations were possible for the same orientation in space. After defining ```a,b,c,d```, our corresponding unit quaternion is defined by:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148681495-babae7e5-530b-4a5e-ac11-3e51fffde938.png" />
+</p>
+
+If ``p``` is the point around which we are rotating, we write ```p``` as a quaternion:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148681542-1353143e-aabb-470d-89d1-f961854dd6af.png" />
+</p>
+
+And finally the rotation is :
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148681579-a9d54829-206d-47af-a500-9090b55458d3.png" />
+</p>
 
 
+#### 5.3.1 Quaternions Advantages over Euler Angles
+- Compared to Euler angles, quaternions do not suffer from ```singularities```: they offer a ```unique``` undisputable way to identify rotations.
+- They also offer an easy way to interpolate ```linearly``` between orientations.
 
+#### 5.3.2 Quaternions Advantages over Rotation Matrix
 
+- Quaternions are more compact: using only ```4``` elements instead of ```9```.
+- Matrices are also impossible to ```interpolate```, and they are not numerically stable.
+- It is possible that a rotation matrix undergoes several computations and comes out ```non-orthogonal``` because of numerical approximations, that is, its determinant is not ```1``` anymore. In that case the matrix is very difficult to recover.
 
-
-
+#### 5.3.3 Slerp
 
 
 
