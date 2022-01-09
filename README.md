@@ -1039,7 +1039,7 @@ Any given orientation is described by one ```unique``` quaternion. That is unlik
   <img src= "https://user-images.githubusercontent.com/59663734/148681495-babae7e5-530b-4a5e-ac11-3e51fffde938.png" />
 </p>
 
-If ``p``` is the point around which we are rotating, we write ```p``` as a quaternion:
+If ```p``` is the point around which we are rotating, we write ```p``` as a quaternion:
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/148681542-1353143e-aabb-470d-89d1-f961854dd6af.png" />
@@ -1062,7 +1062,62 @@ And finally the rotation is :
 - Matrices are also impossible to ```interpolate```, and they are not numerically stable.
 - It is possible that a rotation matrix undergoes several computations and comes out ```non-orthogonal``` because of numerical approximations, that is, its determinant is not ```1``` anymore. In that case the matrix is very difficult to recover.
 
-#### 5.3.3 Slerp
+#### 5.3.3 Spherical Linear Interpolation(Slerp)
+Given two orientations, represented by the two quaternions <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;q_{1}" title="q_{1}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;q_{2}" title="q_{2}" /> what is the shortest and simplest way to go from one point to the other? Since we move along a sphere, there are infinite ways to do this but we are interested in the optimal path - the ```torque-optimal``` solution which uses the minimum energy to travel from the start to the end. 
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148687212-37bcd0b2-92b6-4310-8667-16cbb852ab6f.png" />
+</p>
+
+
+The solution is defined by the formula below, which is equivalent to a linear interpolation in Euclidean space, but this time we move on a ```sphere```. We still use the parameter ```t```, which goes from ```0``` to ```1```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148687135-bdac03af-42e7-4322-9cb5-9da94be6e19e.png" />
+</p>
+
+We can travel along the rotation at ```constant angular speed```. This kind of interpolation is called ```Slerp```. Alpha is the angle between the two quaternions, and it is calculated the same way as the angle between vectors on plane:
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148687346-6bdac9ab-7a73-4b37-a18c-a068c23104f6.png" />
+</p>
+
+Note that the problem with the ```arccosine``` is that it can return two different angles between the quaternions: either the shortest one of the opposite one. To guarantee that we always use the shortest angle we need to make sure that the dot product between the two quaternions is ```positive``` before taking the cos inverse. If we happen to have a negative dot product then we should invert it by inverting one of the two quaternions, i.e, multiple one of the quartenion by -1. We will still reach the same rotation, just using a different path. 
+
+Also, if the angle between the two orientations is very small we could face numerical instabilities with that <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;sin\alpha&space;" title="sin\alpha " /> at the denominator. Observe that a small arc on the sphere essentially degrades into a ```linear``` segment, so we can use the standard linear interpolation instead, and have more stable calculations.
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148687708-5ab10ccb-6c0d-42ff-b094-ba5db760406c.png" />
+</p>
+
+As shown below, when moving the TCP around a particular axis, only the orientation of the TCP chnages and not its position, i.e, the XYZ values remain constant.
+
+https://user-images.githubusercontent.com/59663734/148687992-9160776e-9002-4c84-a01b-000af5f90433.mp4
+
+#### 5.3.4 Implementation
+We have the ```start```<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;A_{0}B_{0}C_{0}" title="A_{0}B_{0}C_{0}" /> orientation of the robot and the user provides a ```target```<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;A_{1}B_{1}C_{1}" title="A_{1}B_{1}C_{1}" /> orientation. We cannot interpolate the ABC Euler angles directly so w interpolate quaternions using ```Slerp```. 
+
+1. We first transform the ```Euler``` angles into ```Rotation``` matrices and from there into ```Quaternions```. 
+2. Then we apply SLERP to interpolate between <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;q_{0}" title="q_{0}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;q_{1}" title="q_{1}" />
+3. But because we control the motors of the robot we need to solve the ```inverse``` kinematics to find out the values of the ```joint``` axes. So we need to transform ```q``` back into a ```Rotation``` matrix and then ```Euler``` angles as input to our inverse kinematic function.
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148688596-c342ffe3-4a53-4885-8d5b-37da2e0b673b.png" />
+</p>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
