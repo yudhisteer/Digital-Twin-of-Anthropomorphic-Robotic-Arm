@@ -1213,9 +1213,7 @@ Bézier curve is a valuable function for robot’s operators: they can just teac
 Also,  while the spline runs the position of the TCP, we can interpolate the orientation in parallel using quaternions.
 
 
-
-
-#### 5.7 Transitions
+#### 5.7 Continuity and Smoothness
 
 
 
