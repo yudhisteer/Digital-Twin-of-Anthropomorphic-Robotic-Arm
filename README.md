@@ -1214,13 +1214,23 @@ Also,  while the spline runs the position of the TCP, we can interpolate the ori
 
 
 #### 5.7 Continuity and Smoothness
+We have studied different geometries to connect two points in space. Now we need to study how to connect those geometries with each other. The point between two consecutive segments of a path is called a ```transition```. The first problem we encounter when observing transitions is that there might be a ```sharp``` angle between them. These sharp edges are bad because when we travel along the path we have to ```decelerate```, ```stop``` at the transition and then start ```accelerating``` again along the next section. This behavior not only wastes a lot of time but is also hard on the mechanics. A ```smoother``` movement would be much more desirable.  One possible solution is to introduce a round edge as a path smoothing transition. You notice that the path is smoother, which allows for higher travelling speed because no stop is required, and it is also gentle on the mechanics. Hence, the reson for using a ```Bézier curve```.
+
+Suppose we have two perpendicular consecutive paths section then we will need a round edge for a ```smooth``` transition. 
+
+1. First we need to limit our radius ```R``` by setting it half the length of the segment. This is incase we have another round edge at the next transition thus, we leave some spave for that.
+2. Once we have R, we need to define two control points: starting(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\bg_white&space;P_{0}" title="\bg_white P_{0}" />) and ending(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\bg_white&space;P_{4}" title="\bg_white P_{4}" />). 
+3. Instead of using a cubic spline, we will use a ```quartic``` spline hence, we have ```5``` control points. 
+4. We place one(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\bg_white&space;P_{2}" title="\bg_white P_{2}" />) at the transition and the two(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;P_{1}&space;and&space;P_{3}" title="P_{1} and P_{3}" />) left are placed in middle of the other control points. 
+5. This configuration ensures ```geometrical continuity``` of the spline with the original line up to the second derivative: i.e, the two sides have same direction and also same curvature. The transition between line and round edge is smooth.
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148768198-9317f376-d0ae-4364-a40a-e4359ebb4a06.png" />
+</p>
 
 
-
-
-
+##### 5.7.1 Transition
 
 
 
