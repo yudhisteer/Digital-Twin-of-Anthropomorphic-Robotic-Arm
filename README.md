@@ -1052,17 +1052,17 @@ And finally the rotation is :
 </p>
 
 
-#### 5.3.1 Quaternions Advantages over Euler Angles
+##### 5.3.1 Quaternions Advantages over Euler Angles
 - Compared to Euler angles, quaternions do not suffer from ```singularities```: they offer a ```unique``` undisputable way to identify rotations.
 - They also offer an easy way to interpolate ```linearly``` between orientations.
 
-#### 5.3.2 Quaternions Advantages over Rotation Matrix
+##### 5.3.2 Quaternions Advantages over Rotation Matrix
 
 - Quaternions are more compact: using only ```4``` elements instead of ```9```.
 - Matrices are also impossible to ```interpolate```, and they are not numerically stable.
 - It is possible that a rotation matrix undergoes several computations and comes out ```non-orthogonal``` because of numerical approximations, that is, its determinant is not ```1``` anymore. In that case the matrix is very difficult to recover.
 
-#### 5.3.3 Spherical Linear Interpolation(Slerp)
+##### 5.3.3 Spherical Linear Interpolation(Slerp)
 Given two orientations, represented by the two quaternions <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;q_{1}" title="q_{1}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;q_{2}" title="q_{2}" /> what is the shortest and simplest way to go from one point to the other? Since we move along a sphere, there are infinite ways to do this but we are interested in the optimal path - the ```torque-optimal``` solution which uses the minimum energy to travel from the start to the end. 
 
 <p align="center">
@@ -1096,7 +1096,7 @@ As shown below, when moving the TCP around a particular axis, only the orientati
 
 https://user-images.githubusercontent.com/59663734/148687992-9160776e-9002-4c84-a01b-000af5f90433.mp4
 
-#### 5.3.4 Implementation
+##### 5.3.4 Implementation
 We have the ```start```(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;A_{0}B_{0}C_{0}" title="A_{0}B_{0}C_{0}" />) orientation of the robot and the user provides a ```target```(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;A_{1}B_{1}C_{1}" title="A_{1}B_{1}C_{1}" />) orientation. We cannot interpolate the ABC Euler angles directly so we interpolate quaternions using ```Slerp```. 
 
 1. We first transform the ```Euler``` angles into ```Rotation``` matrices and from there into ```Quaternions```. 
@@ -1168,6 +1168,51 @@ To sum up:
 
 
 #### 5.6 Splines
+Suppose we have a starting point and a target point and we want to join these 2 points ```smoothly```, i.e, not with a straight line. We will then use a ```spline``` to join these 2 points. Splines are functions built up by composing polynomials piece-by-piece. In our case, we will use a ```Bézier Curve``` for the spline and to be more precise, we will use ```Cubic Bézier Curve```.
+
+##### 5.6.1 Bézier Curve
+Bezier Curve is parametric curve defined by a set of ```control points```. Two points are ends(starting  and ending points) of the curve. Other points determine the shape of the curve. The Bézier curve equation is defined as follows:
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148723060-0c1a1918-ee98-48b8-911c-113ba6f16e49.png" />
+</p>
+
+- t: [0,1]
+- P(t): Any point lying on the curve
+- <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;B_{i}" title="B_{i}" />: ith control point on the Bézier Curve
+- n: degree of the curve
+- <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;J_{n,i}(t)" title="J_{n,i}(t)" />: Blending fucntion = <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;C_{(n,i)}t^{i}(1-t)^{n-i}" title="C_{(n,i)}t^{i}(1-t)^{n-i}" /> where <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;C_{(n,i)}=\frac{n!}{i!(n-i)!}" title="C_{(n,i)}=\frac{n!}{i!(n-i)!}" />.
+
+
+The degree of the polynomial defining the curve segment is one less than the total number of control points. Since we will be using a cubic curve, our number of control points will be ```4```. 
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148726723-ab97b4f4-c0b3-4f05-a8df-7cf86984e7ef.png" />
+</p>
+
+Substituting for n = 3 in the above equation, we get:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148724283-cbf2cc8b-bc20-4448-a106-b08b3a6ea815.png" />
+</p>
+
+<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;B_{1}" title="B_{1}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;B_{2}" title="B_{2}" /> are control points used to define in what direction and with what magnitude the curve moves away from the 2 edge points. We have a total of ```4``` control points because we decided to use a cubic spline in the parameter ```t``` where t = [0,1]. Every point P on curve is a linear combination of the four control points, with the weights being the distances from them. Note that the control points are always placed ```tangential``` to the starting and ending points respectively. 
+
+
+**Note:** A common rule of thumb is to keep the control points distance at about ```1/3``` of linear distance between start and end point.
+
+
+Bézier curve is a valuable function for robot’s operators: they can just teach the position of some points where the robot is required to go through and we automatically generate the whole path in between. For example, if we we need to move our robot from one point to the other but we have an obstacle in between, then we just need to define a third point above the obstacle and let the algorithm calculate a ```smooth``` path between the three points as shown below:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148726378-b82f29e9-ca87-492a-8386-8eba6b9de6bb.png" />
+</p>
+
+Also,  while the spline runs the position of the TCP, we can interpolate the orientation in parallel using quaternions.
+
+
 
 
 #### 5.7 Transitions
@@ -1197,6 +1242,7 @@ To sum up:
 5. https://www.youtube.com/watch?v=vCEWORZbD3Y
 6. https://www.youtube.com/watch?v=1zTDmiDjDOA
 7. https://www.youtube.com/watch?v=unwUt3kkgvE
+8. https://www.gatevidyalay.com/bezier-curve-in-computer-graphics-examples/
 
 ## Conclusion
 
