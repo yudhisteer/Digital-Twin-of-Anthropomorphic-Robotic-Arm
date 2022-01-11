@@ -1222,7 +1222,7 @@ Suppose we have two perpendicular consecutive paths section then we will need a 
 2. Once we have R, we need to define two control points: starting(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\bg_white&space;P_{0}" title="\bg_white P_{0}" />) and ending(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\bg_white&space;P_{4}" title="\bg_white P_{4}" />). 
 3. Instead of using a cubic spline, we will use a ```quartic``` spline hence, we have ```5``` control points. 
 4. We place one(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\bg_white&space;P_{2}" title="\bg_white P_{2}" />) at the transition and the two(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;P_{1}&space;and&space;P_{3}" title="P_{1} and P_{3}" />) left are placed in middle of the other control points. 
-5. This configuration ensures ```geometrical continuity``` of the spline with the original line up to the second derivative: i.e, the two sides have same direction and also same curvature. The transition between line and round edge is smooth.
+5. This configuration ensures ```geometrical continuity``` of the spline with the original line up to the ```second derivative```: i.e, the two sides have same direction and also same curvature. The transition between line and round edge is smooth.
 
 
 <p align="center">
@@ -1230,12 +1230,90 @@ Suppose we have two perpendicular consecutive paths section then we will need a 
 </p>
 
 
-##### 5.7.1 Transition
+##### 5.7.1 C0 Continuity
+We need the path to be smooth but how do we define smoothness? In order to check for smoothness, we need to first ensure that our path is continuous. What is important is to find the direction of the tangents at the transition points. In general:
+
+> A function f(x) is smooth if it is continuous and its derivative is also continuous. 
+
+The figure below shows a <img src="https://latex.codecogs.com/svg.image?C^{0}" title="C^{0}" /> continuous graph  as we have two paths which meet at one point. The tangent of the two paths point in two different directions as shown in ```blue``` below. The edge is sharp and not smooth.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148911493-2f9998a2-7e4a-4b84-aea1-eb3aac5cc16c.png" />
+</p>
+
+> The class <img src="https://latex.codecogs.com/svg.image?C^{0}" title="C^{0}" /> consists of all continuous functions.
+
+##### 5.7.2 C1 Continuity
+In the next figure, the two curves touch at the ```transition``` point. We say we have <img src="https://latex.codecogs.com/svg.image?C^{1}" title="C^{1}" /> continuity as the tangents of the curves and surfaces are vectors with both the magnitude and direction of the tangent vectors being ```identical```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148912581-9d9771c1-7841-4642-8d8e-7ea061f45999.png" />
+</p>
+
+> The class <img src="https://latex.codecogs.com/svg.image?C^{1}" title="C^{1}" /> consists of all differentiable functions whose derivative is continuous; such functions are called ```continuously differentiable```. Thus, a <img src="https://latex.codecogs.com/svg.image?C^{1}" title="C^{1}" /> function is exactly a function whose derivative exists and is of class <img src="https://latex.codecogs.com/svg.image?C^{0}" title="C^{0}" />.
+
+The second derivative represents the smoothness of the curve. Although we have a transition of a circle with a line, it is not smooth, i.e, we do not have a <img src="https://latex.codecogs.com/svg.image?C^{2}" title="C^{2}" /> continuity. As described above, having the same tangential direction implies only <img src="https://latex.codecogs.com/svg.image?C^{1}" title="C^{1}" /> continuity, which translates into same speed of movement, but different accelerations. The fact that this transition between line and circle is not <img src="https://latex.codecogs.com/svg.image?C^{2}" title="C^{2}" /> means that if we travel at constant speed across the transition, the acceleration along the vertical axis changes instantaneously: from zero along the line, to a sudden finite positive value when entering the circle. In practive we will hear a "click" sound on the axes, which can be detrimental to the mechanics. 
+
+The continuity between two curves must be satisfied at higher order of differentiation so as to have a smooth dynamic profile and avoiding slowing down or, worse, stopping the trajectory. Thus, the reacon for using <img src="https://latex.codecogs.com/svg.image?C^{2}" title="C^{2}" /> continuity.
 
 
+##### 5.7.3 C2 Continuity
+The figure below shows <img src="https://latex.codecogs.com/svg.image?C^{2}" title="C^{2}" /> continuity as they have the same tangential direction and the same curvature.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148915712-83d9a6c3-bb49-4b46-b1a2-6f105328bcd4.png" />
+</p>
+
+We do not always need <img src="https://latex.codecogs.com/svg.image?C^{2}" title="C^{2}" /> transition but we need to check that the transition angle between consecutive sections is small enough so as to increase production speed and to avoid excessive force on the mechanics.
+
+##### 5.7.4 Proving C2 Continuity
+Earlier, we introduced a round-edge between two lines as a quartic spline and said that the transition is smooth up to the second derivative. Note that this round edge is not a circle! The transition between line and circle is not <img src="https://latex.codecogs.com/svg.image?C^{2}" title="C^{2}" /> continuous, as we mentioned before. The circle has a ```constant radius``` of curvature, which means a ```constant finite second derivative```. When crossing from line to circle the curvature jumps suddenly. But the round edge is a ```quartic spline```, not a circle. Its radius of curvature is not constant: it starts at zero, increases in the middle and goes back to zero at the end, so that the transitions with the previous and next segments are ```smooth```.
+
+Let's prove the smoothness mathematicaly: We start with a line segment which parametric equation is as follows:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148918599-840e1612-1e34-4e52-b8a8-17f01f6e4e00.png" />
+</p>
+
+First derivative w.r.t ```t```:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148918741-1fb3e0dd-ae8d-4925-bf2a-076d26dcd633.png" />
+</p>
+
+Second derivative w.r.t ```t```:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148918839-6fece634-6d5a-4239-b313-5ce870843560.png" />
+</p>
+
+This clearly shows that a line has zero curvature!
+
+Now if we take the second derivative of our quartic spline we get:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148919749-a5c2ac68-dd34-4387-bb92-605bb373648e.png" />
+</p>
+
+Note that both first and second derivative are not constant: they both vary over the interval from ```t = 0``` to ```t = 1```. Physically, it means that the direction and curvature of the round edge change along the path from start to end. That is obvious for the direction, but very important to underline the curvature. A varying curvature means that we can control the amount of acceleration we require from the physical axes during the movement. That is unlike the case of a simple circle, where the curvature is constant and the centripetal acceleration is also constant, leading to discontinuities at transitions.
+
+If we set ```t = 0``` and ```t = 1``` and we require the curve to have zero curvature, i.e, set the second derivative equal to zero, then we get the position of the points <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;P_{1}" title="P_{1}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;P_{3}" title="P_{3}" />.
+
+That explains why we decided to place the control points of the quartic spline in the middle of the two segments. With that configuration we achieve a geometrically and physically smooth transition between two path sections.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/148920863-b2906b3a-c4f4-431c-b7c7-109ee271221f.png" />
+</p>
 
 
+To sum up:
 
+The various order of parametric continuity can be described as follows:
+
+- C0: zeroth derivative is continuous (curves are continuous)
+- C1: zeroth and first derivatives are continuous
+- C2: zeroth, first and second derivatives are continuous
+- Cn: 0-th through n-th derivatives are continuous
 
 
 
@@ -1251,6 +1329,9 @@ Suppose we have two perpendicular consecutive paths section then we will need a 
 6. https://www.youtube.com/watch?v=1zTDmiDjDOA
 7. https://www.youtube.com/watch?v=unwUt3kkgvE
 8. https://www.gatevidyalay.com/bezier-curve-in-computer-graphics-examples/
+9. https://www.youtube.com/watch?v=JR_6I9bvEIs
+10. https://en.wikipedia.org/wiki/Smoothness
+11. https://www.quora.com/What-is-smoothness-and-how-is-it-different-from-continuity
 
 ## Conclusion
 
