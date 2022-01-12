@@ -1301,7 +1301,9 @@ If we set ```t = 0``` and ```t = 1``` and we require the curve to have zero curv
 
 That explains why we decided to place the control points of the quartic spline in the middle of the two segments. With that configuration we achieve a geometrically and physically smooth transition between two path sections.
 
-If we need to calculate our path length then it is quite straightforward if our path is a straight line, a circle or an arc of a circle. If it is a stright line then we just need to apply Euclidean's distance formula in 3-dimension:
+##### 5.7.5 Path Length
+
+If we need to calculate our path length then it is quite straightforward if our path is a straight line, a circle or an arc of a circle. If it is a straight line then we just need to apply Euclidean's distance formula in 3-dimension:
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/149122101-f85b11e4-fca8-400c-9521-c77c3c4bae30.png" />
@@ -1334,7 +1336,88 @@ The various order of parametric continuity can be described as follows:
 - C2: zeroth, first and second derivatives are continuous
 - Cn: 0-th through n-th derivatives are continuous
 
+### 5. Workspace Monitoring
+While planning lines, circles and splines for the robot, we need to restrict its range of movements to specific areas in space. The allowed space of operation is called ```workspace```. The main reason to monitor the workspace of a robot is ```safety```. 
 
+#### 5.1 Safe Zone
+A safe zone is usually defined to keep the entire robot inside a virtual cage, where it is safe for it to move around without colliding with other elements of the environment. The rule is that **no** part of the robot can be outside the safe zone at any time.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149125540-2f5bac24-7bdc-4860-b537-61101291c7f3.png" />
+</p>
+
+##### 5.1.1 Safe Zone Calculation
+
+
+If both starting and ending points or even one of the points of the movement are outside the zone, then for sure part of the movement is violating our safety area. How do we check mathematically that a point is inside a box? Given the point ```P``` and defining the cuboid by two points B1 and B2, the condition is that ```P``` must be ```smaller``` than the ```maximum``` between B1, B2, and at the same time must be ```larger``` than the ```minimum``` between B1, B2. Since P,B1 and B2 are all 3-dimensional vectors, so this condition must be verified along all three axes ```XYZ```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149131493-2effaf57-40df-468e-84d4-119514688426.png" />
+</p>
+
+
+
+
+#### 5.2 Forbidden Zone
+A forbidden zone precludes the robot from entering certain areas of space, usually, because they are already occupied by something else.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149126026-8eec8937-a500-4c5a-8e94-76922d6ee215.png" />
+</p>
+
+Note that we can also have a forbidden area inside a safe area. The resulting allowed workspace will be the difference between the safe and the forbidden area.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149126758-34755f2b-7923-4d6f-937e-add6fbe13432.png" />
+</p>
+
+It is important to remember that we plan our workspace in order to avoid collison. Hence, it is much wiser and safer to monitor the path while ```planning``` it, not while ```executing``` it. Monitoring only the start and end points of a movement is not enough: they might both be in safe area, but the actual path could intersect a forbidden space. So the entire path needs to be monitored closely.
+
+It is easy to predict collisions if all we have is a straight line. Complex movements are normally decomposed in ```linear segments```, similarly to what we did in order to calculate their path lengths.
+
+##### 5.2.1 Forbidden Zone Calculation
+The condition here is that a line should not intersect the box.
+
+1. Recall that a line is defined by a parametric equation <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;P&space;=&space;P_{0}&plus;t(P_{1}-P_{0})" title="P = P_{0}+t(P_{1}-P_{0})" />, starting from P0 at t = 0 and ending at P1 at t = 1.
+2. We first consider the three edges of the cuboid closer to the point P0 and we calculate the values of t for which the line intersects them.
+3. If the closest edges to P0 is the point B with coordinates Xb,Yb,Zb, we plug in those coordinates one at the time in the above equation and find three values for tx,ty and tz. We take the largest one, which represents the latest intersection between the line and the closest planes of the cuboid and we call it t0.
+4. We repeat the same for the three edges farthest away from P0. We calculate the three intersecting values and take the smallest one, which represents the earliest intersection between line and the furthest planes of the cuboid. We call it t1.
+5. If <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;t_{0}<t_{1}" title="t_{0}<t_{1}" /> then the line ```intersects``` the box.
+6. If <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;t_{0}>t_{1}" title="t_{0}>t_{1}" /> then there is ```no intersection```.
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149138354-e5b283bd-cf67-4beb-b0c7-f917cec59136.png" />
+</p>
+
+
+#### 5.3 Wireframe Model
+So far we have monitored only the position of the TCP. However, there exist cases when the TCP is inside the Safe zone but the part of the body of the robot is outside that zone. So we need to monitor all the parts of the robot which can be complicated depending on the shape of the robot. One solution would be to wireframe the model, i.e, represent each part of the robot with points and lines as shown below and then monitor those points and lines.
+
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149139767-f11a1e3c-0dac-4296-a66e-be38763ff034.png" />
+</p>
+
+
+Because the position of those points depend on the actual values of the joint axes, they are calculated using direct kinematics and constantly updated during movements. Then we can use the techniques learned so far to check whether the wire-model (points and connecting lines) cross forbidden zones or move outside safe zones.
+
+
+#### 5.4 Safe Orientation
+There are cases whereby we also need to monitor the orientation of the TCP such that it does not face towards people - for example a robot during welding or laser cutting. We don't want the TCP to face upwards even though the TCP is inside the Safe zone. A safe zone for orientation is called a ```Safe cone```. We need to define a central working orientation, usually the vertical Z axis, and a maximum deviation angle. The resulting geometry is a cone, outside which the orientation of the TCP is considered unsafe.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149143235-571d1d98-fa70-4df8-a6a2-289ae44fe6d7.png" />
+</p>
+
+Recall from the SLERP interpolation that when expressing orientations with quaternions the angle between two orientations is given by the following formula:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149143622-bf48dde9-4788-41cd-9d2c-0db8b9e000b1.png" />
+</p>
+
+Thus, we can monitor, both at planning time and at real-time, whether the current TCP orientation lies inside the safe cone.
 
 
 ## Implementation
@@ -1351,6 +1434,8 @@ The various order of parametric continuity can be described as follows:
 9. https://www.youtube.com/watch?v=JR_6I9bvEIs
 10. https://en.wikipedia.org/wiki/Smoothness
 11. https://www.quora.com/What-is-smoothness-and-how-is-it-different-from-continuity
+12. https://www.youtube.com/watch?v=1JRMqfEm79c
+13. https://www.youtube.com/watch?v=pnYccz1Ha34
 
 ## Conclusion
 
