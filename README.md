@@ -1423,6 +1423,11 @@ Thus, we can monitor, both at planning time and at real-time, whether the curren
 #### 5.5 Self-Collision
 Another zone whereby the TCP must not come into contact with is the body of the robot itself. In other words, we want to monitor and prevent self-collisions. The solution is to generate forbidden zones around each of the links (usually corresponding to the wire-frame model), starting from the first up to the last. The se capsules act like a raincoat which will cover it safely and prevent self-collisions. Note that we use capsules since they are computationally cheap but we could have used the cuboids also. The only difference with standard forbidden zones is that their position changes over time and must be constantly updated. We generate the position of the zones automatically given the actual position of the joints, using direct kinematics, one joint at the time. 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149196737-9d1cea26-4dba-4d83-8433-85ddbea5e18d.png" />
+</p>
+
+
 
 ##### 5.5.1  Self-Collision Calculation
 A capsule is geometrically defined as the set of points that are all at the same distance from a given segment. It is composed by a cylinder with two semi-spheres at the extremes. The segment is at the same distance ```r``` across the capsule. Usually, ```r``` is given by the user, depending on the size of the mechanical arm of the robot. Imagine we have a point ```Q``` and we need to find the distance from the segment:
