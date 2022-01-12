@@ -1421,24 +1421,24 @@ Thus, we can monitor, both at planning time and at real-time, whether the curren
 
 
 #### 5.5 Self-Collision
+Another zone whereby the TCP must not come into contact with is the body of the robot itself. In other words, we want to monitor and prevent self-collisions. The solution is to generate forbidden zones around each of the links (usually corresponding to the wire-frame model), starting from the first up to the last. The se capsules act like a raincoat which will cover it safely and prevent self-collisions. Note that we use capsules since they are computationally cheap but we could have used the cuboids also. The only difference with standard forbidden zones is that their position changes over time and must be constantly updated. We generate the position of the zones automatically given the actual position of the joints, using direct kinematics, one joint at the time. 
 
 
+##### 5.5.1  Self-Collision Calculation
+A capsule is geometrically defined as the set of points that are all at the same distance from a given segment. It is composed by a cylinder with two semi-spheres at the extremes. The segment is at the same distance ```r``` across the capsule. Usually, ```r``` is given by the user, depending on the size of the mechanical arm of the robot. Imagine we have a point ```Q``` and we need to find the distance from the segment:
 
+1. We P0,P1 as vector n: <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\overline{P_{0}P_{1}}&space;=&space;\overrightarrow{n}" title="\overline{P_{0}P_{1}} = \overrightarrow{n}" />
+2. Observe that the projection of Q onto P0P1 is ```P``` and depends on ```t```, so we call <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\overline{P_{0}P_{}}&space;=&space;\overrightarrow{tn}" title="\overline{P_{0}P_{}} = \overrightarrow{tn}" />.
+3. If t=[0..1] then P is on the segment, otherwise it is on the line before P0 if t is negative or after P1 if t is greater than 1.
+4. We need to find t and then from there P and the distance PQ. We call <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\overline{P_{}Q_{}}&space;=&space;\overrightarrow{d}" title="\overline{P_{}Q_{}} = \overrightarrow{d}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\overline{P_{0}Q_{}}&space;=&space;\overrightarrow{v}" title="\overline{P_{0}Q_{}} = \overrightarrow{v}" />. 
+5. We can immediately find d as the difference between the vectors v and tn: <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\overrightarrow{d}=\overrightarrow{v}-\overrightarrow{tn}" title="\overrightarrow{d}=\overrightarrow{v}-\overrightarrow{tn}" />
+6. Q is joined to P using a perpendicular line so <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\overrightarrow{d}\cdot&space;\overrightarrow{n}=0" title="\overrightarrow{d}\cdot \overrightarrow{n}=0" />.
+7. Replacing d in terms of v and tn we get t.
+8. Once we have t, we can find P and then PQ, which is the distance we were looking for.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149196604-dfe1f267-0936-4507-8d70-efbf0a2f41a6.png" />
+</p>
 
 
 #### 5.6 Multi-robot Monitoring
