@@ -1420,6 +1420,32 @@ Recall from the SLERP interpolation that when expressing orientations with quate
 Thus, we can monitor, both at planning time and at real-time, whether the current TCP orientation lies inside the safe cone.
 
 
+#### 5.5 Self-Collision
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 5.6 Multi-robot Monitoring
+
+
+
+
 ## Implementation
 
 ## References
