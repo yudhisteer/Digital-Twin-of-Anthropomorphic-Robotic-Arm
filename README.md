@@ -1447,8 +1447,33 @@ A capsule is geometrically defined as the set of points that are all at the same
 
 
 #### 5.6 Multi-robot Monitoring
+So far we have monitored the workspace of a single robot through its position and orientation. Now we need to monitor many robots working together in the same environment and sharing the same workspace.
+
+One example could be a robot welding, then the other cuting and another one screwing. Or, we could have multiple robots along a conveyor belt picking objects. We need to monitor their position relative to each other to avoid collisions. Below we describe two functions to perform workspace monitoring for multiple robots.
+
+##### 5.6.1 Exclusive Zones
+
+Exclusive zones are regions of space within which only one robot (or at least its TCP) can lie at a time. Each exclusive zone is associated to a flag bit, which is visible to all robots, and warns of the presence of a robot inside that space. If the TCP of a second robot is programmed to enter the same exclusive zone, it will have to check the status flag first, and will only be allowed to enter if the zone is free. Otherwise the movement is paused until the first robot leaves the exclusive zone. At that point the second robot can resume its movement and enter the region. Now the zone becomes locked by the second robot and the first cannot enter it any more. And so on.
+
+However, we must be careful when we have more than two robots because there might be many robots waiting in line and we can only show the green flag to one of them, usually the first in line, otherwise they will all rush into the zone and collide with each other or the workpiece. 
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149203468-0ee05cc8-9728-47f7-ad4d-da6ce2319cc5.png" />
+</p>
 
 
+
+
+##### 5.6.2 Collision Detection
+In the second solution, we need to monitor the possible intersection between a robot’s body and another one. The user normally defines a minimal distance between robots, which we need to monitor in real-time. Just as explained before, we build bounding capsules around the joints and evaluate all possible collisions between each capsule of a robot against all the capsule of the other robot. Two capsules intersect if the distance between the capsules' segments is smaller than the sum of their radii.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149203027-e2c9eeb6-a24f-4ea0-affc-153d618f9b3e.png" />
+</p>
+
+
+##### 5.6.3  Collision Detection Calculation
+Our goal here is to find the distance between two segments, so that we can avoid collisions.
 
 
 ## Implementation
