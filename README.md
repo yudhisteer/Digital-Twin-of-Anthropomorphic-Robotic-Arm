@@ -1301,10 +1301,29 @@ If we set ```t = 0``` and ```t = 1``` and we require the curve to have zero curv
 
 That explains why we decided to place the control points of the quartic spline in the middle of the two segments. With that configuration we achieve a geometrically and physically smooth transition between two path sections.
 
+If we need to calculate our path length then it is quite straightforward if our path is a straight line, a circle or an arc of a circle. If it is a stright line then we just need to apply Euclidean's distance formula in 3-dimension:
+
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/148920863-b2906b3a-c4f4-431c-b7c7-109ee271221f.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/149122101-f85b11e4-fca8-400c-9521-c77c3c4bae30.png" />
 </p>
 
+If it is an arc then we need the radius ```R``` and the angle <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\alpha&space;" title="\alpha " /> in between the two radii bouding the arc. The formula is as follows: 
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149122622-28ed3b17-4c91-4c8d-a075-c764ca19f7b1.png" />
+</p>
+
+
+If we have a PTP or a spline, then calculating the path is not as straight forward. We just need to divide our path in many small segments of equal length whereby the small segments are considered to be straight lines. We just need to sum up the number of segments to get a numerical solution of the overall length:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149123059-d4045ada-ec96-4d73-8242-357dddb7e031.png" />
+</p>
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/149123297-6bd62f4a-f8ab-44c0-98be-edd26144a50c.png" />
+</p>
 
 To sum up:
 
