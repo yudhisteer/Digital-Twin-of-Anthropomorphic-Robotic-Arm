@@ -3,6 +3,12 @@
 ## Abstract
 
 ## Plan of Action
+1. Research on Industrial Robots
+2. Coordinate Frames and Vectors
+3. Forward Kinematics
+4. Inverse Kinematics
+5. Path Planning
+6. Trajectory Generation
 
 ### 1. Industrial Robots
 Most industrial robots are mechanical arms controlled by electric servo motors and programmed to perform a specific task. This task is mainly repetitive, tedious and boring such that robots are more fitted to perform these tasks than humans. It is important to note here that these robots only perform actions that it was programmed for and does not utilizes any form of intelligence. It has no visual inputs and no AI that can allow it to take decisions on the go. However, a lot of research is being done that uses **Reinforcement Learning** so that the robot teaches itself to perform task such as grabbing objects of different sizes and shapes. 
@@ -83,7 +89,7 @@ Fig. Description of 6-axis Anthropomorphic Robotic Arm.
 
 The ```TCP``` has ```6``` coordinates: ```3``` of them describes its ```position(XYZ)``` in space and the other ```3``` describes its ```orientation(UVW)```. The position of the joints axes and the position of the TCP is related to each other. The process of finding position and orientation of TCP given Joints values is called ```Forward or Direct Kinematics```.  Vice versa, finding our Joints values corresponding to a given TCP position and orientation is called ```Inverse Kinematics```.
 
-### 2. Frames
+### 2. Coordinate Frames and Vectors
 A key requirement in robotics programming is keeping track of the positions and velocities of objects in space. A frame which is essentially a coordinate system with a specific orientation and position. For example, consider the situation whereby we ask a robot to detecta blue ball in a room. It will be futile if the robot report to us that the blue is 1m from the robot because now we want to know where _in the room_ is that blue ball. Providing this information requires us to know each of the following:
 
 - The position of the blue ball relative to the camera.
@@ -1475,6 +1481,9 @@ In the second solution, we need to monitor the possible intersection between a r
 ##### 5.6.3  Collision Detection Calculation
 Our goal here is to find the distance between two segments, so that we can avoid collisions.
 
+
+
+### 6. Trajectory Generation
 
 ## Implementation
 
