@@ -1489,16 +1489,36 @@ Our goal here is to find the distance between two segments, so that we can avoid
 What is the difference between path and trajectory? Suppose we have a static **path** ```s```, then, the **trajectory** transforms this static path into a **function** of **time** ```s(t)``` by sampling points from the geometry along time. We sample points from the path at a constant interval Δt where Δt can be 1ms. Since at every ```1ms``` we cover a constant amount of space, we are actually moving at a ```constant speed``` along the path. If we increase the density of points, we cover a smaller amount of distance in the same time Δt, which means we are now travelling over the same path, but with a lower speed. This is a different trajectory, even if the path is the same, because the relation between space and time is different. If we now sample these points, at different distances from each other, first closer, then farther apart, and finally closer again, then, this trajectory is yet another different way to traverse the same original path, this time at ```non-uniform speed```. We start slowly, accelerate to maximum speed and then slow back down to zero as shown below. In summary, we can visualize the trajectory generator as a sample of points from the given path, where the ```sampling frequency``` decides the movement’s ```speed```. The trajectory generator picks a point from the path that the user programmed, calculates the joints values via IK and sends them to the drives. If the points are all equidistant the path speed is constant else if we move those points closer together, we get lower speed, and so on.
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/154858362-31ad31bb-9cd1-4ab0-96ea-29c2d3446170.png" />
+</p>
 
 
+If we had to instanteneously travel to a constant spped from rest then we would need an ```infinite acceleration``` to go from 0 to max speed which is impossible. In real-life, a machine need some time to accelerate to reach its maximum speed and it needs to deccelerate to come to a halt. From Newton's Second Law of Motion, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;F=ma" title="F=ma" />, where the acceleration depends on force from the motor and mass of the car assuming we are ignoring external forces like friction and air resistance. 
 
 
+**Scenario 1:**
+The faster we want to accelerate, the higher the force required from the motor. If we asked the car to accelerate instantaneously to cruise speed we would be asking for an ```infinite force``` from the motor, which is not realistic. So we need to take into account accelerating time and modify the velocity profile.
 
 
+**Scenario 2:**
+Remmeber that the path length, ```l```, is fixed and the integral of the velocity results in the path covered which is equal to ```l```. If we have a finite acceleration and deceleration time, the movement will still need to cover the whole path length and it will consequently take more time to execute. In practice, asking a mechanical system to accelerate and decelerate so abruptly leads to mechanical wear.
+
+**Scenario 3:**
+We normally smooth the speed profile by also limiting the ```jerk``` which is the derivative of acceleration. Now, given constraints of max speed, acceleration and jerk we can build a speed profile to move across any path with length L. The profile is composed of ```7``` zones: we increase acceleration linearly with maximum jerk then keep accelerating with maximum acceleration. We then reduce acceleration with minimum jerk to reach maximum speed. In the middle we have a zone running at constant maximum speed and the last three zones are similar to the first three, reducing speed to zero with limited acceleration and jerk. This curve is called an ```S-curve```. The diagram below shows the three scenarios discussed:
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/154860782-0014b66f-a6c5-478e-b0c6-e6561a7d069a.png" />
+</p>
 
+To summarise:
 
+- The first scenario only considered maximum speed <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;v_{max}" title="v_{max}" />: it is the fastest movement, but not a realistic one.
+
+- The second profile added the acceleration constraint <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;a_{max}" title="a_{max}" />: it is a bit slower but still hard on the mechanics.
+
+- In the third final option we added a jerk constraint <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;j_{max}" title="j_{max}" />: this generates the slowest movement of the three, but also the smoothest one.
 
 
 
