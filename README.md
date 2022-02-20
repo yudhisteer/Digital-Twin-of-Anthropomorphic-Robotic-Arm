@@ -1,4 +1,4 @@
-# 6dof Robotic Arm Simulation
+# Digital Twin of Anthropomorphic Robotic Arm
 
 ## Abstract
 
