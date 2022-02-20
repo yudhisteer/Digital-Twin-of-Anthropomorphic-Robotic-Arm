@@ -8,7 +8,8 @@
 3. Forward Kinematics
 4. Inverse Kinematics
 5. Path Planning
-6. Trajectory Generation
+6. Workspace Monitoring
+7. Trajectory Generation
 
 ### 1. Industrial Robots
 Most industrial robots are mechanical arms controlled by electric servo motors and programmed to perform a specific task. This task is mainly repetitive, tedious and boring such that robots are more fitted to perform these tasks than humans. It is important to note here that these robots only perform actions that it was programmed for and does not utilizes any form of intelligence. It has no visual inputs and no AI that can allow it to take decisions on the go. However, a lot of research is being done that uses **Reinforcement Learning** so that the robot teaches itself to perform task such as grabbing objects of different sizes and shapes. 
@@ -1342,17 +1343,17 @@ The various order of parametric continuity can be described as follows:
 - C2: zeroth, first and second derivatives are continuous
 - Cn: 0-th through n-th derivatives are continuous
 
-### 5. Workspace Monitoring
+### 6. Workspace Monitoring
 While planning lines, circles and splines for the robot, we need to restrict its range of movements to specific areas in space. The allowed space of operation is called ```workspace```. The main reason to monitor the workspace of a robot is ```safety```. 
 
-#### 5.1 Safe Zone
+#### 6.1 Safe Zone
 A safe zone is usually defined to keep the entire robot inside a virtual cage, where it is safe for it to move around without colliding with other elements of the environment. The rule is that **no** part of the robot can be outside the safe zone at any time.
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/149125540-2f5bac24-7bdc-4860-b537-61101291c7f3.png" />
 </p>
 
-##### 5.1.1 Safe Zone Calculation
+##### 6.1.1 Safe Zone Calculation
 
 
 If both starting and ending points or even one of the points of the movement are outside the zone, then for sure part of the movement is violating our safety area. How do we check mathematically that a point is inside a box? Given the point ```P``` and defining the cuboid by two points B1 and B2, the condition is that ```P``` must be ```smaller``` than the ```maximum``` between B1, B2, and at the same time must be ```larger``` than the ```minimum``` between B1, B2. Since P,B1 and B2 are all 3-dimensional vectors, so this condition must be verified along all three axes ```XYZ```.
@@ -1364,7 +1365,7 @@ If both starting and ending points or even one of the points of the movement are
 
 
 
-#### 5.2 Forbidden Zone
+#### 6.2 Forbidden Zone
 A forbidden zone precludes the robot from entering certain areas of space, usually, because they are already occupied by something else.
 
 <p align="center">
@@ -1381,7 +1382,7 @@ It is important to remember that we plan our workspace in order to avoid colliso
 
 It is easy to predict collisions if all we have is a straight line. Complex movements are normally decomposed in ```linear segments```, similarly to what we did in order to calculate their path lengths.
 
-##### 5.2.1 Forbidden Zone Calculation
+##### 6.2.1 Forbidden Zone Calculation
 The condition here is that a line should not intersect the box.
 
 1. Recall that a line is defined by a parametric equation <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;P&space;=&space;P_{0}&plus;t(P_{1}-P_{0})" title="P = P_{0}+t(P_{1}-P_{0})" />, starting from P0 at t = 0 and ending at P1 at t = 1.
@@ -1397,7 +1398,7 @@ The condition here is that a line should not intersect the box.
 </p>
 
 
-#### 5.3 Wireframe Model
+#### 6.3 Wireframe Model
 So far we have monitored only the position of the TCP. However, there exist cases when the TCP is inside the Safe zone but the part of the body of the robot is outside that zone. So we need to monitor all the parts of the robot which can be complicated depending on the shape of the robot. One solution would be to wireframe the model, i.e, represent each part of the robot with points and lines as shown below and then monitor those points and lines.
 
 
@@ -1410,7 +1411,7 @@ So far we have monitored only the position of the TCP. However, there exist case
 Because the position of those points depend on the actual values of the joint axes, they are calculated using direct kinematics and constantly updated during movements. Then we can use the techniques learned so far to check whether the wire-model (points and connecting lines) cross forbidden zones or move outside safe zones.
 
 
-#### 5.4 Safe Orientation
+#### 6.4 Safe Orientation
 There are cases whereby we also need to monitor the orientation of the TCP such that it does not face towards people - for example a robot during welding or laser cutting. We don't want the TCP to face upwards even though the TCP is inside the Safe zone. A safe zone for orientation is called a ```Safe cone```. We need to define a central working orientation, usually the vertical Z axis, and a maximum deviation angle. The resulting geometry is a cone, outside which the orientation of the TCP is considered unsafe.
 
 <p align="center">
@@ -1426,7 +1427,7 @@ Recall from the SLERP interpolation that when expressing orientations with quate
 Thus, we can monitor, both at planning time and at real-time, whether the current TCP orientation lies inside the safe cone.
 
 
-#### 5.5 Self-Collision
+#### 6.5 Self-Collision
 Another zone whereby the TCP must not come into contact with is the body of the robot itself. In other words, we want to monitor and prevent self-collisions. The solution is to generate forbidden zones around each of the links (usually corresponding to the wire-frame model), starting from the first up to the last. The se capsules act like a raincoat which will cover it safely and prevent self-collisions. Note that we use capsules since they are computationally cheap but we could have used the cuboids also. The only difference with standard forbidden zones is that their position changes over time and must be constantly updated. We generate the position of the zones automatically given the actual position of the joints, using direct kinematics, one joint at the time. 
 
 <p align="center">
@@ -1435,7 +1436,7 @@ Another zone whereby the TCP must not come into contact with is the body of the 
 
 
 
-##### 5.5.1  Self-Collision Calculation
+##### 6.5.1  Self-Collision Calculation
 A capsule is geometrically defined as the set of points that are all at the same distance from a given segment. It is composed by a cylinder with two semi-spheres at the extremes. The segment is at the same distance ```r``` across the capsule. Usually, ```r``` is given by the user, depending on the size of the mechanical arm of the robot. Imagine we have a point ```Q``` and we need to find the distance from the segment:
 
 1. We P0,P1 as vector n: <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\overline{P_{0}P_{1}}&space;=&space;\overrightarrow{n}" title="\overline{P_{0}P_{1}} = \overrightarrow{n}" />
@@ -1452,12 +1453,12 @@ A capsule is geometrically defined as the set of points that are all at the same
 </p>
 
 
-#### 5.6 Multi-robot Monitoring
+#### 6.6 Multi-robot Monitoring
 So far we have monitored the workspace of a single robot through its position and orientation. Now we need to monitor many robots working together in the same environment and sharing the same workspace.
 
 One example could be a robot welding, then the other cuting and another one screwing. Or, we could have multiple robots along a conveyor belt picking objects. We need to monitor their position relative to each other to avoid collisions. Below we describe two functions to perform workspace monitoring for multiple robots.
 
-##### 5.6.1 Exclusive Zones
+##### 6.6.1 Exclusive Zones
 
 Exclusive zones are regions of space within which only one robot (or at least its TCP) can lie at a time. Each exclusive zone is associated to a flag bit, which is visible to all robots, and warns of the presence of a robot inside that space. If the TCP of a second robot is programmed to enter the same exclusive zone, it will have to check the status flag first, and will only be allowed to enter if the zone is free. Otherwise the movement is paused until the first robot leaves the exclusive zone. At that point the second robot can resume its movement and enter the region. Now the zone becomes locked by the second robot and the first cannot enter it any more. And so on.
 
@@ -1470,7 +1471,7 @@ However, we must be careful when we have more than two robots because there migh
 
 
 
-##### 5.6.2 Collision Detection
+##### 6.6.2 Collision Detection
 In the second solution, we need to monitor the possible intersection between a robot’s body and another one. The user normally defines a minimal distance between robots, which we need to monitor in real-time. Just as explained before, we build bounding capsules around the joints and evaluate all possible collisions between each capsule of a robot against all the capsule of the other robot. Two capsules intersect if the distance between the capsules' segments is smaller than the sum of their radii.
 
 <p align="center">
@@ -1478,12 +1479,12 @@ In the second solution, we need to monitor the possible intersection between a r
 </p>
 
 
-##### 5.6.3  Collision Detection Calculation
+##### 6.6.3  Collision Detection Calculation
 Our goal here is to find the distance between two segments, so that we can avoid collisions.
 
 
 
-### 6. Trajectory Generation
+### 7. Trajectory Generation
 
 ## Implementation
 
