@@ -1475,7 +1475,7 @@ However, we must be careful when we have more than two robots because there migh
 In the second solution, we need to monitor the possible intersection between a robot’s body and another one. The user normally defines a minimal distance between robots, which we need to monitor in real-time. Just as explained before, we build bounding capsules around the joints and evaluate all possible collisions between each capsule of a robot against all the capsule of the other robot. Two capsules intersect if the distance between the capsules' segments is smaller than the sum of their radii.
 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/149203027-e2c9eeb6-a24f-4ea0-affc-153d618f9b3e.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/154856990-7e7452a2-2fb2-4c24-9f27-2a575f236ce6.png" />
 </p>
 
 
@@ -1485,6 +1485,25 @@ Our goal here is to find the distance between two segments, so that we can avoid
 
 
 ### 7. Trajectory Generation
+
+What is the difference between path and trajectory? Suppose we have a static **path** ```s```, then, the **trajectory** transforms this static path into a **function** of **time** ```s(t)``` by sampling points from the geometry along time. We sample points from the path at a constant interval Δt where Δt can be 1ms. Since at every ```1ms``` we cover a constant amount of space, we are actually moving at a ```constant speed``` along the path. If we increase the density of points, we cover a smaller amount of distance in the same time Δt, which means we are now travelling over the same path, but with a lower speed. This is a different trajectory, even if the path is the same, because the relation between space and time is different. If we now sample these points, at different distances from each other, first closer, then farther apart, and finally closer again, then, this trajectory is yet another different way to traverse the same original path, this time at ```non-uniform speed```. We start slowly, accelerate to maximum speed and then slow back down to zero as shown below. In summary, we can visualize the trajectory generator as a sample of points from the given path, where the ```sampling frequency``` decides the movement’s ```speed```. The trajectory generator picks a point from the path that the user programmed, calculates the joints values via IK and sends them to the drives. If the points are all equidistant the path speed is constant else if we move those points closer together, we get lower speed, and so on.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Implementation
 
