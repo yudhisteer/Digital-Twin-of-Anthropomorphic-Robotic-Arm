@@ -1509,7 +1509,7 @@ We normally smooth the speed profile by also limiting the ```jerk``` which is th
 
 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/154860782-0014b66f-a6c5-478e-b0c6-e6561a7d069a.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/154910753-0dc695ad-f4df-4bc6-b515-c7b1d21462c6.png" />
 </p>
 
 To summarise:
