@@ -1486,7 +1486,11 @@ Our goal here is to find the distance between two segments, so that we can avoid
 
 ### 7. Trajectory Generation
 
-What is the difference between path and trajectory? Suppose we have a static **path** ```s```, then, the **trajectory** transforms this static path into a **function** of **time** ```s(t)``` by sampling points from the geometry along time. We sample points from the path at a constant interval Δt where Δt can be 1ms. Since at every ```1ms``` we cover a constant amount of space, we are actually moving at a ```constant speed``` along the path. If we increase the density of points, we cover a smaller amount of distance in the same time Δt, which means we are now travelling over the same path, but with a lower speed. This is a different trajectory, even if the path is the same, because the relation between space and time is different. If we now sample these points, at different distances from each other, first closer, then farther apart, and finally closer again, then, this trajectory is yet another different way to traverse the same original path, this time at ```non-uniform speed```. We start slowly, accelerate to maximum speed and then slow back down to zero as shown below. In summary, we can visualize the trajectory generator as a sample of points from the given path, where the ```sampling frequency``` decides the movement’s ```speed```. The trajectory generator picks a point from the path that the user programmed, calculates the joints values via IK and sends them to the drives. If the points are all equidistant the path speed is constant else if we move those points closer together, we get lower speed, and so on.
+What is the difference between path and trajectory? Suppose we have a static **path** ```s```, then, the **trajectory** transforms this static path into a **function** of **time** ```s(t)``` by sampling points from the geometry along time. 
+
+
+#### 7.1 Path vs Trajectory
+We sample points from the path at a constant interval Δt where Δt can be 1ms. Since at every ```1ms``` we cover a constant amount of space, we are actually moving at a ```constant speed``` along the path. If we increase the density of points, we cover a smaller amount of distance in the same time Δt, which means we are now travelling over the same path, but with a lower speed. This is a different trajectory, even if the path is the same, because the relation between space and time is different. If we now sample these points, at different distances from each other, first closer, then farther apart, and finally closer again, then, this trajectory is yet another different way to traverse the same original path, this time at ```non-uniform speed```. We start slowly, accelerate to maximum speed and then slow back down to zero as shown below. In summary, we can visualize the trajectory generator as a sample of points from the given path, where the ```sampling frequency``` decides the movement’s ```speed```. The trajectory generator picks a point from the path that the user programmed, calculates the joints values via IK and sends them to the drives. If the points are all equidistant the path speed is constant else if we move those points closer together, we get lower speed, and so on.
 
 
 <p align="center">
@@ -1520,6 +1524,30 @@ To summarise:
 
 - In the third final option we added a jerk constraint <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;j_{max}" title="j_{max}" />: this generates the slowest movement of the three, but also the smoothest one.
 
+#### 7.2 S-curve
+
+The equations describing an S-curve depend on 3 main parameters: <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;v_{max}" title="v_{max}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;a_{max}" title="a_{max}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;j_{max}" title="j_{max}" />.  Here, we are considering the simple case of starting and ending with zero speed and zero acceleration. This is normally the case when planning a trajectory between two ```non-tangential``` transition points. We need to stop and generate a new trajectory for the next block starting again from zero speed.  If the transition between two consecutive blocks is ```tangential```, then we do not need to stop but merge the two blocks together into a single large movement.
+
+We have seven sections in the movement. Below the notation ```v```, ```a``` and ```j``` represents <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;v_{max}" title="v_{max}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;a_{max}" title="a_{max}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;j_{max}" title="j_{max}" /> respectively.
+
+- **Section 1:** During the first section the speed increases very quickly, only limited by the maximum jerk, as a square function of time. The acceleration increases linearly.
+The time duration of this section is <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\frac{a}{j}" title="\frac{a}{j}" />. This shows that with a higher jerk we can reach the target acceleration in a faster time. 
+
+- **Section 2:** Once we reach the maximum acceleration, we cannot grow quadratically anymore. The speed then only grows ```linearly``` until we need to start reduce acceleration, otherwise we overshoot the target max speed. So the time of this second section depends on the maximum speed we want to reach.
+
+- **Section 3:** The third section is where we reduce the acceleration, and the time duration is the same as the first section. Note the symmetry of the curve because we selected maximum and minimum jerk to be equal to each other, as it is normally the case in practice.
+
+- **Section 4:** The fourth section is the easiest, because the speed does not change. This is usually the longest section, and its duration in time depends on the total movement length. We first we need to know how much distance is covered during the acceleration and deceleration phases. We can find that simply by integrating the speed over the time intervals. Then, we remove the two side phases from the total movement distance and find out how long the central part is. The condition we need to impose is that this distance (or equivalently its execution time) is non negative.
+
+- **Section 5,6,7:** The last three sections make the deceleration phase and they are symmetrical to the first three sections.
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155006543-59130958-f535-4d01-9d82-cf836f5db6c6.png" />
+</p>
+
+
+**Note:** If we happen to have a negative result it means that the path is not long enough to allow the maximum speed to be reached. In that case we need to reduce the maximum value for speed and recalculate the acceleration and deceleration phases. The new target speed will be reached after the acceleration phase and then the deceleration will start immediately. That means that the time <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;dt_{4}" title="dt_{4}" /> is zero: there is no constant speed section in the profile. In extreme cases, when the path is very short and when the target acceleration is very high, we check the condition that the time <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;dt_{2}" title="dt_{2}" /> must be positive. If <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;dt_{2}" title="dt_{2}" /> comes out negative, then we need to reduce amax accordingly, so that dt2 is zero. In this case the movement will only be jerk up and jerk down, with the S-curve reducing to a ```4``` segments profile (segments 1,3,5,7 are still there while 2,4,6 disappear).
 
 
 
