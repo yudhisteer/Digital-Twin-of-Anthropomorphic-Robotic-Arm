@@ -1528,7 +1528,7 @@ To summarise:
 
 The equations describing an S-curve depend on 3 main parameters: <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;v_{max}" title="v_{max}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;a_{max}" title="a_{max}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;j_{max}" title="j_{max}" />.  Here, we are considering the simple case of starting and ending with zero speed and zero acceleration. This is normally the case when planning a trajectory between two ```non-tangential``` transition points. We need to stop and generate a new trajectory for the next block starting again from zero speed.  If the transition between two consecutive blocks is ```tangential```, then we do not need to stop but merge the two blocks together into a single large movement.
 
-We have seven sections in the movement. Below the notation ```v```, ```a``` and ```j``` represents <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;v_{max}" title="v_{max}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;a_{max}" title="a_{max}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;j_{max}" title="j_{max}" /> respectively.
+We have ```7``` sections in the movement:
 
 - **Section 1:** During the first section the speed increases very quickly, only limited by the maximum jerk, as a square function of time. The acceleration increases linearly.
 The time duration of this section is <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\frac{a}{j}" title="\frac{a}{j}" />. This shows that with a higher jerk we can reach the target acceleration in a faster time. 
@@ -1541,6 +1541,7 @@ The time duration of this section is <img src="https://latex.codecogs.com/png.im
 
 - **Section 5,6,7:** The last three sections make the deceleration phase and they are symmetrical to the first three sections.
 
+Below the notation ```v```, ```a``` and ```j``` represents <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;v_{max}" title="v_{max}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;a_{max}" title="a_{max}" /> and <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;j_{max}" title="j_{max}" /> respectively.
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/155006543-59130958-f535-4d01-9d82-cf836f5db6c6.png" />
