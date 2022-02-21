@@ -1547,9 +1547,15 @@ The time duration of this section is <img src="https://latex.codecogs.com/png.im
 </p>
 
 
-**Note:** If we happen to have a negative result it means that the path is not long enough to allow the maximum speed to be reached. In that case we need to reduce the maximum value for speed and recalculate the acceleration and deceleration phases. The new target speed will be reached after the acceleration phase and then the deceleration will start immediately. That means that the time <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;dt_{4}" title="dt_{4}" /> is zero: there is no constant speed section in the profile. In extreme cases, when the path is very short and when the target acceleration is very high, we check the condition that the time <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;dt_{2}" title="dt_{2}" /> must be positive. If <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;dt_{2}" title="dt_{2}" /> comes out negative, then we need to reduce amax accordingly, so that dt2 is zero. In this case the movement will only be jerk up and jerk down, with the S-curve reducing to a ```4``` segments profile (segments 1,3,5,7 are still there while 2,4,6 disappear).
+**Note:** If we happen to have a negative result it means that the path is not long enough to allow the maximum speed to be reached. In that case we need to reduce the maximum value for speed and recalculate the acceleration and deceleration phases. The new target speed will be reached after the acceleration phase and then the deceleration will start immediately. That means that the time <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;dt_{4}" title="dt_{4}" /> is zero: there is no constant speed section in the profile. In extreme cases, when the path is very short and when the target acceleration is very high, we check the condition that the time <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;dt_{2}" title="dt_{2}" /> must be positive. If <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;dt_{2}" title="dt_{2}" /> comes out negative, then we need to reduce amax accordingly, so that <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;dt_{2}" title="dt_{2}" /> is zero. In this case the movement will only be jerk up and jerk down, with the S-curve reducing to a ```4``` segments profile (segments 1,3,5,7 are still there while 2,4,6 disappear).
 
+To summarise:
 
+- The area under curve must always be the same, regardless of the dynamics.
+- It is not necessarily that all 7 zones of movement are present, for example, if the acceleration is so small that the movement does not have enough time to reach the maximum speed before it has to start slowing down again. Some might have to be skipped because of time constraints. In this case it is the central zone with constant speed that is not present.
+- Limiting the jerk is a very important requirement when generating trajectories.
+
+#### 7.3 Bézier Trajectory
 
 
 
