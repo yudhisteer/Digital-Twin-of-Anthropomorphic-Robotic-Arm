@@ -1556,7 +1556,50 @@ To summarise:
 - It is not necessarily that all 7 zones of movement are present, for example, if the acceleration is so small that the movement does not have enough time to reach the maximum speed before it has to start slowing down again. Some might have to be skipped because of time constraints. In this case it is the central zone with constant speed that is not present.
 - Limiting the jerk is a very important requirement when generating trajectories.
 
-#### 7.3 Bézier Trajectory
+#### 7.3 Sinusoidal and Bézier Trajectory
+The S-curve we just examined is the most common solution to generate a speed profile because it allows for complete control over all positive and negative speed, acceleration and jerk values. However, there are alternatives whch can outperform the S-curve. 
+
+##### 7.3.1 Sinusoidal
+In the diagram below, the orange curve is the S-curve with three segments needed to reach maximum speed. The acceleration is trapezoidal and the jerk jumps to maximum values instantaneously. The derivative of jerk will result in an infinite pulse. This can be a problem for extra-smooth movements. In that case it could be useful to use a sinusoidal acceleration profile, so that derivatives are limited to a higher degree. 
+
+- The red curve is constructed with one single sinusoidal segment to reach maximum speed. 
+- The acceleration and jerk profiles are much smoother which is a consequence of the limited harmonic content of the sinusoidal curves. The magnitude of the jerk is much lower and this requires a lower power peak. 
+- The sinusoidal profile is that one single segment is enough to change speed, so instead of a 7 segments curve we now only need a 3 segments curve.
+- However, the time to reach maximum speed is longer under the constraint of equal maximum acceleration.
+
+##### 7.3.2 Bézier
+Alternatively, we can also use Bézier to generate smooth speed profiles. With control points at the same speed of the end points(so as initial and final accelerations are zero), and equidistant(so as to create a uniform spline), The result is a very simple trajectory model, with much fewer parameters to control than the S-curve. The maximum values for acceleration and jerk depend solely on the difference between starting and target velocity, and they are directly related to each other, not independent as they were in the S-curve. We can also use a higher order spline, for example a quartic Bezier curve, by adding extra control points to be able to set jerk and acceleration independently.
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155074270-b3e1163b-612f-4bfb-93ad-bc0dcb3cbdd0.png" />
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
