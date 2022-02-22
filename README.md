@@ -1576,23 +1576,31 @@ Alternatively, we can also use Bézier to generate smooth speed profiles. With c
 </p>
 
 
+#### 7.4 Time-optimal movements
+While the theory presented above works fine for individual joint axes, it does not immediately apply so easily for path interpolated movement. Recall that the relation between path and joints is highly ```non-linear```.
+
+If we make a robot perform a linear movement along the Y axis then, there is a point close to the singularity where the 4th and 6th axis have to move at great speed to keep up. This solution is not physically possible, because the motors cannot realistically accelerate and reach such high speeds. The solution is to slow down the path speed in the critical area, so that the individual joint axes have time to move without violating their speed and acceleration limits. The TCP slows down while the 4th and 6th axes make a 180 degrees rotation.
+
+**1. Maximum Speed Constraint**
+For painting and welding application, we need to impose a speed limit. However, the covered path is the same, we always start and finish at the same positions, but the time that it takes to complete the movement will be different because the speed has changed.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155080273-b5fd2238-5fff-4b32-ac6c-d0780d999e79.png" />
+</p>
 
 
 
 
+**1. Joint Maximum Speed Constraint**
+In joint maximum speed, the constraint is non-linear. The easiest solution to run the movement without violating its new constraints is to limit the maximum path speed, so as to avoid reaching limits on the joints. But this approach is inefficient as it decreases productivity. If the planned path goes close to singularity then the path speed needs to be almost zero, which cannot be done for entire movement. Hence, we want to find the ```time-optimal``` solution which is a trajectory that traverses the path as fast as possible, but still without violating the given dynamic constraints. The consequence is that the path speed will not be constant anymore: it will be higher (up to max path speed) when the joints move at sublimit dynamics, and will be slower (almost down to zero in singularities) when the joint dynamics reach their limits.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155082175-0c14f142-b033-4e23-af5d-f13b16bbaec8.png" />
+</p>
 
 
-
-
-
-
-
-
-
-
-
-
-
+#### 7.5 Differential Kinematics
+How do we find the maximal allowed path speed the given speed limits on the joint axes?
 
 
 
