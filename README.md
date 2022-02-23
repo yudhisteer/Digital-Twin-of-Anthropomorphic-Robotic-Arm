@@ -10,6 +10,7 @@
 5. Path Planning
 6. Workspace Monitoring
 7. Trajectory Generation
+8. Mechanics
 
 ### 1. Industrial Robots
 Most industrial robots are mechanical arms controlled by electric servo motors and programmed to perform a specific task. This task is mainly repetitive, tedious and boring such that robots are more fitted to perform these tasks than humans. It is important to note here that these robots only perform actions that it was programmed for and does not utilizes any form of intelligence. It has no visual inputs and no AI that can allow it to take decisions on the go. However, a lot of research is being done that uses **Reinforcement Learning** so that the robot teaches itself to perform task such as grabbing objects of different sizes and shapes. 
@@ -1666,16 +1667,18 @@ J4 will exhibit a smoother movement, will likely experience no vibrations, but i
 One typical application of trajectory filtering in the time domain is the case of external path corrections for example a robot picking an object on a conveyor belt. The robot plans a movement to pick up a product along the Red line, but the conveyor starts moving and the robot will actually follow the Green path. The **execution time** is the **same**, but the path turned out to be longer than planned, so the **speed limits** might have been violated. Thus, it is useful to have time filters on the individual axes, so that sudden jumps coming from external signals are smoothed out and the likelihood that a servo drive would trigger an error is reduced.
 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/155344976-478fe18e-6c1c-4aac-9ad1-4138ee5df7ff.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/155345717-b46711a6-b8f9-49fd-97be-fee1cad85dff.png" />
 </p>
 
+### 8. Mechanics
 
 
 
 
 
+#### 8.1 Statics
 
-
+#### 8.2 Dynamics
 
 
 
