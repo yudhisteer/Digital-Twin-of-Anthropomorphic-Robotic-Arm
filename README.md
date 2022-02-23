@@ -1663,12 +1663,11 @@ If we look at a movement which is close to a singularity, Joint 4 flips very qui
 
 J4 will exhibit a smoother movement, will likely experience no vibrations, but it will also be a bit slower to reach its final target position.  Note that filtering over a very large window of samples, causes large position violations.
 
-One typical application of trajectory filtering in the time domain is the case of external path corrections for example a robot picking an object on a conveyor belt. 
+One typical application of trajectory filtering in the time domain is the case of external path corrections for example a robot picking an object on a conveyor belt. The robot plans a movement to pick up a product along the Red line, but the conveyor starts moving and the robot will actually follow the Green path. The **execution time** is the **same**, but the path turned out to be longer than planned, so the **speed limits** might have been violated. Thus, it is useful to have time filters on the individual axes, so that sudden jumps coming from external signals are smoothed out and the likelihood that a servo drive would trigger an error is reduced.
 
-
-
-
-
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155344976-478fe18e-6c1c-4aac-9ad1-4138ee5df7ff.png" />
+</p>
 
 
 
