@@ -1654,6 +1654,32 @@ Once a trajectory is generated in the path domain, the inverse kinematic model i
 
 ##### 7.6.1 Gaussian Filter
 
+If we look at a movement which is close to a singularity, Joint 4 flips very quickly - its axis jumps rapidly and its speed reaches high values. To filter, we take a Gaussian curve and swipe it over the original signal in time. The immediate result of this approach is that it reduces sudden peaks. Mathematically, the multiplication means taking the original signal(Red) f and ```convoluting``` with the signal(Green) g, where g is the Gaussian. The result of the convolution is the blue curve, which rises less sharply than the original one. The peak speed is much lower, as are the acceleration and jerk. 
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155304572-ff2ee954-c378-43ff-aa35-91671212a7d2.png" />
+</p>
+
+J4 will exhibit a smoother movement, will likely experience no vibrations, but it will also be a bit slower to reach its final target position.  Note that filtering over a very large window of samples, causes large position violations.
+
+One typical application of trajectory filtering in the time domain is the case of external path corrections for example a robot picking an object on a conveyor belt. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
