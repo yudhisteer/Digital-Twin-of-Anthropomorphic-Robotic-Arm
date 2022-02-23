@@ -1600,12 +1600,59 @@ In joint maximum speed, the constraint is non-linear. The easiest solution to ru
 
 
 #### 7.5 Differential Kinematics
-How do we find the maximal allowed path speed the given speed limits on the joint axes?
+How do we find the maximal allowed path speed the given speed limits on the joint axes? A closed-form solution to the problem is to differentiate the kinematic model with respect to time.
+
+The TCP is a function of the joints(<img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\theta&space;" title="\theta " />) via direct transformations, which always exist for serial kinematics. 
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155291169-14aab2ba-519a-46ee-96e7-25697103cb4e.png" />
+</p>
+
+
+If we take the time derivatives and apply the chain rule we can express the TCP speed as a function of the joints speeds and we get a linear relation.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155291584-db8f9a29-ec64-4c8a-ba77-362e1253d8b9.png" />
+</p>
+
+
+The matrix of the partial derivatives is called Jacobian, which we denote by J. It is a ```6x6``` matrix because we have ```6``` joints and ```6``` possible speeds for the TCP: three linear components along the XYZ axes and three angular velocities around the XYZ axes, that is along the rotating ABC axes. The combined vector of these ```6``` velocities is called ```spatial velocity``` or ```twist```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155293414-dcdf072e-0eb4-47c7-9156-e143b8c6bbaf.png" />
+</p>
+
+We can also solve the inverse problem: we can find what speeds are required on the joint axes given a target speed on the TCP. The solution is simply to invert the Jacobian matrix.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155293893-d3ebe647-3b0e-4487-839b-3aaddba2e20c.png" />
+</p>
+
+**Note:** 
+
+- The inverse differential kinematics admit a ```unique``` solution. Given a speed of the TCP we can calculate a ```unique speed``` for the joints, unlike the position inverse kinematics, where given the pose of the end effector we could find ```different``` possible configurations for the joints.
+- When the robot encounters a singularity during its motion the Jacobian matrix loses rank and its determinant is zero which means the matrix can no longer be inverted. In practical it means that even a very small speed along the path axes might require an infinite high speed on the joint axes.
+- Using differential kinematics we were able to derive speed, acceleration and jerk of the joints, but we do not know yet how much ```torque``` the motors need to move the axes along those trajectories. For that we need to know how ```heavy``` the mechanical parts are, what ```inertia``` they have around the rotating frames, also what ```friction``` there is between the joints. A Dynamic model is ```required``` for these calculations.
 
 
 
+#### 7.6 Time-Filtering
+
+If we have a rough geometrical transition between two consecutive programmed paths, our algorithm would detect a large transition angle between the two tangents and plan a complete stop for our trajectory in that point. We would need to smooth out the path with a spline creating a round edge. The speed at transition will immediately increase. Usually, the lower the radius of curvature, the higher the required acceleration. An additional quick way to smooth out trajectories is to introduce a ```filter``` in the ```time domain```.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155298263-84e3b11c-06c0-48aa-91bb-b7e1eafe7668.png" />
+</p>
+
+Once a trajectory is generated in the path domain, the inverse kinematic model is called to transform the set points into joint values. These values are individually sent to the each servo drive to control the motor of the corresponding axis. Now, we need to add a smoothing filter at the axis level. The effect will be to reduce jerk and therefore soften the vibration on the mechanics. The drawback is a slight modification of the originally programmed path because each axis is individually influenced in different ways by its own filter. The size of the deviation depends on how large we configure the filter and how fast the robot moves. A time filter of 10ms will produce negligible deviation compared to 100ms. 
 
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155299387-e8dae02a-bcda-4a0b-89f8-69b2db003866.png" />
+</p>
+
+
+##### 7.6.1 Gaussian Filter
 
 
 
