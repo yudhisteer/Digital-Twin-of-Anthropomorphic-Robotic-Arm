@@ -1671,12 +1671,27 @@ One typical application of trajectory filtering in the time domain is the case o
 </p>
 
 ### 8. Mechanics
-
-
-
-
+So far we have talked about ```Kinematics``` which is about controlling the position and speed of our robot which is useful in most applications like ```Pick & Place```, ```Palletizing```, ```Painting``` and ````Welding````. However, there are instances where we also need to control the forces at the TCP, for example, if we want our robot to clean a window pane. Ideally, we want the TCP to apply a certain force perpendicular to the glass. Not too much, because we may end up breaking the window and not too little because the cleaning won’t be effective.
 
 #### 8.1 Statics
+Combining position and force control is called ```Hybrid Control```. Specifically for 6 axes robot we can either control the position and orientation of the end effector, or we can also decide to control its forces and torque. Forces act linearly along the XYZ axes and torques act rotationally along the ABC axes. Packed together this six-dimensional vector is called ```Wrench```. What we want to know is if we want to apply a certain force N on a surface along a particular axis, then what torque do we need to apply to the motors to reach it?
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155472409-ad25272a-c5e7-4c6f-a309-d5e57655adb4.png" />
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### 8.2 Dynamics
 
