@@ -1718,10 +1718,28 @@ Combining position and force control is called ```Hybrid Control```. Specificall
 
 6. Substiting equation (5) into equation (4):
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155475854-53306818-c8fb-4578-9854-8c1408d29e1c.png" />
+</p>
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155475959-10d22197-6b43-4f76-8818-dd6e2e2b5ead.png" />
+</p>
+             
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155476085-c6a7b2e6-4c25-4817-b1b0-91447ea2adb4.png" />
+</p>
 
 
+Equation (6) tells us that if we want to find out what torque we need from the motors so that the robot pushed against the window with a specific normal force, we simply need to compose the wrench vector and pre-multiply it by the transpose of the Jacobian matrix.
 
+7. If we know want to know what TCP force we can achieve by applying a given torque to the joint axes:
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155477054-dd3b340d-f8c2-4cad-9596-5f94e1e0c41d.png" />
+</p>
+
+**Note:** At singularities the determinant of the Jacobian goes to zero and the matrix cannot be inverted, which means that even small TCP movement can cause extremely high joint speeds. In our case a very small torque on the motors can cause a great force or torque at the TCP. We are in the situation where the robot experiences total loss of mobility around one axis, but at the same time the robot can oppose an infinite force or torque at the TCP without doing any work up to the physical strength of the mechanical structure itself.
 
 
 
