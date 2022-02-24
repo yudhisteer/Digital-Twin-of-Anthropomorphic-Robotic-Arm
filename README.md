@@ -1745,26 +1745,35 @@ Equation (6) tells us that if we want to find out what torque we need from the m
 #### 8.2 Dynamics
 Previously we have considered the case when the robot was in ```static equilibrium```, that is when the robot is not moving. Now, we will consider the case of a robot in any given ```dynamic state```, so that all the joints have a non-zero speed and acceleration. When the robot moves, it is because the motors are applying torques to the joints. The question now is to find out how much torque we need from the motors to generate a target speed and acceleration at its joints.
 
-##### 8.2.1 Inverse Dynamics
+
+##### 8.2.1 Direct Dynamics
+With Direct Dynamics it is possible to find out joints accelerations given the initial state of position and speed and the input torques from the actuators: 
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155527157-49640019-5d00-438c-833c-43f7713021a1.png" />
+</p>
+
+##### 8.2.2 Inverse Dynamics
 We need to define a function of position, velocity and accelaration which defines the ```inverse dynamics```:
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/155524020-7adb3e35-4318-419a-a8ae-dba7ab94e901.png" />
 </p>
 
-It is interesting to note here that the Torque required depends not only on the speed and acceleration of the joints but also of the position because of the gravitational effects of the links. As shown below, 
+It is interesting to note here that the Torque required depends not only on the speed and acceleration of the joints but also of the position because of the gravitational effects of the links. As shown below, if the J3 is at 90deg the torque required to achieve a certain movement is much lower than the same axis would need for the same movement at 0deg. This is because gravitational force have a  more considerable effect on the motion in the second scenario.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155526663-fffa7d2a-efed-429c-99e5-137af14c2407.png" />
+</p>
+
+Like the kinematic model,  the dynamic model involves all the links at the same time as their movements influence each other. Consider J1 moving alone, while all the others are at standstill. We might think that this movement should not affect the torque of the other axes, whose motors are not rotating. However, because of the effects of centrifugal forces that pull the TCP load outwards, J2 requires a negative torque from its motor in order to hold its position still, even if the axis itself is not moving!
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155528307-b6254573-cbc5-48dc-ab99-96f9bc8249c2.png" />
+</p>
 
 
-
-
-##### 8.2.2 Direct Dynamics
-
-
-
-
-
-
-
+##### 8.2.3 Dynamic Parameters
 
 
 
