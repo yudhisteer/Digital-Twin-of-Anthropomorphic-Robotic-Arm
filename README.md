@@ -1731,7 +1731,7 @@ Combining position and force control is called ```Hybrid Control```. Specificall
 </p>
 
 
-Equation (6) tells us that if we want to find out what torque we need from the motors so that the robot pushed against the window with a specific normal force, we simply need to compose the wrench vector and pre-multiply it by the transpose of the Jacobian matrix.
+Equation (6) tells us that if we want to find out what torque we need from the motors when that the robot's TCP applies with a specific normal force, we simply need to compose the wrench vector and pre-multiply it by the transpose of the Jacobian matrix.
 
 7. If we know want to know what TCP force we can achieve by applying a given torque to the joint axes:
 
@@ -1745,9 +1745,7 @@ Equation (6) tells us that if we want to find out what torque we need from the m
 
 
 #### 8.2 Dynamics
-
-
-
+Previously we have considered the case when the robot was in ```static equilibrium```, that is when the robot is not moving. Now, we will consider the case of a robot in any given ```dynamic state```, so that all the joints have a non-zero speed and acceleration. If the robot moves, it is because the motors are applying torques to the joints. The question now is to find out how much torque we need from the motors to generate a target speed and acceleration at its joints.
 
 
 
