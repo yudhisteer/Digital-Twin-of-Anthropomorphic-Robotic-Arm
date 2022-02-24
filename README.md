@@ -1776,11 +1776,15 @@ Like the kinematic model,  the dynamic model involves all the links at the same 
 ##### 8.2.3 Dynamic Parameters
 Now we also need to find what parameters influence the dynamics of the robot.
 
-- **Mass m:** Gravity effects depends on the mass of the body and the motor needs to compensate for that.
-- **Center of Mass** <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;r_{m}" title="r_{m}" />: 
+- **Mass, m:** Gravity effects depends on the mass of the body and the motor needs to compensate for that.
+- **Center of Mass,** <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;c_{m}" title="c_{m}" />:  Knowing how the mass of a link is distributed is extremely important. It could be uniformly distributed or concentrated towards the end which would require more torque to accelerate because of the increased load inertia seen from the joint.
+- **Inertia, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;I_{x}" title="I_{x}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;I_{y}" title="I_{y}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;I_{z}" title="I_{z}" />:** Because our link rotates, we need to consider its inertia. If we locate our coordinate system at the center of mass and align with the main axes of rotations xyz, we only have a diagonal matrix with three elements <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;I_{x}" title="I_{x}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;I_{y}" title="I_{y}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;I_{z}" title="I_{z}" />.
+- **Motor Inertia,** <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;I_{m}" title="I_{m}" />: The motor also has an inertia value depending on its mechanical built.
+- **Gear Ration, G:** If the motor is attached to the link using a gearbox, then the inertia value is increased by the square of the gear ratio.
+- **Fiction,** <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;F_{s}" title="F_{s}" />, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;F_{v}" title="F_{v}" />: When we start the motor we need an amount of torque only to overcome the ```static friction```, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;F_{s}" title="F_{s}" />. So the total torque required will increase immediately even at zero speed. Plus we have some ```viscous friction```, <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;F_{v}" title="F_{v}" />, which usually increases slowly with the speed of the axis. Friction effects are much larger when using gearboxes.
+- **Flexibility,** <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;K,\delta&space;" title="K,\delta " />: The mechanical coupling acts like a spring with a specific stiffness and damping, introducing vibrations into the motion and modify the required torque.
 
-
-
+If we take the parameters described above for each of the six links then we have what we need to parameterize the entire dynamic model of our robot.
 
 
 
