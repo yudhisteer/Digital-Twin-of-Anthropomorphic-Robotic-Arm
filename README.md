@@ -1774,10 +1774,10 @@ Like the kinematic model,  the dynamic model involves all the links at the same 
 
 
 ##### 8.2.3 Dynamic Parameters
+Now we also need to find what parameters influence the dynamics of the robot.
 
-
-
-
+- **Mass m:** Gravity effects depends on the mass of the body and the motor needs to compensate for that.
+- **Center of Mass** <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;r_{m}" title="r_{m}" />: 
 
 
 
