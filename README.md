@@ -7,7 +7,7 @@ Simulation is an extremely important part of the development of a robot, and in 
 -  **Design Planning:** We can also plan and ```optimize``` our entire production line design. In simulation we can make sure our robots are in the best position to avoid singularities and have time-optimal trajectories for the tasks to be completed.
 -  **Process Monitoring:** We can remotely connect the simulation to the real machine, and ```control``` it or simply view it from our office.
 
-
+The main goal of this project is to understand how to design the control software for a standard 6-axes industrial manipulator. 
 
 ## Plan of Action
 1. Research on Industrial Robots
@@ -1797,6 +1797,16 @@ If we take the parameters described above for each of the six links then we have
 
 
 ## Implementation
+
+## Conclusion
+
+1. We started by developing a geometrical framework of individual frames, and calculating their translations and rotations in space.
+2. Then, we quickly added frames on top of each other and were able to derive the formulas for the forward kinematics, that is, how to calculate the position and orientation of the end effector given the values of all joints.
+3. We studies the Inverse Kinematics problem which is how to calculate the value of the joints given the current TCP pose. We used some geometrical intuition to derive those equations and showed that the solution is not always unique.
+4. Once we knew how to calculate all positions, we needed ways to move from one pose of the robot to the next, following a defined path. We studied interpolations of lines, circles, and splines in space.
+5. In Workspace Monitoring, we introduced safe and forbidden zones and studied how capsules can be useful to detect collisions between robots and also between the robot’s end effector and its own body.
+6. We generated a realistic trajectory that would move along the planned path without violating the given constraints of speed, acceleration and jerk.
+7. We introduced the concepts of statics and dynamics in Mechanics, where we talked about force control and the dynamic model of the robot.
 
 ## References
 1. https://www.youtube.com/watch?v=L7J_9OSxGvA
