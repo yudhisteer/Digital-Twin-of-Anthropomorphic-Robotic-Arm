@@ -1,6 +1,13 @@
 # Digital Twin of Anthropomorphic Robotic Arm
 
 ## Abstract
+Simulation is an extremely important part of the development of a robot, and in general of any kind of industrial machine or process. Creating a simulated version of our machine, a so-called ```digital twin```, will give you many advantages:
+
+- **Model Validation:** We can validate the ```correctness``` of our model. For example, after we write the inverse kinematics of our robot we can check that the results are correct in simulation, before we go on the real machine. This makes testing much ```safer``` and ```cheaper```.
+-  **Design Planning:** We can also plan and ```optimize``` our entire production line design. In simulation we can make sure our robots are in the best position to avoid singularities and have time-optimal trajectories for the tasks to be completed.
+-  **Process Monitoring:** We can remotely connect the simulation to the real machine, and ```control``` it or simply view it from our office.
+
+
 
 ## Plan of Action
 1. Research on Industrial Robots
