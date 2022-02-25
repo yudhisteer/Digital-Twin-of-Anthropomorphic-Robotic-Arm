@@ -1,5 +1,10 @@
 # Digital Twin of Anthropomorphic Robotic Arm
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155680544-0fa9ca2a-ba46-47e2-a927-061c6de97a6e.png" />
+</p>
+
+
 ## Abstract
 Simulation is an extremely important part of the development of a robot, and in general of any kind of industrial machine or process. Creating a simulated version of our machine, a so-called ```digital twin```, will give you many advantages:
 
