@@ -1855,11 +1855,10 @@ We will start by designing a floor on which we will put our base. The base and i
 A Bracket is added on top of the base to attach J2. Since, it is the heaviest link, a mechanical spring is attached along with a second motor.
 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/155933644-79531325-7ebd-43ab-8587-d78bf2041405.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/155935358-6999d678-dcde-465f-adea-11a0e31d8bdd.png" />
 </p>
 
 ##### 3. Joint 3
-
 Joint 3 is connected to using using a motor:
 
 <p align="center">
@@ -1867,11 +1866,42 @@ Joint 3 is connected to using using a motor:
 </p>
 
 
+##### 4. Joint 4
+Join4 4 is connected to Joint 3 and 3 more motors will be used for the motion of J5:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155935820-81a0e0f9-0a05-47e6-a947-cfe2e097945a.png" />
+</p>
+
+##### 5. Joint 5
+Joint 5 is connected to J4:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155936086-0fa54f07-e4f9-462f-9e73-e7e2f77759b4.png" />
+</p>
+
+##### 6. TCP
+Mounting point is added to J5 where tool will be connected and TCP will be used:
+
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155936440-43282c2a-a6ff-495e-8a48-e6b02c90d3de.png" />
+</p>
+
+Now that the robot has been mounted, we will need to write a script to control its joints.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155936605-82accda1-f117-4680-8c31-2a2f6f384bd0.png" />
+</p>
+
+#### 9.4 Scripting
 
 
 
 
-#### 9.4 Markerless AR
+
+
+#### 9.5 Markerless AR
 
 
 
