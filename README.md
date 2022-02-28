@@ -23,6 +23,7 @@ The main goal of this project is to understand how to design the control softwar
 6. Workspace Monitoring
 7. Trajectory Generation
 8. Mechanics
+9. Implementation
 
 ### 1. Industrial Robots
 Most industrial robots are mechanical arms controlled by electric servo motors and programmed to perform a specific task. This task is mainly repetitive, tedious and boring such that robots are more fitted to perform these tasks than humans. It is important to note here that these robots only perform actions that it was programmed for and does not utilizes any form of intelligence. It has no visual inputs and no AI that can allow it to take decisions on the go. However, a lot of research is being done that uses **Reinforcement Learning** so that the robot teaches itself to perform task such as grabbing objects of different sizes and shapes. 
@@ -1799,19 +1800,54 @@ Now we also need to find what parameters influence the dynamics of the robot.
 If we take the parameters described above for each of the six links then we have what we need to parameterize the entire dynamic model of our robot.
 
 
+### 9. Implementation
+Afer this thorough explanation on the engineering concepts behind a 6dof robotic arm, it is now time to design one. We will work on top of the 3d model designed by Fabrizio to implement an ```Augmented Reality(AR) Digital Twin```.
+
+#### 9.1 Digital Twin
+
+A Digital twin in defined as:
+
+_A digital twin simply refers to a virtual replica of a physical product or assets. This replica is updated as regularly as possible or in real-time._
+
+We need to update our replice - 2D/3D model - so that it is as similar as possible to the real physical product at any time. Updating the model can be successfully used for a range of purposes which includes analyzing previous results and testing new strategies. However, we might ask why to go through all the trouble of creating a virtual duplicate of a pre-existing structure or area. The answer is simple: **to create an environment where changes can be made with almost identical results in the physical space.**
+
+Experimentation is a vital part of the developmental process. However, it can be a really costly endeavor. Not only is it financially demanding, but it can also be time-consuming. With a digital replica, however, new solutions can be tested and simulations can be run with quick edits. Digital twin helps companies to make changes to existing production equipment, reducing downtime to an absolute minimum. It is created with identical data and layout as the original, allowing experts to remotely access vital information about the physical asset by simply working on the digital twin.
 
 
-## Implementation
+After the testing has been done, instructions can then be sent to those with access to make the physical changes. If for instance, the experiment does not produce the desired results, the experiments would not have been performed at the expense of physical resources. In our case at RT Knits, the 6dof robot can be tested in various positions to carry different tasks in a production line and can be refined and tested without having to shut down the entire process and incurring additional costs. While we may be able to use the digital twin for ```predictive analysis```, we can also use it for ```monitoring``` and ```situational awareness``` for the existing structure.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Conclusion
 
-1. We started by developing a geometrical framework of individual frames, and calculating their translations and rotations in space.
-2. Then, we quickly added frames on top of each other and were able to derive the formulas for the forward kinematics, that is, how to calculate the position and orientation of the end effector given the values of all joints.
-3. We studies the Inverse Kinematics problem which is how to calculate the value of the joints given the current TCP pose. We used some geometrical intuition to derive those equations and showed that the solution is not always unique.
-4. Once we knew how to calculate all positions, we needed ways to move from one pose of the robot to the next, following a defined path. We studied interpolations of lines, circles, and splines in space.
-5. In Workspace Monitoring, we introduced safe and forbidden zones and studied how capsules can be useful to detect collisions between robots and also between the robot’s end effector and its own body.
-6. We generated a realistic trajectory that would move along the planned path without violating the given constraints of speed, acceleration and jerk.
-7. We introduced the concepts of statics and dynamics in Mechanics, where we talked about force control and the dynamic model of the robot.
+1. We started by developing a ```geometrical framework``` of individual frames, and calculating their translations and rotations in space.
+2. Then, we quickly added frames on top of each other and were able to derive the formulas for the ```Forward Kinematics```, that is, how to calculate the position and orientation of the end effector given the values of all joints.
+3. We studies the ```Inverse Kinematics``` problem which is how to calculate the value of the joints given the current TCP pose. We used some geometrical intuition to derive those equations and showed that the solution is not always unique.
+4. Once we knew how to calculate all positions, we needed ways to move from one pose of the robot to the next, following a defined ```path```. We studied interpolations of lines, circles, and splines in space.
+5. In ```Workspace Monitoring```, we introduced safe and forbidden zones and studied how capsules can be useful to detect collisions between robots and also between the robot’s end effector and its own body.
+6. We generated a realistic ```trajectory``` that would move along the planned path without violating the given constraints of speed, acceleration and jerk.
+7. We introduced the concepts of ```statics``` and ```dynamics``` in Mechanics, where we talked about force control and the dynamic model of the robot.
+
+
+
+
+
+
+
+
+
+
 
 ## References
 1. https://www.youtube.com/watch?v=L7J_9OSxGvA
@@ -1827,6 +1863,4 @@ If we take the parameters described above for each of the six links then we have
 11. https://www.quora.com/What-is-smoothness-and-how-is-it-different-from-continuity
 12. https://www.youtube.com/watch?v=1JRMqfEm79c
 13. https://www.youtube.com/watch?v=pnYccz1Ha34
-
-## Conclusion
-
+14. https://4experience.co/digital-twin-in-ar-vr/
