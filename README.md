@@ -1837,7 +1837,38 @@ Now, in order to update our 3d model in real-time, the physical machine would ne
 
 https://user-images.githubusercontent.com/59663734/155929694-b5c0a3b5-f7bf-4b4d-9a05-52d846265ddc.mp4
 
-#### 9.3 Robotic Arm Model
+#### 9.3 Mounting Robotic Arm Model
+The components of the robotic arm has been given but we will need to mount it. We will start from the Base and connect each links and motors till the TCP.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155931029-b1f80fe0-3d8b-4ec0-b8ec-9ccd96ac9116.png" />
+</p>
+
+##### 1. Base
+We will start by designing a floor on which we will put our base. The base and its motor is connected as shown below:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155932312-9d3a1aa3-d935-4ad6-bac2-2e051e4d3b7f.png" />
+</p>
+
+##### 2. Joint 2
+A Bracket is added on top of the base to attach J2. Since, it is the heaviest link, a mechanical spring is attached along with a second motor.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155933644-79531325-7ebd-43ab-8587-d78bf2041405.png" />
+</p>
+
+##### 3. Joint 3
+
+Joint 3 is connected to using using a motor:
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155934251-f7966b57-de84-486e-92d6-aaf27e0bbb34.png" />
+</p>
+
+
+
+
 
 
 #### 9.4 Markerless AR
