@@ -1805,11 +1805,15 @@ Afer this thorough explanation on the engineering concepts behind a 6dof robotic
 
 #### 9.1 Digital Twin
 
-A Digital twin in defined as:
+The concept and model of the digital twin was publicly introduced in 2002 by ```Michael Grieves```, then of the University of Michigan, at a Society of Manufacturing Engineers. He defined it as:
 
 _A digital twin simply refers to a virtual replica of a physical product or assets. This replica is updated as regularly as possible or in real-time._
 
 We need to update our replice - 2D/3D model - so that it is as similar as possible to the real physical product at any time. Updating the model can be successfully used for a range of purposes which includes analyzing previous results and testing new strategies. However, we might ask why to go through all the trouble of creating a virtual duplicate of a pre-existing structure or area. The answer is simple: **to create an environment where changes can be made with almost identical results in the physical space.**
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155927912-8a7aa614-e436-4f59-8568-df23ebff7ba1.png" />
+</p>
 
 Experimentation is a vital part of the developmental process. However, it can be a really costly endeavor. Not only is it financially demanding, but it can also be time-consuming. With a digital replica, however, new solutions can be tested and simulations can be run with quick edits. Digital twin helps companies to make changes to existing production equipment, reducing downtime to an absolute minimum. It is created with identical data and layout as the original, allowing experts to remotely access vital information about the physical asset by simply working on the digital twin.
 
@@ -1817,14 +1821,26 @@ Experimentation is a vital part of the developmental process. However, it can be
 After the testing has been done, instructions can then be sent to those with access to make the physical changes. If for instance, the experiment does not produce the desired results, the experiments would not have been performed at the expense of physical resources. In our case at RT Knits, the 6dof robot can be tested in various positions to carry different tasks in a production line and can be refined and tested without having to shut down the entire process and incurring additional costs. While we may be able to use the digital twin for ```predictive analysis```, we can also use it for ```monitoring``` and ```situational awareness``` for the existing structure.
 
 
+#### 9.2 Augmented Reality(AR) in Digital Twin
+Currently, digital twins are 3D-models represented on 2D-screens. With AR, its digital twin can be overlaid on top of it, so we can visualize the machine’s inner workings and understand its data flows. This makes for faster and more ```effective decision-making```. A similar project which I worked on during my internship at RT Knits can be found at this link: [Augmented-Reality-for-Preventive](https://github.com/yudhisteer/Augmented-Reality-for-Preventive-Maintenance)
+
+https://user-images.githubusercontent.com/59663734/155928767-415b28a5-97df-4ec0-b277-d1b13fa2f636.mp4
+
+Another option would be to use ```Virtual Reality(VR)``` which allows users to immerse themselves in the environment of the digital twin. It gives a more visceral impression, which helps better understand the dynamics of the digital twin (and so also of its physical counterpart).
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/155929147-bbbdad28-b347-4960-833b-710952c9fb09.png" />
+</p>
+
+Now, in order to update our 3d model in real-time, the physical machine would need to be connected to sensors sending data in real-time. These IoT sensors would generate data which will be stored in a database and we would need to fetch these data and change our model based on these data according to physical laws. A project which I worked on was to monitor the temperature and humidity of a centrifugal pump and display its real-time values and graphs using Augmented Reality: [Augmented-Reality-and-IoT-for-Machines-Monitoring](https://github.com/yudhisteer/Augmented-Reality-and-IoT-for-Machines-Monitoring)
 
 
+https://user-images.githubusercontent.com/59663734/155929694-b5c0a3b5-f7bf-4b4d-9a05-52d846265ddc.mp4
+
+#### 9.3 Robotic Arm Model
 
 
-
-
-
-
+#### 9.4 Markerless AR
 
 
 
