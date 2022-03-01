@@ -780,13 +780,13 @@ Singularities most occur in nature when we place objects to be grabbed by the TC
   <img src= "https://user-images.githubusercontent.com/59663734/147918132-70959e4b-beb8-4b31-875d-674c90772583.png" />
 </p>
 
-
-
 Below are ```6``` ways to avoid singularities:
 
 **1. Choose another robot:** We can ```only``` get a singularity with a 6-axis or more robot. If we have a four axis robot, there is no such thing as singularity. It cannot happen because any place we want to go there are no two axes fighting each other hence, we have only one solution.
 
 **2. Singularity Avoidance package:** This is a package when  buying a robot that imbed some built-in intelligence to the robot to avoid these singularities. It's going to make movements that will result in only one solution.
+
+![Untitled](https://user-images.githubusercontent.com/59663734/156158791-7f3caf79-5126-4fcd-9cae-412ca4ad6b4b.gif)
 
 **3. Re-design workplace:** We could relocate the robot by lowering it relative to the picking surface or change the table's postion, i.e, we increased the height and placed it a bit further from the base and this result in a change in the articulation of the robot arm. We now have a nice bend between J4 and J5(57.6°).
 
@@ -1986,6 +1986,7 @@ There are several different communication protocols which we can use. Note that 
 
 
 ## Conclusion
+A lot of topics have been covered in this project and though we have not explored extensively some topics, it has been a good start for someone to start understanding the mathematical concepts behind the working of a robot. The concepts explored were:
 
 1. We started by developing a ```geometrical framework``` of individual frames, and calculating their translations and rotations in space.
 2. Then, we quickly added frames on top of each other and were able to derive the formulas for the ```Forward Kinematics```, that is, how to calculate the position and orientation of the end effector given the values of all joints.
@@ -1997,14 +1998,7 @@ There are several different communication protocols which we can use. Note that 
 8. A ```Digital Twin``` of the robot was built on Unity which can simulate the movement of the real robot.
 9. ```Augmented Reality```` is used to project the 3D model on any flat surface for better visualization of the robot's movements.
 
-
-
-
-
-
-
-
-
+A lot of areas are left to be exaplined such as ```Perception``` which allows the robot to be autonomous by visualizing its environment, or the gripping mechanism of the tool at the TCP, or the use of ```Reinforcement Learning``` for the robot to learn from its environment or even ```Controllers``` to model smooth trajectories. These topics will be explored in future projects and will be implemented as per convenient.
 
 
 ## References
@@ -2023,3 +2017,12 @@ There are several different communication protocols which we can use. Note that 
 13. https://www.youtube.com/watch?v=pnYccz1Ha34
 14. https://4experience.co/digital-twin-in-ar-vr/
 15. https://roboticsandautomationnews.com/2021/04/22/the-role-of-robotics-and-automation-in-industry-4-0/42638/
+16. https://i.ytimg.com/vi/h2YM0CDzDl4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBQRM8Z-hmK6YHO0nf_rvrfqt0AKw
+17. https://i.ytimg.com/vi/YS3kt_eqOPY/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAnPQswazv-E5DXW-WYR_RQgKNdHg
+18. https://i.ytimg.com/vi/SefTCXrpL8U/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAGrLwLdT7efDbBk2EFM3U5e-9k8g
+19. https://i.ytimg.com/an_webp/vjJgTvnQpBs/mqdefault_6s.webp?du=3000&sqp=CIbt95AG&rs=AOn4CLCL0YSrq-waSCDMkaAI8bMoVSG6Nw
+20. http://www.mech.sharif.ir/c/document_library/get_file?uuid=5a4bb247-1430-4e46-942c-d692dead831f&groupId=14040
+21. https://www.coursera.org/specializations/modernrobotics
+22. http://hades.mech.northwestern.edu/images/7/7f/MR.pdf
+23. https://link.springer.com/book/10.1007/978-3-319-54413-7
+24. https://www.amazon.com/Robot-Dynamics-Control-Mark-Spong/dp/047161243X
