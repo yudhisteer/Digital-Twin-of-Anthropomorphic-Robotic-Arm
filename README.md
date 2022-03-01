@@ -1834,11 +1834,10 @@ Another option would be to use ```Virtual Reality(VR)``` which allows users to i
 
 Now, in order to update our 3d model in real-time, the physical machine would need to be connected to sensors sending data in real-time. These IoT sensors would generate data which will be stored in a database and we would need to fetch these data and change our model based on these data according to physical laws. A project which I worked on was to monitor the temperature and humidity of a centrifugal pump and display its real-time values and graphs using Augmented Reality: [Augmented-Reality-and-IoT-for-Machines-Monitoring](https://github.com/yudhisteer/Augmented-Reality-and-IoT-for-Machines-Monitoring)
 
-
 https://user-images.githubusercontent.com/59663734/155929694-b5c0a3b5-f7bf-4b4d-9a05-52d846265ddc.mp4
 
 #### 9.3 Mounting Robotic Arm Model
-The components of the robotic arm has been given but we will need to mount it. We will start from the Base and connect each links and motors till the TCP.
+The components of the robotic arm has been given but we will need to mount it. We will start from the Base and connect each links and motors till the TCP. Some components will need to be resized according to the dimension of a real-life robot.
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/155931029-b1f80fe0-3d8b-4ec0-b8ec-9ccd96ac9116.png" />
@@ -1881,27 +1880,89 @@ Joint 5 is connected to J4:
 </p>
 
 ##### 6. TCP
-Mounting point is added to J5 where tool will be connected and TCP will be used:
+Mounting point is added to J5 where a tool will be connected and the TCP will be used:
 
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/155936440-43282c2a-a6ff-495e-8a48-e6b02c90d3de.png" />
 </p>
 
-Now that the robot has been mounted, we will need to write a script to control its joints.
+Note that it is important that each axis is a child of the earlier axis. In that way, moving J1 will move J2,J3,J4 and so on as it would happen in real-life. Now that the robot has been mounted, we will need to write a script to control its joints.
 
 <p align="center">
-  <img src= "https://user-images.githubusercontent.com/59663734/155936605-82accda1-f117-4680-8c31-2a2f6f384bd0.png" />
+  <img src= "https://user-images.githubusercontent.com/59663734/156119158-6d9fbd91-7375-4d05-9414-f4d0f6d13dcc.png" />
 </p>
 
 #### 9.4 Scripting
+Since we are using Unity to model our robot, it is important to note that Unity is **not** primarily a robot simulation software. While a lot of interesting and insightful simulations and animations can be performed using Unity, using it as a Robot Simulation tool can be quite challenging. For this reason, writing the Inverse Kinematics is a daunting task and the use of a Transformation library by Fabrizio will be used to model the motion of the robot. 
+
+For ```Forward Kinematics```, we will attach a script in ```C#``` of name ```'MoveRobot'```. We are already give a public class with properties and methods. In ```void start()```, we run all the code that need to be executed to initialize the simulation correctly and in ```void update()``` we put the code that runs cyclically during the whole simulation. 
+
+We then add a public variable of type ```Transform``` and create an array of ```6``` elements, because we will have six axes to control. We will use it to link the robot’s axes to it.
+
+```
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public Transform [] = new Transform[6];
+
+public class MoveRobot : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
+```
+
+We can now drag and drop from the Hierarchy window any object of type transform so that we can control its properties from the script at runtime. We will do it for the first axis here. In the Update function modify the euler angles of the first element of the Robot array, that is the orientation of the first axis. Note that we are using Euler angles for simplicity and that we should actually use Quaternions when interpolating orientations. 
+
+We define a local variable J1 for the first axis, then increase its value cyclically, and finally assign it to the rotation around the Y axis, which in Unity is the vertical axis.
+
+```
+public Transform[] Robot = new Transform[6];
+float J1 = 0;
+
+public class MoveRobot : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        J1++;
+        Robot[0].localEulerAngles = new Vector3(0, J1, 0);
+        
+    }
+}
+```
+![J1](https://user-images.githubusercontent.com/59663734/156123296-b4d8d0de-decf-45ca-8540-9a1515947ca6.gif)
+
+
+#### 9.5 Interface
+After we implement our code, we are ready to link it to the simulated robot and see it moves as we like. If we created our control visualizations with Unity and we want to use it to control the real robot then we need a way to communicate between the two environments.
+
+There are several different communication protocols which we can use. Note that the limitation is normally not Unity, but the PLC itself. A free alternative is the good old TCP/IP, or even UDP if we want to go faster.
+
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/156125338-e2651926-335e-465b-bbe3-ab98c2e1fd29.png" />
+</p>
 
 
 
-
-
-
-#### 9.5 Markerless AR
+#### 9.6 Markerless AR
 
 
 
