@@ -1,15 +1,15 @@
 # Digital Twin of Anthropomorphic Robotic Arm using AR
-As the global manufacturing industry enters its fourth revolution, innovations such as robotics, automation and artificial intelligence (AI) are set to take over. The number of active industrial robots worldwide is increasing by approximately ```14%``` year on year, and automation continues to create new types of robots with improved utility and function. Factories of the future will likely feature robots and humans working side-by-side to meet consumer demand—a new world which business owners should be prepared for. 
+As the global manufacturing industry enters its fourth revolution, innovations such as robotics, automation, and artificial intelligence (AI) are set to take over. The number of active industrial robots worldwide is increasing by approximately ```14%``` year on year, and automation creates new types of robots with improved utility and function. Factories of the future will likely feature robots and humans working side-by-side to meet consumer demand—a new world for which business owners should be prepared. 
 
-Based on current projections, AI is expected to have the ability to increase labour productivity by up to ```40%``` by 2035 and robots are generally designed to take on **repetitive tasks** and allow workers to focus on more **intensive duties**.  A major benefit of robots in automation of large manufacturing operations is that some tasks could effectively be completed ```24/7```, thereby **boosting production** output without any additional **labour costs**.
+Based on current projections, AI is expected to have the ability to increase labor productivity by up to ```40%``` by 2035, and robots are generally designed to take on **repetitive tasks** and allow workers to focus on more **intensive duties**.  A major benefit of robots in automating large manufacturing operations is that some tasks could effectively be completed ```24/7```, thereby **boosting production** output without any additional **labor costs**.
 
-At RT Knits Ltd, a 6dof robot was bought for the retrieval of garments out of printing machines in the Printing Department. It is the first robot of the brand ```Borunte``` which the company invested in. Hence, I wanted to take this opportunity to explore the mathematical and physical models of a 6-axis industrial robot and build a ```Digital Twin``` of the machine for simulation of future processes.
+RT Knits Ltd bought a 6dof robot to retrieve garments from printing machines in the Printing Department. It is the first robot of the brand ```Borunte``` which the company invested in. Hence, I wanted to take this opportunity to explore the mathematical and physical models of a 6-axis industrial robot and build a ```Digital Twin``` of the machine for simulation of future processes.
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/155680544-0fa9ca2a-ba46-47e2-a927-061c6de97a6e.png" />
 </p>
 
-Through this project I want to provide the basic understanding of how robots work and how to develop models to control them. In the industry we will find lots of different kinds of robots, with different number of axes, different mechanical configurations, but the 6-axes one is the most commonly used and also, it is one of the most complicated ones. Hence, if we understand how this one works, we should be able to solve models for all the others.
+Through this project, I want to provide a basic understanding of how robots work and develop models to control them. We will find many different kinds of robots with different axes and different mechanical configurations in the industry. However, the 6-axes one is the most commonly used, and also, it is one of the most complicated ones. Hence, if we understand how this one works, we should be able to solve models for all the others.
 
 ![image](https://user-images.githubusercontent.com/59663734/156128316-858d37e3-ddf1-48c7-b7d6-91123637051b.png)
 
@@ -1982,19 +1982,19 @@ There are several different communication protocols which we can use. Note that 
 
 
 ## Conclusion
-A lot of topics have been covered in this project and though we have not explored extensively some topics, it has been a good start for someone to start understanding the mathematical concepts behind the working of a robot. The concepts explored were:
+Many topics have been covered in this project. Though we have not explored some topics extensively, it has been a good start for someone to understand the mathematical concepts behind the working of a robot. The ideas explored were:
 
-1. We started by developing a ```geometrical framework``` of individual frames, and calculating their translations and rotations in space.
-2. Then, we quickly added frames on top of each other and were able to derive the formulas for the ```Forward Kinematics```, that is, how to calculate the position and orientation of the end effector given the values of all joints.
-3. We studies the ```Inverse Kinematics``` problem which is how to calculate the value of the joints given the current TCP pose. We used some geometrical intuition to derive those equations and showed that the solution is not always unique.
+1. We started by developing a ```geometrical framework``` of individual frames and calculating their translations and rotations in space.
+2. Then, we quickly added frames on top of each other and derived the formulas for the ```Forward Kinematics```, that is, how to calculate the position and orientation of the end effector given the values of all joints.
+3. We studied the ```Inverse Kinematics``` problem, which is how to calculate the value of the joints given the current TCP pose. We used some geometrical intuition to derive those equations and showed that the solution is not always unique.
 4. Once we knew how to calculate all positions, we needed ways to move from one pose of the robot to the next, following a defined ```path```. We studied interpolations of lines, circles, and splines in space.
-5. In ```Workspace Monitoring```, we introduced safe and forbidden zones and studied how capsules can be useful to detect collisions between robots and also between the robot’s end effector and its own body.
+5. In ```Workspace Monitoring```, we introduced safe and forbidden zones. We studied how capsules can be helpful for detecting collisions between robots and between the robot’s end effector and its own body.
 6. We generated a realistic ```trajectory``` that would move along the planned path without violating the given constraints of speed, acceleration and jerk.
 7. We introduced the concepts of ```statics``` and ```dynamics``` in Mechanics, where we talked about force control and the dynamic model of the robot.
 8. A ```Digital Twin``` of the robot was built on Unity which can simulate the movement of the real robot.
-9. ```Augmented Reality```` is used to project the 3D model on any flat surface for better visualization of the robot's movements.
+9. ```Augmented Reality```` is used to project the 3D model on any flat surface to better visualize the robot's movements.
 
-A lot of areas are left to be exaplined such as ```Perception``` which allows the robot to be autonomous by visualizing its environment, or the gripping mechanism of the tool at the TCP, or the use of ```Reinforcement Learning``` for the robot to learn from its environment or even ```Controllers``` to model smooth trajectories. These topics will be explored in future projects and will be implemented as per convenient.
+A lot of areas are left to be exaplained such as ```Perception``` which allows the robot to be autonomous by visualizing its environment, or the gripping mechanism of the tool at the TCP, or the use of ```Reinforcement Learning``` for the robot to learn from its environment or even ```Controllers``` to model smooth trajectories. These topics will be explored in future projects and will be implemented as per convenience.
 
 
 ## References
