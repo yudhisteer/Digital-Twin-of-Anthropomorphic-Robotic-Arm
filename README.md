@@ -1,4 +1,4 @@
-# Digital Twin of Anthropomorphic Robotic Arm
+# Digital Twin of Anthropomorphic Robotic Arm using AR
 As the global manufacturing industry enters its fourth revolution, innovations such as robotics, automation and artificial intelligence (AI) are set to take over. The number of active industrial robots worldwide is increasing by approximately ```14%``` year on year, and automation continues to create new types of robots with improved utility and function. Factories of the future will likely feature robots and humans working side-by-side to meet consumer demand—a new world which business owners should be prepared for. 
 
 Based on current projections, AI is expected to have the ability to increase labour productivity by up to ```40%``` by 2035 and robots are generally designed to take on **repetitive tasks** and allow workers to focus on more **intensive duties**.  A major benefit of robots in automation of large manufacturing operations is that some tasks could effectively be completed ```24/7```, thereby **boosting production** output without any additional **labour costs**.
@@ -24,6 +24,9 @@ Simulation is an extremely important part of the development of a robot, and in 
 The main goal of this project is to understand the mathematical concepts behind a standard 6-axes industrial manipulator and build a Digital Twin in Unity which will allow us to simulate any other tasks.
 
 A special thanks to Prof. Fabrizio for the guidance on this project. Most of the concepts explained below are based on his materials.
+
+![demo](https://user-images.githubusercontent.com/59663734/156130311-5a82230b-026c-4858-8536-31c7e8a016f6.gif)
+
 
 ## Plan of Action
 1. Research on Industrial Robots
