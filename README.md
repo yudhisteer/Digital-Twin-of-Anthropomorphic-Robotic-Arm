@@ -757,9 +757,8 @@ To sum up:
 
 Below is a video showing the singularities explained above:
 
-
-
 https://user-images.githubusercontent.com/59663734/148587446-15e434bb-f6a5-40fc-8f08-8ef141b521ad.mp4
+
 <p align="center">
   [Video by Mecademic Robotics](https://www.youtube.com/watch?v=lD2HQcxeNoA)
 </p>
