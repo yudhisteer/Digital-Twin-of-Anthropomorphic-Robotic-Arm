@@ -1995,6 +1995,7 @@ There are several different communication protocols which we can use. Note that 
 6. We generated a realistic ```trajectory``` that would move along the planned path without violating the given constraints of speed, acceleration and jerk.
 7. We introduced the concepts of ```statics``` and ```dynamics``` in Mechanics, where we talked about force control and the dynamic model of the robot.
 8. A ```Digital Twin``` of the robot was built on Unity which can simulate the movement of the real robot.
+9. ```Augmented Reality```` is used to project the 3D model on any flat surface for better visualization of the robot's movements.
 
 
 
