@@ -1,8 +1,17 @@
 # Digital Twin of Anthropomorphic Robotic Arm
+As the global manufacturing industry enters its fourth revolution, innovations such as robotics, automation and artificial intelligence (AI) are set to take over. The number of active industrial robots worldwide is increasing by approximately ```14%``` year on year, and automation continues to create new types of robots with improved utility and function. Factories of the future will likely feature robots and humans working side-by-side to meet consumer demand—a new world which business owners should be prepared for. 
+
+Based on current projections, AI is expected to have the ability to increase labour productivity by up to ```40%``` by 2035 and robots are generally designed to take on **repetitive tasks** and allow workers to focus on more **intensive duties**.  A major benefit of robots in automation of large manufacturing operations is that some tasks could effectively be completed ```24/7```, thereby **boosting production** output without any additional **labour costs**.
+
+At RT Knits Ltd, a 6dof robot was bought for the retrieval of garments out of printing machines in the Printing Department. It is the first robot of the brand ```Borunte``` which the company invested in. Hence, I wanted to take this opportunity to explore the mathematical and physical models of a 6-axis industrial robot and build a ```Digital Twin``` of the machine for simulation of future processes.
 
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/155680544-0fa9ca2a-ba46-47e2-a927-061c6de97a6e.png" />
 </p>
+
+Through this project I want to provide the basic understanding of how robots work and how to develop models to control them. In the industry we will find lots of different kinds of robots, with different number of axes, different mechanical configurations, but the 6-axes one is the most commonly used and also, it is one of the most complicated ones. Hence, if we understand how this one works, we should be able to solve models for all the others.
+
+![image](https://user-images.githubusercontent.com/59663734/156128316-858d37e3-ddf1-48c7-b7d6-91123637051b.png)
 
 
 ## Abstract
@@ -12,7 +21,9 @@ Simulation is an extremely important part of the development of a robot, and in 
 -  **Design Planning:** We can also plan and ```optimize``` our entire production line design. In simulation we can make sure our robots are in the best position to avoid singularities and have time-optimal trajectories for the tasks to be completed.
 -  **Process Monitoring:** We can remotely connect the simulation to the real machine, and ```control``` it or simply view it from our office.
 
-The main goal of this project is to understand how to design the control software for a standard 6-axes industrial manipulator. 
+The main goal of this project is to understand the mathematical concepts behind a standard 6-axes industrial manipulator and build a Digital Twin in Unity which will allow us to simulate any other tasks.
+
+A special thanks to Prof. Fabrizio for the guidance on this project. Most of the concepts explained below are based on his materials.
 
 ## Plan of Action
 1. Research on Industrial Robots
@@ -1964,6 +1975,10 @@ There are several different communication protocols which we can use. Note that 
 
 #### 9.6 Markerless AR
 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/156129058-c6ee8529-b32f-4a55-92fd-e1bde60ff45f.jpg" />
+</p>
+
 
 
 
@@ -1976,6 +1991,7 @@ There are several different communication protocols which we can use. Note that 
 5. In ```Workspace Monitoring```, we introduced safe and forbidden zones and studied how capsules can be useful to detect collisions between robots and also between the robot’s end effector and its own body.
 6. We generated a realistic ```trajectory``` that would move along the planned path without violating the given constraints of speed, acceleration and jerk.
 7. We introduced the concepts of ```statics``` and ```dynamics``` in Mechanics, where we talked about force control and the dynamic model of the robot.
+8. A ```Digital Twin``` of the robot was built on Unity which can simulate the movement of the real robot.
 
 
 
@@ -2002,3 +2018,4 @@ There are several different communication protocols which we can use. Note that 
 12. https://www.youtube.com/watch?v=1JRMqfEm79c
 13. https://www.youtube.com/watch?v=pnYccz1Ha34
 14. https://4experience.co/digital-twin-in-ar-vr/
+15. https://roboticsandautomationnews.com/2021/04/22/the-role-of-robotics-and-automation-in-industry-4-0/42638/
