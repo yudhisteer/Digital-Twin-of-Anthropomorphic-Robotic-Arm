@@ -786,7 +786,9 @@ Below are ```6``` ways to avoid singularities:
 
 **2. Singularity Avoidance package:** This is a package when  buying a robot that imbed some built-in intelligence to the robot to avoid these singularities. It's going to make movements that will result in only one solution.
 
-![Untitled](https://user-images.githubusercontent.com/59663734/156158791-7f3caf79-5126-4fcd-9cae-412ca4ad6b4b.gif)
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59663734/156158791-7f3caf79-5126-4fcd-9cae-412ca4ad6b4b.gif" />
+</p>
 
 **3. Re-design workplace:** We could relocate the robot by lowering it relative to the picking surface or change the table's postion, i.e, we increased the height and placed it a bit further from the base and this result in a change in the articulation of the robot arm. We now have a nice bend between J4 and J5(57.6°).
 
@@ -1505,11 +1507,6 @@ In the second solution, we need to monitor the possible intersection between a r
 <p align="center">
   <img src= "https://user-images.githubusercontent.com/59663734/154856990-7e7452a2-2fb2-4c24-9f27-2a575f236ce6.png" />
 </p>
-
-
-##### 6.6.3  Collision Detection Calculation
-Our goal here is to find the distance between two segments, so that we can avoid collisions.
-
 
 
 ### 7. Trajectory Generation
