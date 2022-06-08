@@ -9,6 +9,7 @@ RT Knits Ltd bought a 6dof robot to retrieve garments from printing machines in 
   <img src= "https://user-images.githubusercontent.com/59663734/155680544-0fa9ca2a-ba46-47e2-a927-061c6de97a6e.png" />
 </p>
 
+
 Through this project, I want to provide a basic understanding of how robots work and develop models to control them. We will find many different kinds of robots with different axes and different mechanical configurations in the industry. However, the 6-axes one is the most commonly used, and also, it is one of the most complicated ones. Hence, if we understand how this one works, we should be able to solve models for all the others.
 
 ![image](https://user-images.githubusercontent.com/59663734/156128316-858d37e3-ddf1-48c7-b7d6-91123637051b.png)
